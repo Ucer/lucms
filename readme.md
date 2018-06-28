@@ -1,58 +1,126 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+## lucms
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## 项目概述
 
-## About Laravel
+- 产品名称：lucms
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+lucms 是一个基于 `laravel5.5*` 与 `vuejs` 开发的一套后台管理系统的解决方案。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 功能如下
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+- 用户认证 —— 注册、登录、退出
 
-## Learning Laravel
+## 开发环境部署/安装
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+本项目代码使用 PHP 框架 Laravel 5.5 开发，本地开发环境使用 Laravel Homestead。
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+下文将在假定读者已经安装好了 Homestead 的情况下进行说明。如果您还未安装 Homestead，可以参照 Homestead 安装与设置 进行安装配置。
 
-## Laravel Sponsors
+### 基础安装
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+- 克隆源代码
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+克隆 lucms 源代码到本地：
 
-## Contributing
+> git@github.com:Ucer/lucms.git
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- php 配置修改
 
-## Security Vulnerabilities
+1). 配置本地环境，根目录指向 `public`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2). 目录访问权限配置
 
-## License
+```text
+  $ chmod -R 777 storage
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+3). 安装 passport 客户端, vue api 请求 token 认证要用到
+```
+ $ art passport:install
+```
+
+4). 生成配置文件
+```html
+cp .env.example .env
+你可以根据情况修改 .env 文件里的内容，如数据库连接、缓存、邮件设置等：
+```
+
+5). 生成数据表及生成测试数据
+```html
+art migrate --send
+```
+
+6). 生成密钥
+```html
+art key:generate
+```
+
+7). 设定图片上传软链接 `storage/app/public/*` 到 `public/storage/images`
+
+8). 配置 .env 
+```sh
+.
+
+.
+
+.
+QUEUE_DRIVER=sync 「同步模式，不使用任何队列」 => redis
+
+.
+
+.
+
+.
+```
+
+- 修改 js 配置
+
+1). 修改基本域名
+
+`lucms/lu/src/libs/util.js`
+```js
+const ajaxUrl = env === 'development'
+    ? 'http://lucms.test/api'
+    : env === 'production'
+        ? 'http://lucms.test/api'
+        : 'http://lucms.test/api';
+```
+
+`lucms/lu/src/main.js`
+```js
+const app_url = '//lucms.test/api';
+```
+
+### vuejs 安装与运行
+
+1). 开发环境
+```
+cd lu
+cnpm install
+npm run dev
+```
+
+
+privileges
+
+
+## 扩展包使用情况
+
+| 扩展包	| 一句话描述	| 本项目应用场景|
+| --- | --- | --- |
+| [laravel/passport](https://github.com/laravel/passport)     | jwt 用户认证包          | api 登录认证|
+| [Intervention/image](https://github.com/Intervention/image)     | 图片处理包     | 图片上传裁剪|
+| [laravel-permission:~2.7](https://github.com/spatie/laravel-permission)     | 权限管理包     | 权限管理|
+| [mews/purifier](https://github.com/mewebstudio/Purifier)     | xss过滤     | 富文本编辑器|
+| [overtrue/pinyin](https://github.com/overtrue/pinyin)     | 基于 CC-CEDICT 词典的中文转拼音工具     | 文章 seo 友好的 url|
+| [nrk/predis](https://github.com/nrk/predis)     | redis 队列驱动器     | 队列管理 |
+| [laravel/horizon](https://laravel-china.org/docs/laravel/5.5/horizon/1345)     | 队列监控     | 队列监控 |
+
+
+## 队列
+
+| Jobs | 一句话描述|
+|--- | --- |
+| TranslateSlug | 翻译文章 title |
+
+
