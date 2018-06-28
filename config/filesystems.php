@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 'public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
@@ -61,6 +61,13 @@ return [
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
+        ],
+        'oss' => [
+            'driver' => 'oss',
+            'access_key_id' => env('ALI_OSS_ACCESS_KEY_ID'),
+            'access_key_secret' => env('ALI_OSS_ACCESS_KEY_SECRET'),
+            'endpoint' => env('ALI_OSS_ENDPOINT'),
+            'bucket' => env('ALI_OSS_BUCKET'),
         ],
 
     ],
