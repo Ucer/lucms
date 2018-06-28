@@ -3,12 +3,37 @@
 ## 项目概述
 
 - 产品名称：lucms
+- demo: https://lucms.codehaoshi.com/dashboard  账号：dev@lucms.com  密码： 123456
 
-lucms 是一个基于 `laravel5.5*` 与 `vuejs` 开发的一套后台管理系统的解决方案。
+lucms 是一个基于 `laravel5.5*` 与 `iviewjs` 开发的一套后台管理系统。
+
+<p align="center">
+  <br>
+  <b>Ucer-admin</b>
+  <br>
+  <a href="https://www.codehaoshi.com">
+    <img src="https://gitee.com/uploads/images/2018/0628/193946_711f853f_923445.png "lucms-1.png" width=800>
+  </a>
+  <br>
+  <a href="https://www.codehaoshi.com">
+    <img src="https://gitee.com/uploads/images/2018/0628/194014_117a03f4_923445.png "lucms-2.png" width=800>
+  </a>
+  <a href="https://www.codehaoshi.com">
+    <img src="https://gitee.com/uploads/images/2018/0628/194036_ec75ea27_923445.png "lucms3.png" width=800>
+  </a>
+  <a href="https://www.codehaoshi.com">
+    <img src="https://gitee.com/uploads/images/2018/0628/194105_bb523b94_923445.png "lucms4.png" width=800>
+  </a>
+</p>
 
 ## 功能如下
 
-- 用户认证 —— 注册、登录、退出
+- 用户认证 —— 登录、退出
+- 用户管理 —— 头像上传、资料修改
+- 权限系统 —— 多角色、多权限管理
+- 权限系统 —— 多角色、多权限管理
+- 附件管理 —— 服务器文件管理
+- 新闻系统 —— 基础新闻管理
 
 ## 开发环境部署/安装
 
@@ -22,7 +47,7 @@ lucms 是一个基于 `laravel5.5*` 与 `vuejs` 开发的一套后台管理系�
 
 克隆 lucms 源代码到本地：
 
-> git@github.com:Ucer/lucms.git
+> git@gitee.com:zhjaa/lucms.git
 
 - php 配置修改
 
@@ -46,8 +71,10 @@ cp .env.example .env
 ```
 
 5). 生成数据表及生成测试数据
-```html
-art migrate --send
+
+/database/lucms.sql
+```sh
+$ art migrate
 ```
 
 6). 生成密钥
@@ -99,10 +126,6 @@ cd lu
 cnpm install
 npm run dev
 ```
-
-
-privileges
-
 
 ## 扩展包使用情况
 
