@@ -9,15 +9,13 @@ util.title = function (title) {
     window.document.title = title;
 };
 
-/*
 const ajaxUrl = env === 'development'
     ? 'http://lucms.test/api'
     : env === 'production'
         ? 'http://lucms.test/api'
         : 'http://lucms.test/api';
-*/
 
-const ajaxUrl = 'http://lucms.codehaoshi.com/api';
+// const ajaxUrl = 'http://lucms.codehaoshi.com/api';
 
 util.ajax = axios.create({
     baseURL: ajaxUrl,
