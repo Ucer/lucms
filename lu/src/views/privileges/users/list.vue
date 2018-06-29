@@ -19,6 +19,9 @@
             <Col span="2">
                 <Button type="primary" icon="ios-search" @click="getList(feeds.current_page)">Search</Button>
             </Col>
+            <Col span="2">
+                <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+            </Col>
         </Row>
         <br>
 
@@ -383,6 +386,11 @@
                         title: '出错了',
                         desc: error.message
                     });
+                });
+            },
+            addBtn() {
+                this.$router.push({
+                    name: 'add-user',
                 });
             },
         },

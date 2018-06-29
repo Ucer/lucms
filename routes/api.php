@@ -17,7 +17,8 @@ Route::namespace('Admin')->group(function () {
 
     Route::get('admin/users', 'UserController@usersList')->name('users.list');
     Route::get('admin/users/{user}', 'UserController@show')->name('users.show');
-    Route::post('admin/users/{user}', 'UserController@update')->name('users.update');
+    Route::post('admin/users', 'UserController@store')->name('users.store');
+    Route::patch('admin/users/{user}', 'UserController@update')->name('users.update');
     Route::get('admin/users/{user}/roles', 'UserController@getUserRoles')->name('users.get_user_roles');
     Route::post('admin/give/{user}/roles', 'UserController@giveUserRoles')->name('users.give_user_roles');
     Route::delete('admin/users/{user}', 'UserController@destroy')->name('users.destroy');

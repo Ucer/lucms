@@ -58,6 +58,12 @@ export const otherRouter = {
     children: [
         {path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/home.vue')},
         {
+            path: 'privileges/user/users-add',
+            title: '添加用户',
+            name: 'add-user',
+            component: () => import('@/views/privileges/users/add-user.vue')
+        },
+        {
             path: 'privileges/user/:user_id',
             title: '编辑用户',
             name: 'edit-user',
