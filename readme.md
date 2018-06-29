@@ -118,6 +118,22 @@ const ajaxUrl = env === 'development'
 const app_url = '//lucms.test/api';
 ```
 
+`lucms/lu/build/webpack.prod.config.js`
+```js
+.
+.
+.
+    output: {
+        //publicPath: 'http://lucms.test/lu/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名
+        publicPath: 'http://lucms.codehaoshi.com/lu/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名
+        filename: '[name].[hash].js',
+        chunkFilename: '[name].[hash].chunk.js'
+    },
+. 
+.
+.
+```
+
 ### vuejs 安装与运行
 
 1). 开发环境

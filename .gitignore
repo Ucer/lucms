@@ -16,4 +16,6 @@ node_modules
 .DS_Store
 \.settings/
 build/env.js
+/public/lu
 public/dashboard.blade.php
+/resources/views/dashboard.blade.php

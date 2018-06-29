@@ -15,6 +15,8 @@ const ajaxUrl = env === 'development'
         ? 'http://lucms.test/api'
         : 'http://lucms.test/api';
 
+// const ajaxUrl = 'http://lucms.codehaoshi.com/api';
+
 util.ajax = axios.create({
     baseURL: ajaxUrl,
     timeout: 30000
