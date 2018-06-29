@@ -3,7 +3,7 @@
 ## 项目概述
 
 - 产品名称：lucms
-- demo: https://lucms.codehaoshi.com/dashboard  账号：dev@lucms.com  密码： 123456
+- demo: http://lucms.codehaoshi.com/dashboard  账号：dev@lucms.com  密码： 123456
 
 lucms 是一个基于 `laravel5.5*` 与 `iviewjs` 开发的一套后台管理系统。
 
