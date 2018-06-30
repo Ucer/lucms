@@ -14,7 +14,7 @@ class  UserValidate extends Validate
     {
         $rules = [
             'name' => 'required|between:3,50',
-            'password' => 'between:6,12|alpha_dash|confirmed',
+            'password' => 'between:6,12|alpha_num|confirmed',
             'email' => 'email|unique:users'
         ];
         $rest_validate = $this->validate($request_data, $rules);
