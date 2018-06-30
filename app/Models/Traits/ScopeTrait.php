@@ -2,6 +2,8 @@
 
 namespace App\Models\Traits;
 
+use App\Models\User;
+
 trait ScopeTrait
 {
     public function scopeRecent($query)
@@ -22,5 +24,12 @@ trait ScopeTrait
     public function scopeColumnLike($query, $column, $value)
     {
         return $query->where($column, 'like', $value . '%');
+    }
+
+
+    public function scopeUserNameSearch($query, $user_name)
+    {
+        $user_ids = User::columnLike('name',$user_name)->pluck('id');
+        return $query->whereIn('user_id', $user_ids);
     }
 }

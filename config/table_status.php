@@ -21,5 +21,13 @@ return [
         'enable' => ['F' => '禁用', 'T' => '启用'],
         'recommend' => ['F' => '不推荐', 'T' => '推荐'],
         'top' => ['F' => '不置顶', 'T' => '置顶'],
+    ],
+    'logs' => [
+        'type' => ['C' => '添加', 'U' => '更新', 'R' => '读取', 'D' => '删除', 'L' => '登录', 'O' => '其它'],
+        'table_name' => [
+            'users' => '用户表', 'attachments' => '附件表', 'roles' => '角色表', 'permissions' => '权限表',
+            'advertisement_positions' => '广告位表', 'advertisements' => '广告表', 'categories' => '分类表', 'tags' => '标签表',
+            'articles' => '文章表'
+        ],
     ]
 ];

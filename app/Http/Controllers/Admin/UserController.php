@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
-use App\Models\Attachment;
 use App\Validates\UserValidate;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class UserController extends AdminController
 {
@@ -45,7 +45,7 @@ class UserController extends AdminController
         return new UserResource($user);
     }
 
-   public function store(Request $request, User $user, UserValidate $validate)
+    public function store(Request $request, User $user, UserValidate $validate)
     {
         $insert_data = $request->all();
         $insert_data['head_image'] = $insert_data['head_image']['attachment_id'];
@@ -73,7 +73,10 @@ class UserController extends AdminController
         $update_data['head_image'] = $update_data['head_image']['attachment_id'];
         $res = $user->updateUser($update_data);
 
-        if ($res['status'] === true) return $this->message($res['message']);
+        if ($res['status'] === true) {
+            admin_log_record(Auth::id(), 'U', 'users', '更新用户', $update_data);
+            return $this->message($res['message']);
+        }
         return $this->failed($res['message']);
     }
 

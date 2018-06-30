@@ -148,22 +148,6 @@ export const appRouter = [
         ]
     },
     {
-        path: '/resources',
-        icon: 'link',
-        title: '资源管理',
-        name: 'resources',
-        component: Main,
-        children: [
-            {
-                path: 'attachments',
-                icon: 'link',
-                title: '附件列表',
-                name: 'attachments',
-                component: () => import('@/views/resources/attachments/list.vue')
-            }
-        ]
-    },
-    {
         path: '/news-system',
         icon: 'ios-cog',
         title: '新闻系统',
@@ -205,6 +189,38 @@ export const appRouter = [
                 name: 'article-list',
                 component: () => import('@/views/news-system/articles/list.vue')
             },
+        ]
+    },
+    {
+        path: '/resources',
+        icon: 'link',
+        title: '资源管理',
+        name: 'resources',
+        component: Main,
+        children: [
+            {
+                path: 'attachments',
+                icon: 'link',
+                title: '附件列表',
+                name: 'attachments',
+                component: () => import('@/views/resources/attachments/list.vue')
+            }
+        ]
+    },
+    {
+        path: '/security',
+        icon: 'link',
+        title: '安全管理',
+        name: 'security',
+        component: Main,
+        children: [
+            {
+                path: 'system-logs',
+                icon: 'link',
+                title: '系统日志',
+                name: 'system-logs',
+                component: () => import('@/views/security/logs/list.vue')
+            }
         ]
     },
     {

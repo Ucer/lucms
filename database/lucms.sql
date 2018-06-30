@@ -9,6 +9,7 @@
 * @table  tags 标签表
 * @table  model_has_tags 多态标签表
 * @table  articles 文章表
+* @table  logs 日志表
  */
 create database if not exists lucms default character set utf8mb4 collate utf8mb4_unicode_ci;
 use lucms;
@@ -161,4 +162,18 @@ CREATE TABLE articles (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci comment '文章表';
 
 
+drop table if exists logs;
+CREATE TABLE logs (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  user_id int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '操作人ID',
+  type enum('C','U','R','D','L','O') NOT NULL DEFAULT 'O' COMMENT '日志所属操作类型:模型 CURD 操作,后台登录,其它操作',
+  table_name varchar(10) NOT NULL DEFAULT '' COMMENT '表名:articles',
+  ip varchar(18)  NOT NULL DEFAULT '' COMMENT 'IP',
+  content text NOT NULL COMMENT '日志内容,json_encode([data=>insert into ... ,message=>添加数据)',
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY logs_type_index (type),
+  KEY logs_table_name_index (table_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci comment '日志表';
 
