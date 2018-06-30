@@ -48,8 +48,14 @@ class LoginController extends ApiController
         $user->last_login_at = Carbon::now();
         $user->save();
 
+        $return = $user->toArray();
+
+        foreach ($user->roles as $role) {
+            $return['roles'][] = $role['name'];
+        }
+
         $tokens = $this->authenticate();
-        return $this->success(['token' => $tokens, 'user' => $user]);
+        return $this->success(['token' => $tokens, 'user' => $return]);
     }
 
     public function refreshToken()

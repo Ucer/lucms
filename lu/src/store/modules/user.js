@@ -34,6 +34,10 @@ const user = {
             localStorage.access_token = data.token.access_token;
             localStorage.access_token_type = data.token.token_type;
             localStorage.current_user = JSON.stringify(data.user);
+            localStorage.current_user_roles = JSON.stringify(data.user.roles);
+            Cookies.set('current_roles', JSON.stringify(data.user.roles, { expires: 1 }));
+            Cookies.set('refresh_token', data.token.refresh_token, { expires: 1 });
+            Cookies.set('access_token', data.token.access_token, { expires: 1 });
         },
         logout(state, vm) {
             // 恢复默认样式
@@ -45,6 +49,9 @@ const user = {
                 theme = localStorage.theme;
             }
             localStorage.clear();
+            Cookies.remove('current_roles');
+            Cookies.remove('refresh_token');
+            Cookies.remove('access_token');
             if (theme) {
                 localStorage.theme = theme;
             }

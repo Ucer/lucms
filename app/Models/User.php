@@ -53,6 +53,7 @@ class User extends Authenticatable
             }
             $this->fill($input);
             $this->email = $input['email'];
+            $this->password = bcrypt($input['password']);
             $this->save();
 
             DB::commit();

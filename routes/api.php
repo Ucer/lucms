@@ -39,7 +39,7 @@ Route::namespace('Admin')->group(function () {
     Route::get('admin/attachments', 'AttachmentsController@attachmentList')->name('attachments.list');
     Route::delete('admin/attachments/{attachment}', 'AttachmentsController@destroy')->name('attachments.destroy');
 
-Route::get('admin/advertisement_positions', 'AdvertisementPositionsController@advertisementPositionList')->name('advertisement_positions.list');
+    Route::get('admin/advertisement_positions', 'AdvertisementPositionsController@advertisementPositionList')->name('advertisement_positions.list');
     Route::post('admin/advertisement_positions', 'AdvertisementPositionsController@addEditAdvertisementPosition')->name('advertisement_positions.add_edit');
     Route::delete('admin/advertisement_positions/{advertisement_position}', 'AdvertisementPositionsController@destroy')->name('advertisement_positions.destroy');
     Route::get('admin/advertisement_positions/all', 'AdvertisementPositionsController@allAdvertisementPositions')->name('advertisement_positions.all');
@@ -70,7 +70,6 @@ Route::get('admin/advertisement_positions', 'AdvertisementPositionsController@ad
 
     Route::get('admin/logs', 'LogsController@logList')->name('logs.list');
 });
-
 
 
 /**       ==========================          文件上传           ====================   */

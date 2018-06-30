@@ -63,12 +63,22 @@ util.oneOf = function (ele, targetArr) {
         return false;
     }
 };
+util.arrayInArray = function (parentArray, sunArray) {
+    if (!(parentArray instanceof Array) || !(sunArray instanceof Array)) return false;
+    if (parentArray.length < sunArray.length) return false;
+    var aStr = parentArray.toString();
+    for (var i = 0, len = sunArray.length; i < len; i++) {
+        if (aStr.indexOf(sunArray[i]) == -1) return false;
+    }
+    return true;
 
-util.showThisRoute = function (itAccess, currentAccess) {
-    if (typeof itAccess === 'object' && Array.isArray(itAccess)) {
-        return util.oneOf(currentAccess, itAccess);
+};
+
+util.showThisRoute = function (needAccess, currentAccess) {
+    if (typeof needAccess === 'object' && Array.isArray(needAccess)) {
+        return util.arrayInArray(currentAccess, needAccess);
     } else {
-        return itAccess === currentAccess;
+        return needAccess === currentAccess;
     }
 };
 

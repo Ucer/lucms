@@ -123,6 +123,7 @@ export const appRouter = [
         name: 'access',
         title: '权限管理',
         component: Main,
+        access: ['Founder'],
         children: [
             {
                 path: 'permission-list',

@@ -38,9 +38,10 @@ const app = {
             state.tagsList.push(...list);
         },
         updateMenulist (state) {
-            let accessCode = parseInt(Cookies.get('access'));
+            let accessCode = JSON.parse(Cookies.get('current_roles'));
             let menuList = [];
             appRouter.forEach((item, index) => {
+
                 if (item.access !== undefined) {
                     if (Util.showThisRoute(item.access, accessCode)) {
                         if (item.children.length === 1) {
