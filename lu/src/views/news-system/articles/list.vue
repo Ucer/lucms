@@ -34,7 +34,7 @@
             <Col span="2">
                 <Button type="primary" icon="ios-search" @click="getList(1)">Search</Button>
             </Col>
-            <Col span="2">
+            <Col span="2" v-if="canAccess">
                 <Button type="success" icon="plus" @click="addBtn()">Add</Button>
             </Col>
         </Row>
@@ -238,23 +238,11 @@
                         title: '操作',
                         render: (h, params) => {
                             let t = this;
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'success',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.$router.push({
-                                                name: 'edit-article',
-                                                params: {article_id: params.row.id}
-                                            });
-                                        }
-                                    }
+                            let canAccess = t.canAccess;
+                            var delete_btn = '';
 
-                                }, 'Edit'),
-                                h('Poptip', {
+                            if( canAccess) {
+                                 delete_btn = h('Poptip', {
                                     props: {
                                         confirm: true,
                                         title: '您确定要删除「' + params.row.name + '」？',
@@ -277,7 +265,24 @@
                                         }
                                     }, '删除'),
                                 ])
+                            }
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'success',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.$router.push({
+                                                name: 'edit-article',
+                                                params: {article_id: params.row.id}
+                                            });
+                                        }
+                                    }
 
+                                }, 'Edit'),
+                                delete_btn
                             ])
                         }
                     },
@@ -290,6 +295,12 @@
             t.getList(t.feeds.current_page);
             t.getTableStatus();
             t.getArticleCategories();
+        },
+        computed: {
+            canAccess() {
+                return true;
+                // return this.$util.showThisRoute(['Founder', 'news_listor'], JSON.parse(this.$cookie.get('current_roles')))
+            }
         },
         methods: {
             getTableStatus() {

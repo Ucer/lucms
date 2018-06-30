@@ -154,6 +154,7 @@ export const appRouter = [
         title: '新闻系统',
         name: 'news-system',
         component: Main,
+        access: ['Founder', 'news_listor'],
         children: [
             {
                 path: 'advertisement-positions',

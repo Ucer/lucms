@@ -6,6 +6,7 @@ import store from './store';
 import App from './app.vue';
 import '@/locale';
 import 'iview/dist/styles/iview.css';
+import Cookies from 'js-cookie';
 import VueI18n from 'vue-i18n';
 import util from './libs/util';
 
@@ -20,6 +21,7 @@ const app_url = '//lucms.test/api';
 // const app_url = '//lucms.codehaoshi.com/api';
 
 Object.defineProperty(Vue.prototype, '$util', {value: util}); // 全局能使用 this.$axios
+Object.defineProperty(Vue.prototype, '$cookie', {value: Cookies}); // 全局能使用 this.$axios
 window.uploadUrl = {
     uploadAvatar: app_url + '/upload/avatar',
     uploadAdvertisement: app_url + '/upload/advertisement',

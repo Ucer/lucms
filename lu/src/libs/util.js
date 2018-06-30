@@ -65,10 +65,13 @@ util.oneOf = function (ele, targetArr) {
 };
 util.arrayInArray = function (parentArray, sunArray) {
     if (!(parentArray instanceof Array) || !(sunArray instanceof Array)) return false;
-    if (parentArray.length < sunArray.length) return false;
-    var aStr = parentArray.toString();
+    // if (parentArray.length < sunArray.length) return false;
     for (var i = 0, len = sunArray.length; i < len; i++) {
-        if (aStr.indexOf(sunArray[i]) == -1) return false;
+        if (parentArray.indexOf(sunArray[i]) === -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
     return true;
 
@@ -76,7 +79,7 @@ util.arrayInArray = function (parentArray, sunArray) {
 
 util.showThisRoute = function (needAccess, currentAccess) {
     if (typeof needAccess === 'object' && Array.isArray(needAccess)) {
-        return util.arrayInArray(currentAccess, needAccess);
+        return util.arrayInArray(needAccess, currentAccess);
     } else {
         return needAccess === currentAccess;
     }

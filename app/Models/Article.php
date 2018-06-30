@@ -98,7 +98,6 @@ class Article extends Model
 
     public function destroyArticle()
     {
-
         DB::beginTransaction();
         try {
             $attachment_id = $this->cover_image['attachment_id'];
