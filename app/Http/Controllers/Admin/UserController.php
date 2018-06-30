@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
-use App\Models\Attachment;
 use App\Validates\UserValidate;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class UserController extends AdminController
 {
@@ -45,19 +45,38 @@ class UserController extends AdminController
         return new UserResource($user);
     }
 
+    public function store(Request $request, User $user, UserValidate $validate)
+    {
+        $insert_data = $request->all();
+        $insert_data['head_image'] = $insert_data['head_image']['attachment_id'];
+
+        $rest_validate = $validate->storeValidate($insert_data);
+
+        if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
+
+
+        $res = $user->storeUser($insert_data);
+        if ($res['status'] === true) return $this->message($res['message']);
+        return $this->failed($res['message']);
+
+    }
+
     public function update(User $user, Request $request, UserValidate $validate)
     {
         $update_data = $request->only('id', 'name', 'head_image', 'is_admin');
 
-        $rest_validate = $validate->storeValidate($update_data);
+        $rest_validate = $validate->updateValidate($update_data);
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
 
         $update_data['head_image'] = $update_data['head_image']['attachment_id'];
-        $res = $user->storeUser($update_data);
+        $res = $user->updateUser($update_data);
 
-        if ($res['status'] === true) return $this->message($res['message']);
+        if ($res['status'] === true) {
+            admin_log_record(Auth::id(), 'U', 'users', '更新用户', $update_data);
+            return $this->message($res['message']);
+        }
         return $this->failed($res['message']);
     }
 

@@ -5,6 +5,20 @@ function flash($status = 'success', $msg = '操作成功', $key = 'toastrMsg')
     session()->flash($key, ['status' => $status, 'message' => $msg]);
 }
 
+function admin_log_record($user_id, $type, $table_name, $content_message = '', $content_data = '')
+{
+    return (new \App\Models\Log())->storeLog([
+        'user_id' => $user_id,
+        'type' => $type,
+        'table_name' => $table_name,
+        'ip' => get_client_ip(),
+        'content' => [
+            'data' => $content_data,
+            'message' => $content_message,
+        ]
+    ]);
+}
+
 /**
  * 获取客户端 ip
  * @return array|false|null|string

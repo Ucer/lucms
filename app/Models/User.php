@@ -16,7 +16,7 @@ class User extends Authenticatable
     use Notifiable, HasApiTokens, ScopeTrait, ExcuteTrait, HasRoles, BaseResponseTrait;
 
     protected $fillable = [
-        'name', 'email', 'password', 'head_image', 'last_login_at', 'is_admin'
+        'name', 'password', 'head_image', 'last_login_at', 'is_admin'
     ];
 
     protected $hidden = [
@@ -44,8 +44,28 @@ class User extends Authenticatable
         return $query->where('is_admin', $value);
     }
 
-
     public function storeUser($input)
+    {
+        DB::beginTransaction();
+        try {
+            if ($input['head_image']) {
+                $this->saveAttachmentAfterSave($input['head_image']);
+            }
+            $this->fill($input);
+            $this->email = $input['email'];
+            $this->password = bcrypt($input['password']);
+            $this->save();
+
+            DB::commit();
+            return $this->succeed([], '操作成功');
+        } catch (\Exception $e) {
+            throw $e;
+            DB::rollBack();
+            return $this->failed('内部错误');
+        }
+    }
+
+    public function updateUser($input)
     {
         $old_head_image = $this->head_image['attachment_id'];
         $new_head_image = $input['head_image'];

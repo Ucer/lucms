@@ -7,8 +7,8 @@ use App\Http\Controllers\Api\ApiController;
 
 class AdminController extends ApiController
 {
+
     public function __construct()
     {
-
     }
 }

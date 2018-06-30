@@ -154,6 +154,7 @@ npm run dev
 | [overtrue/pinyin](https://github.com/overtrue/pinyin)     | 基于 CC-CEDICT 词典的中文转拼音工具     | 文章 seo 友好的 url|
 | [nrk/predis](https://github.com/nrk/predis)     | redis 队列驱动器     | 队列管理 |
 | [laravel/horizon](https://laravel-china.org/docs/laravel/5.5/horizon/1345)     | 队列监控     | 队列监控 |
+| [rap2hpoutre/laravel-log-viewer](https://github.com/rap2hpoutre/laravel-log-viewer)     | laravel 日志查看     | 查看日志 |
 
 
 ## 队列

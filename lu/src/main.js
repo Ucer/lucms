@@ -6,6 +6,7 @@ import store from './store';
 import App from './app.vue';
 import '@/locale';
 import 'iview/dist/styles/iview.css';
+import Cookies from 'js-cookie';
 import VueI18n from 'vue-i18n';
 import util from './libs/util';
 
@@ -20,6 +21,7 @@ const app_url = '//lucms.test/api';
 // const app_url = '//lucms.codehaoshi.com/api';
 
 Object.defineProperty(Vue.prototype, '$util', {value: util}); // 全局能使用 this.$axios
+Object.defineProperty(Vue.prototype, '$cookie', {value: Cookies}); // 全局能使用 this.$axios
 window.uploadUrl = {
     uploadAvatar: app_url + '/upload/avatar',
     uploadAdvertisement: app_url + '/upload/advertisement',
@@ -36,18 +38,6 @@ new Vue({
     data: {
         currentPageName: '',
     },
-    mounted() {
-
-
-        this.currentPageName = this.$route.name;
-        // 显示打开的页面的列表
-        // this.$store.commit('setOpenedList');
-        // this.$store.commit('initCachepage');
-        // 权限菜单过滤相关
-        // this.$store.commit('updateMenulist');
-        // iview-admin检查更新
-        util.checkUpdate(this);
-    },
     created() {
         let tagsList = [];
         appRouter.map((item) => {
@@ -58,5 +48,15 @@ new Vue({
             }
         });
         this.$store.commit('setTagsList', tagsList);
-    }
+    },
+    mounted() {
+        this.currentPageName = this.$route.name;
+        // 显示打开的页面的列表
+        this.$store.commit('setOpenedList');
+        this.$store.commit('initCachepage');
+        // 权限菜单过滤相关
+        this.$store.commit('updateMenulist');
+        // iview-admin检查更新
+        util.checkUpdate(this);
+    },
 });

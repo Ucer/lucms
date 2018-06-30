@@ -17,7 +17,8 @@ Route::namespace('Admin')->group(function () {
 
     Route::get('admin/users', 'UserController@usersList')->name('users.list');
     Route::get('admin/users/{user}', 'UserController@show')->name('users.show');
-    Route::post('admin/users/{user}', 'UserController@update')->name('users.update');
+    Route::post('admin/users', 'UserController@store')->name('users.store');
+    Route::patch('admin/users/{user}', 'UserController@update')->name('users.update');
     Route::get('admin/users/{user}/roles', 'UserController@getUserRoles')->name('users.get_user_roles');
     Route::post('admin/give/{user}/roles', 'UserController@giveUserRoles')->name('users.give_user_roles');
     Route::delete('admin/users/{user}', 'UserController@destroy')->name('users.destroy');
@@ -37,7 +38,6 @@ Route::namespace('Admin')->group(function () {
 
     Route::get('admin/attachments', 'AttachmentsController@attachmentList')->name('attachments.list');
     Route::delete('admin/attachments/{attachment}', 'AttachmentsController@destroy')->name('attachments.destroy');
-
 
     Route::get('admin/advertisement_positions', 'AdvertisementPositionsController@advertisementPositionList')->name('advertisement_positions.list');
     Route::post('admin/advertisement_positions', 'AdvertisementPositionsController@addEditAdvertisementPosition')->name('advertisement_positions.add_edit');
@@ -66,6 +66,9 @@ Route::namespace('Admin')->group(function () {
     Route::post('admin/articles', 'ArticlesController@store')->name('articles.store');
     Route::patch('admin/articles/{article}', 'ArticlesController@update')->name('articles.update');
     Route::delete('admin/articles/{article}', 'ArticlesController@destroy')->name('articles.destroy');
+
+
+    Route::get('admin/logs', 'LogsController@logList')->name('logs.list');
 });
 
 

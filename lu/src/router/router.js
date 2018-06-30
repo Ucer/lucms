@@ -58,6 +58,12 @@ export const otherRouter = {
     children: [
         {path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/home.vue')},
         {
+            path: 'privileges/user/users-add',
+            title: '添加用户',
+            name: 'add-user',
+            component: () => import('@/views/privileges/users/add-user.vue')
+        },
+        {
             path: 'privileges/user/:user_id',
             title: '编辑用户',
             name: 'edit-user',
@@ -117,6 +123,7 @@ export const appRouter = [
         name: 'access',
         title: '权限管理',
         component: Main,
+        access: ['Founder'],
         children: [
             {
                 path: 'permission-list',
@@ -142,27 +149,12 @@ export const appRouter = [
         ]
     },
     {
-        path: '/resources',
-        icon: 'link',
-        title: '资源管理',
-        name: 'resources',
-        component: Main,
-        children: [
-            {
-                path: 'attachments',
-                icon: 'link',
-                title: '附件列表',
-                name: 'attachments',
-                component: () => import('@/views/resources/attachments/list.vue')
-            }
-        ]
-    },
-    {
         path: '/news-system',
         icon: 'ios-cog',
         title: '新闻系统',
         name: 'news-system',
         component: Main,
+        access: ['Founder', 'news_listor'],
         children: [
             {
                 path: 'advertisement-positions',
@@ -199,6 +191,38 @@ export const appRouter = [
                 name: 'article-list',
                 component: () => import('@/views/news-system/articles/list.vue')
             },
+        ]
+    },
+    {
+        path: '/resources',
+        icon: 'link',
+        title: '资源管理',
+        name: 'resources',
+        component: Main,
+        children: [
+            {
+                path: 'attachments',
+                icon: 'link',
+                title: '附件列表',
+                name: 'attachments',
+                component: () => import('@/views/resources/attachments/list.vue')
+            }
+        ]
+    },
+    {
+        path: '/security',
+        icon: 'link',
+        title: '安全管理',
+        name: 'security',
+        component: Main,
+        children: [
+            {
+                path: 'system-logs',
+                icon: 'link',
+                title: '系统日志',
+                name: 'system-logs',
+                component: () => import('@/views/security/logs/list.vue')
+            }
         ]
     },
     {

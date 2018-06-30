@@ -3,11 +3,11 @@
 </style>
 <template>
     <div>
-        <Col span="10">
+        <Col span="16">
             <Card>
                 <p slot="title">
                     <Icon type="edit"></Icon>
-                    编辑用户信息
+                    添加用户
                 </p>
                 <div>
                     <Form ref="editUserForm" :model="editUserForm" :rules="ruleEditUser"
@@ -17,8 +17,20 @@
                                 <Input v-model="editUserForm.name"></Input>
                             </div>
                         </FormItem>
-                        <FormItem label="邮箱：">
-                            <span>{{ editUserForm.email }}</span>
+                        <FormItem label="邮箱：" prop="email">
+                            <div style="display:inline-block;width:50%">
+                                <Input  v-model="editUserForm.email"></Input>
+                            </div>
+                        </FormItem>
+                        <FormItem label="登录密码：" prop="password">
+                            <div style="display:inline-block;width:50%">
+                                <Input type="password" v-model="editUserForm.password"></Input>
+                            </div>
+                        </FormItem>
+                        <FormItem label="登录密码确认：" prop="password_confirmation">
+                            <div style="display:inline-block;width:50%">
+                                <Input type="password" v-model="editUserForm.password_confirmation"></Input>
+                            </div>
                         </FormItem>
                         <FormItem label="是否可登录后台">
                             <RadioGroup v-model="editUserForm.is_admin">
@@ -50,7 +62,7 @@
                             </div>
                         </FormItem>
                         <FormItem>
-                            <Button type="primary" :loading="loading" @click="handleSubmit">保存 </Button>
+                            <Button type="primary" :loading="loading" @click="handleSubmit">保存</Button>
                         </FormItem>
 
                     </Form>
@@ -62,22 +74,53 @@
 <script>
     export default {
         data() {
+            const validatePassword = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入登录密码'));
+                } else {
+                    if (this.editUserForm.password !== '') {
+                        // 对第二个密码框单独验证
+                        this.$refs.editUserForm.validateField('password_confirmation');
+                    }
+                    callback();
+                }
+            };
+            const validatePasswordConfirm = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入确认密码'));
+                } else if (value !== this.editUserForm.password) {
+                    callback(new Error('两次密码不一致 '));
+                } else {
+                    callback();
+                }
+            };
             return {
                 loading: false,
                 editUserForm: {
-                    id: this.$route.params.user_id,
                     name: '',
                     is_admin: 'F',
                     email: '',
+                    password: '',
+                    password_confirmation: '',
                     head_image: {
                         attachment_id: 0,
                         url: '',
                     },
-                    head_image_id: '',
                 },
                 ruleEditUser: {
                     name: [
-                        {required: true, message: '请填写昵称', trigger: 'blur'}
+                        {required: true, message: '请填写昵称', trigger: 'blur'},
+                        {type: 'string', min: 2, message: '昵称至少要 2 个字符', trigger: 'blur'}
+                    ],
+                    email: [
+                        {required: true, message: '请填写邮箱', trigger: 'blur'},
+                        {type: 'email', message: '邮箱格式不正确', trigger: 'blur'},
+                    ],
+                    password: [
+                        {validator: validatePassword, trigger: 'blur'}
+                    ],
+                    password_confirmation: [
+                        {validator: validatePasswordConfirm, trigger: 'blur'}
                     ],
                 },
                 uploadConfig: {
@@ -90,32 +133,15 @@
                 },
             }
         },
-        created() {
-            let t = this;
-            t.getUserInfo(t.editUserForm.id)
-        },
         methods: {
-            getUserInfo(id) {
-                let t = this;
-                t.$util.ajax.get('/admin/users/' + id).then(function (response) {
-                    let response_data = response.data;
-                    t.editUserForm = response_data.data;
-                    t.editUserForm.head_image.attachment_id = response_data.data.head_image.attachment_id;
-                }, function (error) {
-                    t.$Notice.warning({
-                        title: '出错了',
-                        desc: error.message
-                    });
-                })
-            },
             handleSubmit() {
                 let t = this;
                 t.$refs.editUserForm.validate((valid) => {
                     if (valid) {
                         t.loading = true;
-                        this.$util.ajax.patch('/admin/users/' + t.editUserForm.id, t.editUserForm).then(function (response) {
+                        this.$util.ajax.post('/admin/users', t.editUserForm).then(function (response) {
                             t.$Notice.success({
-                                title: '资料修改成功'
+                                title: '资料添加成功'
                             });
                             t.loading = false;
                         }, function (error) {
