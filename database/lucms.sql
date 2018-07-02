@@ -1,5 +1,6 @@
 /**
 * @table  users 用户表
+* @table  admin_users 管理员用户表
 * @table  attachments 附件件表
 * @table  attachments 附件件表
 * @table  advertisement_positions 广告位表
@@ -16,6 +17,27 @@ use lucms;
 
 drop table if exists users;
 CREATE TABLE users (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  name varchar(255) NOT NULL,
+  email varchar(255)  NOT NULL,
+  password varchar(255)  NOT NULL,
+  enable enum ('T','F')  NOT NULL  DEFAULT  'F' comment '启用状态：F禁用，T启用',
+  is_admin enum ('T','F')  NOT NULL  DEFAULT  'F' comment '是否可登录后台：F否，是',
+  description varchar(50)  NOT NULL  DEFAULT  '' comment '一句话描述',
+  head_image int(11)  NOT NULL  DEFAULT  0 comment '头像',
+  remember_token varchar(100)  DEFAULT NULL,
+  last_login_at timestamp NULL DEFAULT NULL,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY users_email_unique (email),
+   KEY users_head_image_index (head_image)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+insert into users (name,email,password,enable,is_admin,created_at) values ('ucer','dev@lucms.com','$2y$10$fsOBO.HAhsZ9wM8R9vARi..MST.yqpxu4z4ikefR17srjyPhRfulS','T','T','2018-06-08 13:21:21');
+
+
+drop table if exists admin_users;
+CREATE TABLE admin_users (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   name varchar(255) NOT NULL,
   email varchar(255)  NOT NULL,

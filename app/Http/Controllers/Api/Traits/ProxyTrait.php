@@ -4,22 +4,30 @@ namespace App\Http\Controllers\Api\Traits;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use Illuminate\Http\Request;
 
 
 trait ProxyTrait
 {
-    public function authenticate()
+    public function authenticate($guard = '')
     {
         $client = new Client();
 
         try {
             $url = request()->root() . '/api/oauth/token';
 
-            $params = array_merge(config('passport.proxy'), [
-                'username' => request('email'),
-                'password' => request('password'),
-            ]);
+            if ($guard) {
+                $params = array_merge(config('passport.proxy'), [
+                    'username' => request('email'),
+                    'password' => request('password'),
+                    'provider' => $guard
+                ]);
+            } else {
+                $params = array_merge(config('passport.proxy'), [
+                    'username' => request('email'),
+                    'password' => request('password'),
+                ]);
+            }
+
 
             $respond = $client->request('POST', $url, ['form_params' => $params]);
         } catch (RequestException $exception) {

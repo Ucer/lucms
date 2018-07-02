@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Api\Traits\ProxyTrait;
+use App\Models\AdminUser;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -19,7 +20,7 @@ class LoginController extends ApiController
 
     public function __construct()
     {
-        $this->middleware('guest')->except('logout,refreshToken');
+        $this->middleware('guest')->except('logout,adminUserLogout,refreshToken');
     }
 
     public function login(Request $request)
@@ -56,6 +57,43 @@ class LoginController extends ApiController
 
         $tokens = $this->authenticate();
         return $this->success(['token' => $tokens, 'user' => $return]);
+    }
+
+    public function logout()
+    {
+        if (\Auth::guard('api')->check()) {
+//            \Auth::guard('api')->user()->token()->revoke();
+            \Auth::guard('api')->user()->token()->delete();
+        }
+
+        return $this->message('退出登录成功');
+    }
+
+    public function adminUserLogin(Request $request)
+    {
+
+        $admin_user = AdminUser::where('email', $request->email)
+            ->firstOrFail();
+
+        if (!Hash::check($request->password, $admin_user->password)) {
+            return $this->failed('密码不正确');
+        }
+
+        $admin_user->last_login_at = Carbon::now();
+        $admin_user->save();
+
+        $tokens = $this->authenticate('admin_users');
+        return $this->success(['token' => $tokens, 'user' => $admin_user]);
+    }
+
+    public function adminUserLogout()
+    {
+        if (\Auth::guard('admin_user_api')->check()) {
+//            \Auth::guard('admin_user_api')->user()->token()->revoke();
+            \Auth::guard('admin_user_api')->user()->token()->delete();
+        }
+
+        return $this->message('退出登录成功');
     }
 
     public function refreshToken()

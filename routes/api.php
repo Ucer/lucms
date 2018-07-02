@@ -5,11 +5,20 @@
 Route::namespace('Api')->group(function () {
 
     Route::post('login', 'LoginController@login');
+    Route::post('logout', 'LoginController@logout');
     Route::post('refreshtoken', 'LoginController@refreshToken');
+
+    // 多表登录测试
+    Route::post('admin_user/login', 'LoginController@adminUserLogin');
+    Route::get('admin_user', 'AdminUsersController@index');
+    Route::post('admin_user/logout', 'LoginController@adminUserLogout');
 
 
     Route::post('common_switch_enable', 'CommonController@switchEnable');
     Route::get('common_get_table_status/{table_name}/{column_name?}', 'CommonController@getTableStatus');
+
+
+
 });
 
 /**       ==========================          后台APi           ====================   */
