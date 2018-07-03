@@ -54,7 +54,7 @@ CREATE TABLE admin_users (
   UNIQUE KEY users_email_unique (email),
    KEY users_head_image_index (head_image)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-insert into users (name,email,password,enable,is_admin,created_at) values ('ucer','dev@lucms.com','$2y$10$fsOBO.HAhsZ9wM8R9vARi..MST.yqpxu4z4ikefR17srjyPhRfulS','T','T','2018-06-08 13:21:21');
+insert into admin_users (id,name,email,password,enable,is_admin,created_at) values (2,'ucer_admin','dev@lucms.com','$2y$10$fsOBO.HAhsZ9wM8R9vARi..MST.yqpxu4z4ikefR17srjyPhRfulS','T','T','2018-06-08 13:21:21');
 
 drop table if exists attachments;
 CREATE TABLE attachments (
