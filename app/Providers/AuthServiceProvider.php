@@ -28,9 +28,10 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Passport::routes(function (RouteRegistrar $router) {
             $router->forAccessTokens();
-        }, ['prefix' => 'api/oauth']);
-        Passport::tokensExpireIn(now()->addDay(3));
-        Passport::refreshTokensExpireIn(now()->addDay(3));
+        }, ['prefix' => 'api/oauth', 'middleware' => 'passport-administrators']);
+
+        Passport::tokensExpireIn(now()->addMinute(3));
+        Passport::refreshTokensExpireIn(now()->addMinute(3));
 
     }
 }

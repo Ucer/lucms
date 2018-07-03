@@ -6,12 +6,12 @@
         <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
             <scroll-bar ref="scrollBar">
                 <shrinkable-menu
-                    :shrink="shrink"
-                    @on-change="handleSubmenuChange"
-                    :theme="menuTheme"
-                    :before-push="beforePush"
-                    :open-names="openedSubmenuArr"
-                    :menu-list="menuList">
+                        :shrink="shrink"
+                        @on-change="handleSubmenuChange"
+                        :theme="menuTheme"
+                        :before-push="beforePush"
+                        :open-names="openedSubmenuArr"
+                        :menu-list="menuList">
                     Lucms
                     <div slot="top" class="logo-con">
                         <!--<img v-show="!shrink"  src="../images/logo.jpg" key="max-logo" />-->
@@ -23,7 +23,8 @@
         <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
             <div class="main-header">
                 <div class="navicon-con">
-                    <Button :style="{transform: 'rotateZ(' + (this.shrink ? '-90' : '0') + 'deg)'}" type="text" @click="toggleClick">
+                    <Button :style="{transform: 'rotateZ(' + (this.shrink ? '-90' : '0') + 'deg)'}" type="text"
+                            @click="toggleClick">
                         <Icon type="navicon" size="32"></Icon>
                     </Button>
                 </div>
@@ -92,7 +93,7 @@
             themeSwitch,
             scrollBar
         },
-        data () {
+        data() {
             return {
                 user: JSON.parse(localStorage.current_user),// 已经登录的用户的信息
                 shrink: false,
@@ -127,7 +128,7 @@
             }
         },
         methods: {
-            init () {
+            init() {
                 let pathArr = util.setCurrentPath(this, this.$route.name);
                 this.$store.commit('updateMenulist');
                 if (pathArr.length >= 2) {
@@ -138,10 +139,10 @@
                 this.checkTag(this.$route.name);
                 this.$store.commit('setMessageCount', 3);
             },
-            toggleClick () {
+            toggleClick() {
                 this.shrink = !this.shrink;
             },
-            handleClickUserDropdown (name) {
+            handleClickUserDropdown(name) {
                 if (name === 'ownSpace') {
                     util.openNewPage(this, 'ownspace_index');
                     this.$router.push({
@@ -149,14 +150,23 @@
                     });
                 } else if (name === 'loginout') {
                     // 退出登录
-                    this.$store.commit('logout', this);
-                    this.$store.commit('clearOpenedSubmenu');
-                    this.$router.push({
-                        name: 'login'
-                    });
+                    let t = this;
+                    t.$util.ajax.post('/logout').then(function (response) {
+                        t.$store.commit('logout', this);
+                        t.$store.commit('clearOpenedSubmenu');
+                        t.$router.push({
+                            name: 'login'
+                        });
+                    }, function (error) {
+                        t.$notice.warning({
+                            title: '出错了',
+                        })
+                    })
+
+
                 }
             },
-            checkTag (name) {
+            checkTag(name) {
                 let openpageHasTag = this.pageTagsList.some(item => {
                     if (item.name === name) {
                         return true;
@@ -166,9 +176,9 @@
                     util.openNewPage(this, name, this.$route.params || {}, this.$route.query || {});
                 }
             },
-            handleSubmenuChange (val) {
+            handleSubmenuChange(val) {
             },
-            beforePush (name) {
+            beforePush(name) {
                 // if (name === 'accesstest_index') {
                 //     return false;
                 // } else {
@@ -176,14 +186,14 @@
                 // }
                 return true;
             },
-            fullscreenChange (isFullScreen) {
+            fullscreenChange(isFullScreen) {
             },
-            scrollBarResize () {
+            scrollBarResize() {
                 this.$refs.scrollBar.resize();
             }
         },
         watch: {
-            '$route' (to) {
+            '$route'(to) {
                 this.$store.commit('setCurrentPageName', to.name);
                 let pathArr = util.setCurrentPath(this, to.name);
                 if (pathArr.length > 2) {
@@ -192,24 +202,24 @@
                 this.checkTag(to.name);
                 localStorage.currentPageName = to.name;
             },
-            lang () {
+            lang() {
                 util.setCurrentPath(this, this.$route.name); // 在切换语言时用于刷新面包屑
             },
-            openedSubmenuArr () {
+            openedSubmenuArr() {
                 setTimeout(() => {
                     this.scrollBarResize();
                 }, 300);
             }
         },
-        mounted () {
+        mounted() {
             this.init();
             window.addEventListener('resize', this.scrollBarResize);
         },
-        created () {
+        created() {
             // 显示打开的页面的列表
             this.$store.commit('setOpenedList');
         },
-        dispatch () {
+        dispatch() {
             window.removeEventListener('resize', this.scrollBarResize);
         }
     };
