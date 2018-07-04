@@ -76,6 +76,7 @@ cp .env.example .env
 /database/lucms.sql
 ```sh
 $ art migrate
+$ art db:seed
 ```
 
 6). 生成密钥
