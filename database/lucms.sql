@@ -121,7 +121,7 @@ drop table if exists categories;
 CREATE TABLE categories (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL DEFAULT '' COMMENT '分类名称',
-  cover_image int(11) NOT NULL DEFAULT '' COMMENT '封面图片',
+  cover_image int(11) NOT NULL DEFAULT 0 COMMENT '封面图片',
   description varchar(100) NOT NULL DEFAULT '' COMMENT '广告位描述',
   created_at timestamp NULL DEFAULT NULL,
   updated_at timestamp NULL DEFAULT NULL,
