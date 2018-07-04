@@ -209,7 +209,7 @@ export const appRouter = [
             },
             {
                 path: 'ip-filters',
-                icon: 'link',
+                icon: 'alert',
                 title: 'ip 过滤',
                 name: 'ip-filters',
                 component: () => import('@/views/security/ip_filters/list.vue')
