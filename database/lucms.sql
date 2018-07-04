@@ -11,6 +11,7 @@
 * @table  model_has_tags 多态标签表
 * @table  articles 文章表
 * @table  logs 日志表
+* @table  ip_filters ip 过滤表
  */
 create database if not exists lucms default character set utf8mb4 collate utf8mb4_unicode_ci;
 use lucms;
@@ -198,4 +199,17 @@ CREATE TABLE logs (
   KEY logs_type_index (type),
   KEY logs_table_name_index (table_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci comment '日志表';
+
+
+drop table if exists ip_filters;
+CREATE TABLE ip_filters (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  type enum('white','black') NOT NULL DEFAULT 'white' COMMENT '类型',
+  ip varchar(18)  NOT NULL DEFAULT '' COMMENT 'IP',
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY ip_filters_type_index (type),
+  UNIQUE ip_filters_ip_unique (ip)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci comment 'ip 过滤';
 

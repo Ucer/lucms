@@ -206,6 +206,13 @@ export const appRouter = [
                 title: '系统日志',
                 name: 'system-logs',
                 component: () => import('@/views/security/logs/list.vue')
+            },
+            {
+                path: 'ip-filters',
+                icon: 'link',
+                title: 'ip 过滤',
+                name: 'ip-filters',
+                component: () => import('@/views/security/ip_filters/list.vue')
             }
         ]
     },

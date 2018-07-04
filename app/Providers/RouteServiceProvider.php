@@ -6,6 +6,7 @@ use App\Models\Advertisement;
 use App\Models\AdvertisementPosition;
 use App\Models\Article;
 use App\Models\Attachment;
+use App\Models\IpFilter;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -53,6 +54,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('article', function ($value) {
             return Article::where('id', $value)->first();
+        });
+        Route::bind('ip_filter', function ($value) {
+            return IpFilter::where('id', $value)->first();
         });
     }
 

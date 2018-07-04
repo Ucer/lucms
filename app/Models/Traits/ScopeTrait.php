@@ -26,10 +26,14 @@ trait ScopeTrait
         return $query->where($column, 'like', $value . '%');
     }
 
+    public function scopeColumnEqualSearch($query, $column, $value)
+    {
+        return $query->where($column, $value);
+    }
 
     public function scopeUserNameSearch($query, $user_name)
     {
-        $user_ids = User::columnLike('name',$user_name)->pluck('id');
+        $user_ids = User::columnLike('name', $user_name)->pluck('id');
         return $query->whereIn('user_id', $user_ids);
     }
 }
