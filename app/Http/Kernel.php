@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'passport-administrators' => \App\Http\Middleware\PassportCustomProvider::class,
+        'ip-filter' =>  \App\Http\Middleware\IpFilter::class,
     ];
 }

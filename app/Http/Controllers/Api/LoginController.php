@@ -21,6 +21,7 @@ class LoginController extends ApiController
     public function __construct()
     {
         $this->middleware('guest')->except('logout,adminUserLogout,refreshToken');
+        $this->middleware('ip-filter')->only('login');
     }
 
     public function login(Request $request)
