@@ -126,7 +126,7 @@ $ art db:seed
 
 ```
 
-3). 配置 .env  ，修改数据库信息 . ....
+6). 配置 .env  ，修改数据库信息 . ....
 ```sh
 .
 
@@ -146,12 +146,12 @@ OAUTH_SCOPE=*
 ```
 
 
-6). 生成密钥
+7). 生成密钥
 ```html
 art key:generate
 ```
 
-7). 设定图片上传软链接 `storage/app/public/*` 到 `public/storage/images`
+8). 设定图片上传软链接 `storage/app/public/*` 到 `public/storage/images`
 ```
 $ cd public
 $ mkdir storage
