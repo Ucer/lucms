@@ -13,7 +13,7 @@
 * @table  logs 日志表
 * @table  ip_filters ip 过滤表
  */
-create database if not exists lucms default character set utf8mb4 collate utf8mb4_unicode_ci;
+-- create database if not exists lucms default character set utf8mb4 collate utf8mb4_unicode_ci;
 use lucms;
 
 drop table if exists users;

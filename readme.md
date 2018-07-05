@@ -54,39 +54,25 @@ lucms 是一个基于 `laravel5.5*` 与 `iviewjs` 开发的一套后台管理系
 
 1). 配置本地环境，根目录指向 `public`
 
+2). 安装 composer
+```html
+composer install
+```
+
+2). 生成配置文件
+```html
+cp .env.example .env
+你可以根据情况修改 .env 文件里的内容，如数据库连接、缓存、邮件设置等：
+```
+
 2). 目录访问权限配置
 
 ```text
   $ chmod -R 777 storage
 ```
 
-3). 安装 passport 客户端, vue api 请求 token 认证要用到
-```
- $ art passport:install
-```
 
-4). 生成配置文件
-```html
-cp .env.example .env
-你可以根据情况修改 .env 文件里的内容，如数据库连接、缓存、邮件设置等：
-```
-
-5). 生成数据表及生成测试数据
-
-/database/lucms.sql
-```sh
-$ art migrate
-$ art db:seed
-```
-
-6). 生成密钥
-```html
-art key:generate
-```
-
-7). 设定图片上传软链接 `storage/app/public/*` 到 `public/storage/images`
-
-8). 配置 .env 
+3). 配置 .env  ，修改数据库信息 . ....
 ```sh
 .
 
@@ -102,9 +88,62 @@ QUEUE_DRIVER=sync 「同步模式，不使用任何队列」 => redis
 .
 ```
 
+4). 生成数据表及生成测试数据
+
+source xxx/database/lucms.sql
+```sh
+$ mysql -hlocalhost -uroot -p
+mysql>  create database if not exists lucms2 default character set utf8mb4 collate utf8mb4_unicode_ci
+
+$ art migrate
+
+mysql> source /xxx/database/lucms.sql
+
+$ art db:seed
+
+```
+
+5). 安装 passport 客户端, vue api 请求 token 认证要用到
+```
+ $ art passport:install
+```
+
+3). 配置 .env  ，修改数据库信息 . ....
+```sh
+.
+
+.
+
+.
+OAUTH_GRANT_TYPE=password
+OAUTH_CLIENT_ID=2
+OAUTH_CLIENT_SECRET=p7XaeU3D9RASxQ18eiF5CT1uL9xUJRYjT6O8BJFt
+OAUTH_SCOPE=*
+
+.
+
+.
+
+.
+```
+
+
+6). 生成密钥
+```html
+art key:generate
+```
+
+7). 设定图片上传软链接 `storage/app/public/*` 到 `public/storage/images`
+```
+$ cd public
+$ mkdir storage
+$ ln -s /xxxx/storage/app/public/* ./storage
+```
+
+
 - 修改 js 配置
 
-1). 修改基本域名
+1). 全局修改基本域名 lucms.text => xxx.test
 
 `lucms/lu/src/libs/util.js`
 ```js
@@ -140,9 +179,16 @@ const app_url = '//lucms.test/api';
 
 1). 开发环境
 ```
-cd lu
-cnpm install
-npm run dev
+$ cd lu
+$ cnpm install
+$ npm run dev
+```
+
+2). 生产环境
+```
+$ cd lu 
+$ npm run build
+$ mv ../public/dashboard.blade.php ../resources/views
 ```
 
 ## 扩展包使用情况
