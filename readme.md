@@ -74,6 +74,19 @@ cp .env.example .env
 
 3). 配置 .env  ，修改数据库信息 . ....
 ```sh
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:IKlBaIonliiolP7yK0QWP8Ixwgc1Z5R2ylxEA6CD3nA=
+APP_DEBUG=true
+APP_LOG_LEVEL=debug
+APP_URL=http://lucms.test
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=lucms
+DB_USERNAME=root
+DB_PASSWORD=route
 .
 
 .
@@ -104,8 +117,13 @@ $ art db:seed
 ```
 
 5). 安装 passport 客户端, vue api 请求 token 认证要用到
-```
+```sh
  $ art passport:install
+ 
+ # 以下内容复制到 .env 中
+ Client ID: 2
+ Client Secret: qtbbnoYSKM1QkAfbcs614iCiWmMvBWNdRloJNbDi
+
 ```
 
 3). 配置 .env  ，修改数据库信息 . ....
@@ -137,13 +155,13 @@ art key:generate
 ```
 $ cd public
 $ mkdir storage
-$ ln -s /xxxx/storage/app/public/* ./storage
+$ ln -s /srv/wwwroot/homestead-code/lucms/storage/app/public/* ./storage/
 ```
 
 
 - 修改 js 配置
 
-1). 全局修改基本域名 lucms.text => xxx.test
+1). 全局修改基本域名 http://lucms.test => https://xxxxx
 
 `lucms/lu/src/libs/util.js`
 ```js
@@ -184,7 +202,28 @@ $ cnpm install
 $ npm run dev
 ```
 
-2). 生产环境
+2). 开发环境跨域配置
+chrome 安装插件 Access-Control-Allow_Credentials
+
+服务器跨域，Apache请自行搜索处理或在 php 文件中处理。此处不建议在 php 中处理:
+
+nginx 配置如下：
+```sh
+.
+.
+.
+  add_header Access-Control-Allow-Origin http://localhost:8080;
+  add_header Access-Control-Allow-Headers *;
+  add_header Access-Control-Allow-Methods GET,POST,OPTIONS,PATCH,PUT;
+  .
+  .
+  .
+
+```
+
+> $ service nginx restart
+
+3). 生产环境
 ```
 $ cd lu 
 $ npm run build
