@@ -19,9 +19,9 @@ use lucms;
 drop table if exists users;
 CREATE TABLE users (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(255) NOT NULL,
-  email varchar(255)  NOT NULL,
-  password varchar(255)  NOT NULL,
+  name varchar(50) NOT NULL default  '',
+  email varchar(255)  NOT NULL default  '',
+  password varchar(255)  NOT NULL default '',
   enable enum ('T','F')  NOT NULL  DEFAULT  'F' comment '启用状态：F禁用，T启用',
   is_admin enum ('T','F')  NOT NULL  DEFAULT  'F' comment '是否可登录后台：F否，是',
   description varchar(50)  NOT NULL  DEFAULT  '' comment '一句话描述',

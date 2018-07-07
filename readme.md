@@ -103,17 +103,9 @@ QUEUE_DRIVER=sync 「同步模式，不使用任何队列」 => redis
 
 4). 生成数据表及生成测试数据
 
-数据库文件位置 xxx/database/lucms.sql
 ```sh
-$ mysql -hlocalhost -uroot -p
-mysql>  create database if not exists lucms2 default character set utf8mb4 collate utf8mb4_unicode_ci
-
 $ art migrate
-
-mysql> source /xxx/database/lucms.sql
-
 $ art db:seed
-
 ```
 
 5). 安装 passport 客户端, vue api 请求 token 认证要用到
