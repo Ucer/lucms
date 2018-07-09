@@ -13,16 +13,31 @@ const user = {
     actions: {
         login({commit}, userForm) {
             return new Promise(function (resolve, reject) {
-                Util.ajax.post('/login', {
-                    email: userForm.email,
-                    password: userForm.password
-                }).then(function (response) {
-                    let response_data = response.data;
-                    commit(types.LOGIN_SUCCESS, response_data.data);
-                    resolve(response_data.data);
-                }, function (error) {
-                    reject(error);
-                })
+                if (localStorage.refresh_token) {
+                    Util.ajax.post('/refreshtoken', {
+                        refresh_token: localStorage.refresh_token
+                    }).then(function (response) {
+                        let response_data = response.data;
+                        commit(types.LOGIN_SUCCESS, response_data.data);
+                        resolve(response_data.data);
+                    }, function (error) {
+                        commit('logout');
+                        reject(error);
+                    })
+
+                } else {
+                    Util.ajax.post('/login', {
+                        email: userForm.email,
+                        password: userForm.password
+                    }).then(function (response) {
+                        let response_data = response.data;
+                        commit(types.LOGIN_SUCCESS, response_data.data);
+                        resolve(response_data.data);
+                    }, function (error) {
+                        commit('logout');
+                        reject(error);
+                    })
+                }
 
             })
 

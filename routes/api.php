@@ -18,9 +18,6 @@ Route::namespace('Api')->group(function () {
 
     Route::post('common_switch_enable', 'CommonController@switchEnable');
     Route::get('common_get_table_status/{table_name}/{column_name?}', 'CommonController@getTableStatus');
-
-
-
 });
 
 /**       ==========================          后台APi           ====================   */

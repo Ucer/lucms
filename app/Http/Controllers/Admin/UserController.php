@@ -14,7 +14,8 @@ class UserController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('passport-administrators');
+//        $this->middleware('passport-administrators');
+        $this->middleware('auth:api');
     }
 
     public function usersList(Request $request, User $user)
