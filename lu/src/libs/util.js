@@ -34,7 +34,8 @@ util.ajax.interceptors.response.use(function (response) {
         const {response} = error;
         if ([401].indexOf(response.status) >= 0) {
             if (response.status == 401 && response.statusText == 'Unauthorized') {
-                store.commit('logout');
+                router.push({name: 'login'})
+                // store.commit('logout');
             }
         }
 
