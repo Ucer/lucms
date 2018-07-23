@@ -39,6 +39,16 @@ class CommonController extends ApiController
         return $this->failed('出错了');
     }
 
+
+    public function switchTableStatus(Request $request)
+    {
+        $rest = DB::table($request->table)
+            ->where('id', $request->id)
+            ->update([$request->column => $request->value]);
+        if ($rest) return $this->message('操作成功');
+        return $this->failed('出错了');
+    }
+
     public function getTableStatus($table_name, $column_name = '')
     {
         return $this->success($this->getBaseStatus($table_name, $column_name));
