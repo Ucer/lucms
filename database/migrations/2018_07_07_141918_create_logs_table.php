@@ -17,7 +17,7 @@ class CreateLogsTable extends Migration
             $table->increments('id')->unsigned('');
             $table->integer('user_id')->default(0);
             $table->enum('type', ['C', 'U', 'R', 'D', 'L', 'O'])->default('O')->comment('日志所属操作类型:模型 CURD 操作,后台登录,其它操作');
-            $table->string('table_name', 10)->default('')->comment('表名：articles');
+            $table->string('table_name', 50)->default('')->comment('表名：articles');
             $table->ipAddress('ip')->default('')->comment('IP');
             $table->text('content')->comment('日志内容,json_encode([data=>insert into ... ,message=>添加数据)');
             $table->timestamps();
