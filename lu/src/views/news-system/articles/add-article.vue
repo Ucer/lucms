@@ -161,6 +161,12 @@
                 <Button type="primary" @click="handleAddTag" :loading="addEditTagModal.saveLoading">保存</Button>
             </div>
         </Modal>
+        <div class="demo-spin-container" v-if="spinLoading">
+            <Spin fix>
+                <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+                <div>加载中...</div>
+            </Spin>
+        </div>
     </div>
 </template>
 <script>
@@ -169,6 +175,7 @@
     export default {
         data() {
             return {
+                spinLoading: true,
                 editOpenness: false,
                 Openness: '公开',
                 loading: false,
@@ -366,6 +373,7 @@
 
 
                 });
+                t.spinLoading = false;
             },
             handleAddNewTag() {
                 this.addEditTagModal.show = true;
