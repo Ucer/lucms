@@ -14,7 +14,7 @@
         <br>
 
         <Row>
-            <Table border :columns="columns" :data="dataList" :loading="loading"></Table>
+            <Table border :columns="columns" :data="dataList"></Table>
         </Row>
 
         <Modal v-model="addEditPermissionModal.show" :closable='false' :mask-closable=false :width="500">
@@ -40,6 +40,12 @@
                 <Button type="primary" @click="handleSubmit" :loading="addEditPermissionModal.saveLoading">保存</Button>
             </div>
         </Modal>
+        <div class="demo-spin-container" v-if="loading">
+            <Spin fix>
+                <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+                <div>加载中...</div>
+            </Spin>
+        </div>
     </div>
 
 </template>
@@ -73,7 +79,7 @@
                     id: 0,
                     name: '',
                     guard_name: '',
-                    description:'',
+                    description: '',
                 },
                 dataList: [],
                 columns: [
@@ -125,7 +131,7 @@
                                 h('Poptip', {
                                     props: {
                                         confirm: true,
-                                        title: '您确定要删除「'+params.row.name+'」权限？',
+                                        title: '您确定要删除「' + params.row.name + '」权限？',
                                         transfer: true
                                     },
                                     on: {
@@ -164,7 +170,7 @@
                     id: 0,
                     name: '',
                     guard_name: '',
-                    description:''
+                    description: ''
                 };
             },
             handleSubmit() {

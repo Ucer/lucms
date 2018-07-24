@@ -1,12 +1,13 @@
 <template>
     <div id="news_system_advertisement-list">
-        <Row>
-            <Col span="16">
-                <Card>
-                    <p slot="title">
-                        <Icon type="android-create"></Icon>
-                        添加文章
-                    </p>
+        <Card>
+            <p slot="title">
+                <Icon type="android-create"></Icon>
+                添加文章
+            </p>
+
+            <Row>
+                <Col span="16">
                     <Form ref="addArticleForm" :model="addArticleForm" :rules="ruleEditArticle"
                           label-position="right" :label-width="80">
                         <FormItem label="标题" prop="title">
@@ -55,97 +56,91 @@
                         </FormItem>
 
                     </Form>
-                </Card>
-            </Col>
+                </Col>
+                <Col span="8" class="padding-left-20">
+                    <Card>
+                        <p slot="title">
+                            <Icon type="paper-airplane"></Icon>
+                            其它信息
+                        </p>
+                        <Form label-position="right" :label-width="80">
+                            <FormItem label="分类：">
+                                <Select v-model="addArticleForm.category_id" filterable placeholder="请选择文章分类"
+                                        style="width:70%">
+                                    <Option v-for="(item,key) in articleCategoryList" :value="item.id" :key="key">{{
+                                        item.name
+                                        }}
+                                    </Option>
+                                </Select>
+                            </FormItem>
+                            <FormItem label="排序：">
+                                <Input style="width:30%" v-model="addArticleForm.weight"
+                                       placeholder="请输入序号"></Input>
+                            </FormItem>
+                            <FormItem label="置顶：">
+                                <Select size="small" style="width:20%" v-model="addArticleForm.top">
+                                    <Option value="F">否</Option>
+                                    <Option value="T">是</Option>
+                                </Select>
+                            </FormItem>
+                            <FormItem label="推荐：">
+                                <Select size="small" style="width:20%" v-model="addArticleForm.recommend">
+                                    <Option value="F">否</Option>
+                                    <Option value="T">是</Option>
+                                </Select>
+                            </FormItem>
 
-            <Col span="8" class="padding-left-10">
-                <Card>
-                    <p slot="title">
-                        <Icon type="paper-airplane"></Icon>
-                        其它信息
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="levels" class="margin-icon"></Icon>
-                        <b>分类</b>
-                        <Select v-model="addArticleForm.category_id" filterable placeholder="请选择文章分类" style="width:70%">
-                            <Option v-for="(item,key) in articleCategoryList" :value="item.id" :key="key">{{ item.name
-                                }}
-                            </Option>
-                        </Select>
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="ribbon-b" class="margin-icon"></Icon>
-                        <b>排序：</b>
-                        <Input style="width:30%" v-model="addArticleForm.weight"
-                               placeholder="请输入序号"></Input>
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="ios-rose" class="margin-icon"></Icon>
-                        <b>置顶：</b>
-                        <Select size="small" style="width:20%" v-model="addArticleForm.top">
-                            <Option value="F">否</Option>
-                            <Option value="T">是</Option>
-                        </Select>
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="home" class="margin-icon"></Icon>
-                        <b>推荐：</b>
-                        <Select size="small" style="width:20%" v-model="addArticleForm.recommend">
-                            <Option value="F">否</Option>
-                            <Option value="T">是</Option>
-                        </Select>
-                    </p>
-
-                    <p class="margin-top-10">
-                        <Icon type="eye"></Icon>&nbsp;&nbsp;公开度：&nbsp;<b>{{ Openness }}</b>
-                        <Button v-show="!editOpenness" size="small" @click="handleEditOpenness" type="text">修改</Button>
-                        <transition name="openness-con">
-                            <div v-show="editOpenness" class="publish-time-picker-con">
-                                <RadioGroup v-model="addArticleForm.access_type" vertical>
-                                    <Radio label="PUB"> 公开</Radio>
-                                    <Radio label="PWD"> 密码
-                                        <Input v-show="addArticleForm.access_type === 'PWD'"
-                                               v-model="addArticleForm.access_value" style="width:50%"
-                                               size="small" placeholder="请输入密码"/>
-                                    </Radio>
-                                    <Radio label="PRI">私密</Radio>
-                                </RadioGroup>
-                                <div>
-                                    <Button type="primary" @click="handleSaveOpenness">确认</Button>
-                                </div>
-                            </div>
-                        </transition>
-                    </p>
-                    <Row class="margin-top-20 publish-button-con">
+                            <p class="margin-top-10">
+                                <Icon type="eye"></Icon>&nbsp;&nbsp;公开度：&nbsp;<b>{{ Openness }}</b>
+                                <Button v-show="!editOpenness" size="small" @click="handleEditOpenness" type="text">修改
+                                </Button>
+                                <transition name="openness-con">
+                                    <div v-show="editOpenness" class="publish-time-picker-con">
+                                        <RadioGroup v-model="addArticleForm.access_type" vertical>
+                                            <Radio label="PUB"> 公开</Radio>
+                                            <Radio label="PWD"> 密码
+                                                <Input v-show="addArticleForm.access_type === 'PWD'"
+                                                       v-model="addArticleForm.access_value" style="width:50%"
+                                                       size="small" placeholder="请输入密码"/>
+                                            </Radio>
+                                            <Radio label="PRI">私密</Radio>
+                                        </RadioGroup>
+                                        <div>
+                                            <Button type="primary" @click="handleSaveOpenness">确认</Button>
+                                        </div>
+                                    </div>
+                                </transition>
+                            </p>
+                            <Row class="margin-top-20 publish-button-con">
                         <span class="publish-button right-float">
                             <Button :loading="loading" @click="handleSubmit" icon="ios-checkmark"
                                     type="primary"> 保存 </Button>
                         </span>
-                    </Row>
-                </Card>
-
-                <div class="margin-top-10">
-                    <Card>
-                        <p slot="title">
-                            <Icon type="ios-pricetags-outline"></Icon>
-                            标签
-                        </p>
-                        <Row>
-                            <Col span="18">
-                                <Select v-model="addArticleForm.tags" multiple filterable placeholder="请选择文章标签">
-                                    <Option v-for="item in articleTagList" :value="item.id" :key="item.id">{{ item.name
-                                        }}
-                                    </Option>
-                                </Select>
-                            </Col>
-                            <Col span="6" class="padding-left-10">
-                                <Button @click="handleAddNewTag" long type="ghost">新建</Button>
-                            </Col>
-                        </Row>
+                            </Row>
+                        </Form>
                     </Card>
-                </div>
-            </Col>
-        </Row>
+
+                    <div class="margin-top-10">
+                        <Card>
+                            <p slot="title">
+                                <Icon type="ios-pricetags-outline"></Icon>
+                                标签
+                            </p>
+                            <Row>
+                                <Col span="18">
+                                    <Select v-model="addArticleForm.tags" multiple filterable placeholder="请选择文章标签">
+                                        <Option v-for="item in articleTagList" :value="item.id" :key="item.id">{{ item.name }} </Option>
+                                    </Select>
+                                </Col>
+                                <Col span="6" class="padding-left-10">
+                                    <Button @click="handleAddNewTag" long type="ghost">新建</Button>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </div>
+                </Col>
+            </Row>
+        </Card>
         <Modal v-model="addEditTagModal.show" :closable='false' :mask-closable=false :width="800">
             <h3 slot="header" style="color:#2D8CF0">编辑</h3>
             <Form ref="addEditTagForm"
@@ -167,6 +162,7 @@
                 <div>加载中...</div>
             </Spin>
         </div>
+
     </div>
 </template>
 <script>
@@ -327,7 +323,7 @@
                     selector: '#addArticleEditor',
                     branding: false,
                     elementpath: false,
-                    height: 600,
+                    height: 500,
                     language: 'zh_CN.GB2312',
                     menubar: 'edit insert view format table tools',
                     theme: 'modern',

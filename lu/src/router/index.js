@@ -28,18 +28,22 @@ router.beforeEach((to, from, next) => {
     } else if (Cookies.get('locking') === '0' && to.name === 'locking') {
         next(false);
     } else {
-        // if (!localStorage.access_token && to.name !== 'login') {
-        if (!Cookies.get('access_token') && to.name !== 'login') {
+        if (!localStorage.access_token && to.name !== 'login') {
+            // if (!Cookies.get('access_token') && to.name !== 'login') {
+            store.commit('logout');
             next({
                 name: 'login'
             });
-        } else if (Cookies.get('access_token') && to.name === 'login') {
+
+            // } else if (Cookies.get('access_token') && to.name === 'login') {
+        } else if (localStorage.access_token && to.name === 'login') {
             Util.title();
             next({
                 name: 'home_index'
             });
         } else {
-            if (Cookies.get('access_token')) { // 带着 token 云请求
+            // if (Cookies.get('access_token')) { // 带着 token 云请求
+            if (localStorage.access_token) { // 带着 token 云请求
                 Util.ajax.defaults.headers.common['Authorization'] = localStorage.access_token_type + ' ' + localStorage.access_token;
             }
 

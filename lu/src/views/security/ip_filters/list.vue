@@ -20,7 +20,7 @@
         <br>
 
         <Row>
-            <Table border :columns="columns" :data="feeds.data" :loading="loading"></Table>
+            <Table border :columns="columns" :data="feeds.data"></Table>
             <div style="margin: 10px;overflow: hidden">
                 <div style="float: right;">
                     <Page :total="feeds.total" :current="feeds.current_page" :page-size="feeds.per_page" class="paging"
@@ -50,6 +50,12 @@
                 <Button type="primary" @click="handleSubmit" :loading="addEditIpFilterModal.saveLoading">保存</Button>
             </div>
         </Modal>
+        <div class="demo-spin-container" v-if="loading">
+            <Spin fix>
+                <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+                <div>加载中...</div>
+            </Spin>
+        </div>
     </div>
 
 </template>

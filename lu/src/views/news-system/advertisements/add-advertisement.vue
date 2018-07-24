@@ -1,12 +1,12 @@
 <template>
     <div id="news_system_advertisement-list">
-        <Row>
-            <Col span="16">
-                <Card>
-                    <p slot="title">
-                        <Icon type="android-create"></Icon>
-                        添加广告
-                    </p>
+        <Card>
+            <p slot="title">
+                <Icon type="android-create"></Icon>
+                添加广告
+            </p>
+            <Row>
+                <Col span="16">
                     <Form ref="addAdvertisementForm" :model="addAdvertisementForm" :rules="ruleEdit"
                           label-position="right" :label-width="80">
                         <FormItem label="广告标题" prop="name">
@@ -35,83 +35,91 @@
                                      v-if="addAdvertisementForm.cover_image.url" class="normall-image">
                             </div>
                         </FormItem>
-                        <FormItem label="是否启用">
+                        <FormItem label="是否启用：">
                             <RadioGroup v-model="addAdvertisementForm.enable">
                                 <Radio label="F">禁用</Radio>
                                 <Radio label="T">启用</Radio>
                             </RadioGroup>
                         </FormItem>
-                        <FormItem label="广告内容">
+                        <FormItem label="广告内容：">
                             <textarea id="advertisementEditor"></textarea>
                         </FormItem>
 
                     </Form>
-                </Card>
-            </Col>
+                </Col>
+                <Col span="8" class="padding-left-20">
+                    <Card>
+                        <p slot="title">
+                            <Icon type="paper-airplane"></Icon>
+                            其它信息
+                        </p>
 
-            <Col span="8" class="padding-left-10">
-                <Card>
-                    <p slot="title">
-                        <Icon type="paper-airplane"></Icon>
-                        其它信息
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="levels" class="margin-icon"></Icon>
-                        <b>广告位：</b>
-                        <Select v-model="addAdvertisementForm.advertisement_positions_id" filterable
-                                @on-change="positionHasChanged"
-                                placeholder="请选择文章标签" style="width:70%">
-                            <Option v-for="(item,key) in advertisement_positions_ids" :value="item.id" :key="key">{{
-                                item.name }}
-                            </Option>
-                        </Select>
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="link" class="margin-icon"></Icon>
-                        <b>链接地址：</b>
-                        <Input style="width:70%" v-model="addAdvertisementForm.link_url"
-                               placeholder="请输入链接地址如： http://lucms.com"></Input>
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="ribbon-b" class="margin-icon"></Icon>
-                        <b>排序：</b>
-                        <Input style="width:30%" v-model="addAdvertisementForm.weight"
-                               placeholder="请输入序号"></Input>
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="ios-time" class="margin-icon"></Icon>
-                        <b>有效期：</b>
-                        <DatePicker type="datetimerange"  placement="bottom-end" placeholder="请选择有效期，不选永久有效" confirm @on-clear="timeClear" @on-change="timeChanged" style="width: 60%"></DatePicker>
-                    </p>
-                    <p class="margin-top-10" v-if="typeIsModel">
-                        <Icon type="ios-fastforward"></Icon>
-                        <b>键值对选择：</b>
-                        <transition name="publish-time">
-                            <div class="publish-time-picker-con">
-                                <div class="margin-top-10"> 模型 &nbsp;&nbsp;
-                                    <Input type="text" size="small" style="width:80%"
-                                           v-model="addAdvertisementForm.model_column_value.model"
-                                           placeholder="如：App\Models\Article"></Input>
-                                </div>
-                                <div class="margin-top-10"> 字段 &nbsp;&nbsp;
-                                    <Input type="text" size="small" style="width:80%"
-                                           v-model="addAdvertisementForm.model_column_value.column" placeholder="如：slug"></Input>
-                                </div>
-                                <div class="margin-top-10"> 字段值
-                                    <Input type="text" size="small" style="width:80%"
-                                           v-model="addAdvertisementForm.model_column_value.value" placeholder="mark-down-preview"></Input>
-                                </div>
-                            </div>
-                        </transition>
-                    </p>
-                    <Row class="margin-top-20 publish-button-con">
+                        <Form label-position="right" :label-width="80">
+                            <FormItem label="广告位：">
+                                <Select v-model="addAdvertisementForm.advertisement_positions_id" filterable
+                                        @on-change="positionHasChanged"
+                                        placeholder="请选择文章标签" style="width:70%">
+                                    <Option v-for="(item,key) in advertisement_positions_ids" :value="item.id"
+                                            :key="key">{{
+                                        item.name }}
+                                    </Option>
+                                </Select>
+                            </FormItem>
+                            <FormItem label="链接地址：">
+                                <Input style="width:70%" v-model="addAdvertisementForm.link_url"
+                                       placeholder="请输入链接地址如： http://lucms.com"></Input>
+                            </FormItem>
+                            <FormItem label="排序：">
+                                <Input style="width:30%" v-model="addAdvertisementForm.weight"
+                                       placeholder="请输入序号"></Input>
+                            </FormItem>
+                            <FormItem label="有效期：">
+                                <DatePicker type="datetimerange" placement="bottom-end" placeholder="请选择有效期，不选永久有效"
+                                            confirm
+                                            @on-clear="timeClear" @on-change="timeChanged"
+                                            style="width: 60%"></DatePicker>
+                            </FormItem>
+                            <p class="margin-top-10" v-if="typeIsModel">
+                                <Icon type="ios-fastforward"></Icon>
+                                <b>键值对选择：</b>
+                                <transition name="publish-time">
+                                    <div class="publish-time-picker-con">
+                                        <div class="margin-top-10"> 模型 &nbsp;&nbsp;
+                                            <Input type="text" size="small" style="width:80%"
+                                                   v-model="addAdvertisementForm.model_column_value.model"
+                                                   placeholder="如：App\Models\Article"></Input>
+                                        </div>
+                                        <div class="margin-top-10"> 字段 &nbsp;&nbsp;
+                                            <Input type="text" size="small" style="width:80%"
+                                                   v-model="addAdvertisementForm.model_column_value.column"
+                                                   placeholder="如：slug"></Input>
+                                        </div>
+                                        <div class="margin-top-10"> 字段值
+                                            <Input type="text" size="small" style="width:80%"
+                                                   v-model="addAdvertisementForm.model_column_value.value"
+                                                   placeholder="mark-down-preview"></Input>
+                                        </div>
+                                    </div>
+                                </transition>
+                            </p>
+                            <Row class="margin-top-20 publish-button-con">
                         <span class="publish-button">
-                            <Button  :loading="loading" @click="handleSubmit" icon="ios-checkmark" style="width:90px;" type="primary"> 保存 </Button>
+                            <Button :loading="loading" @click="handleSubmit" icon="ios-checkmark" style="width:90px;"
+                                    type="primary"> 保存 </Button>
                         </span>
-                    </Row>
-                </Card>
-            </Col>
-        </Row>
+                            </Row>
+                        </Form>
+                    </Card>
+                </Col>
+            </Row>
+        </Card>
+
+        <div class="demo-spin-container" v-if="spinLoading">
+            <Spin fix>
+                <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+                <div>加载中...</div>
+            </Spin>
+        </div>
     </div>
 </template>
 <script>
@@ -120,6 +128,7 @@
     export default {
         data() {
             return {
+                spinLoading: true,
                 advertisement_positions_ids: [],
                 loading: false,
                 addAdvertisementForm: {
@@ -243,7 +252,7 @@
                     selector: '#advertisementEditor',
                     branding: false,
                     elementpath: false,
-                    height: 600,
+                    height: 500,
                     language: 'zh_CN.GB2312',
                     menubar: 'edit insert view format table tools',
                     theme: 'modern',
@@ -286,9 +295,8 @@
                             })
                         }
                     },
-
-
                 });
+                t.spinLoading = false;
             },
 
         },

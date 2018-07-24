@@ -40,10 +40,13 @@ const app = {
         updateMenulist(state) {
             let accessCode = '';
             let menuList = [];
-           
-            if (Cookies.get('current_roles')) {
-                accessCode = JSON.parse(Cookies.get('current_roles'));
+
+            if (localStorage.current_user_roles) {
+                accessCode = JSON.parse(localStorage.current_user_roles);
             }
+            // if (Cookies.get('current_roles')) {
+            //     accessCode = JSON.parse(Cookies.get('current_roles'));
+            // }
             appRouter.forEach((item, index) => {
 
                 if (item.access !== undefined) {

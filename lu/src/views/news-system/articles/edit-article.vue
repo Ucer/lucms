@@ -64,62 +64,60 @@
                         <Icon type="paper-airplane"></Icon>
                         其它信息
                     </p>
-                    <p class="margin-top-10">
-                        <Icon type="levels" class="margin-icon"></Icon>
-                        <b>分类</b>
-                        <Select v-model="addArticleForm.category_id" filterable placeholder="请选择文章分类" style="width:70%">
-                            <Option v-for="(item,key) in articleCategoryList" :value="item.id" :key="key">{{ item.name }} </Option>
-                        </Select>
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="ribbon-b" class="margin-icon"></Icon>
-                        <b>排序：</b>
-                        <Input style="width:30%" v-model="addArticleForm.weight"
-                               placeholder="请输入序号"></Input>
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="ios-rose" class="margin-icon"></Icon>
-                        <b>置顶：</b>
-                        <Select size="small" style="width:20%" v-model="addArticleForm.top">
-                            <Option value="F">否</Option>
-                            <Option value="T">是</Option>
-                        </Select>
-                    </p>
-                    <p class="margin-top-10">
-                        <Icon type="home" class="margin-icon"></Icon>
-                        <b>推荐：</b>
-                        <Select size="small" style="width:20%" v-model="addArticleForm.recommend">
-                            <Option value="F">否</Option>
-                            <Option value="T">是</Option>
-                        </Select>
-                    </p>
+                    <Form label-position="right" :label-width="80">
+                        <FormItem label="分类：">
+                            <Select v-model="addArticleForm.category_id" filterable placeholder="请选择文章分类"
+                                    style="width:70%">
+                                <Option v-for="(item,key) in articleCategoryList" :value="item.id" :key="key">{{
+                                    item.name }}
+                                </Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="排序：">
+                            <Input style="width:30%" v-model="addArticleForm.weight"
+                                   placeholder="请输入序号"></Input>
+                        </FormItem>
+                        <FormItem label="置顶：">
+                            <Select size="small" style="width:20%" v-model="addArticleForm.top">
+                                <Option value="F">否</Option>
+                                <Option value="T">是</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="推荐：">
+                            <Select size="small" style="width:20%" v-model="addArticleForm.recommend">
+                                <Option value="F">否</Option>
+                                <Option value="T">是</Option>
+                            </Select>
+                        </FormItem>
 
-                    <p class="margin-top-10">
-                        <Icon type="eye"></Icon>&nbsp;&nbsp;公开度：&nbsp;<b>{{ Openness }}</b>
-                        <Button v-show="!editOpenness" size="small" @click="handleEditOpenness" type="text">修改</Button>
-                        <transition name="openness-con">
-                            <div v-show="editOpenness" class="publish-time-picker-con">
-                                <RadioGroup v-model="addArticleForm.access_type" vertical>
-                                    <Radio label="PUB"> 公开</Radio>
-                                    <Radio label="PWD"> 密码
-                                        <Input v-show="addArticleForm.access_type === 'PWD'"
-                                               v-model="addArticleForm.access_value" style="width:50%"
-                                               size="small" placeholder="请输入密码"/>
-                                    </Radio>
-                                    <Radio label="PRI">私密</Radio>
-                                </RadioGroup>
-                                <div>
-                                    <Button type="primary" @click="handleSaveOpenness">确认</Button>
+                        <p class="margin-top-10">
+                            <Icon type="eye"></Icon>&nbsp;&nbsp;公开度：&nbsp;<b>{{ Openness }}</b>
+                            <Button v-show="!editOpenness" size="small" @click="handleEditOpenness" type="text">修改
+                            </Button>
+                            <transition name="openness-con">
+                                <div v-show="editOpenness" class="publish-time-picker-con">
+                                    <RadioGroup v-model="addArticleForm.access_type" vertical>
+                                        <Radio label="PUB"> 公开</Radio>
+                                        <Radio label="PWD"> 密码
+                                            <Input v-show="addArticleForm.access_type === 'PWD'"
+                                                   v-model="addArticleForm.access_value" style="width:50%"
+                                                   size="small" placeholder="请输入密码"/>
+                                        </Radio>
+                                        <Radio label="PRI">私密</Radio>
+                                    </RadioGroup>
+                                    <div>
+                                        <Button type="primary" @click="handleSaveOpenness">确认</Button>
+                                    </div>
                                 </div>
-                            </div>
-                        </transition>
-                    </p>
-                    <Row class="margin-top-20 publish-button-con">
+                            </transition>
+                        </p>
+                        <Row class="margin-top-20 publish-button-con">
                         <span class="publish-button right-float">
                             <Button :loading="loading" @click="handleSubmit" icon="ios-checkmark"
                                     type="primary"> 保存 </Button>
                         </span>
-                    </Row>
+                        </Row>
+                    </Form>
                 </Card>
 
                 <div class="margin-top-10">
@@ -265,12 +263,21 @@
                         t.handleSaveOpenness();
                         t.addArticleForm.cover_image.attachment_id = response_data.data.cover_image.attachment_id;
                         t.addArticleForm.tags = response_data.data.tagids;
+                        t.spinLoading = false;
                     }, function (error) {
                         t.$Notice.warning({
                             title: '出错了',
                             desc: error.message
                         });
+                        t.spinLoading = false;
                     })
+                } else {
+
+                    t.$Notice.warning({
+                        title: '出错了',
+                        desc: '没有可更新的数据'
+                    });
+                    return false;
                 }
                 t.spinLoading = false;
             },
@@ -280,7 +287,7 @@
                 t.$refs.addArticleForm.validate((valid) => {
                     if (valid && this.passwordValidate()) {
                         t.loading = true;
-                        t.$util.ajax.patch('/admin/articles/'+t.addArticleForm.id, t.addArticleForm).then(function (response) {
+                        t.$util.ajax.patch('/admin/articles/' + t.addArticleForm.id, t.addArticleForm).then(function (response) {
                             t.$Notice.success({
                                 title: '操作成功'
                             });
@@ -346,7 +353,7 @@
                     selector: '#addArticleEditor',
                     branding: false,
                     elementpath: false,
-                    height: 600,
+                    height: 500,
                     language: 'zh_CN.GB2312',
                     menubar: 'edit insert view format table tools',
                     theme: 'modern',

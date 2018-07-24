@@ -3,15 +3,15 @@
 </style>
 <template>
     <div>
-        <Col span="16">
             <Card>
                 <p slot="title">
                     <Icon type="edit"></Icon>
                     添加用户
                 </p>
-                <div>
+                <Row>
+                    <Col span="10">
                     <Form ref="editUserForm" :model="editUserForm" :rules="ruleEditUser"
-                          label-position="right">
+                          label-position="right" :label-width="100">
                         <FormItem label="昵称：" prop="name">
                             <div style="display:inline-block;width:50%">
                                 <Input v-model="editUserForm.name"></Input>
@@ -66,9 +66,15 @@
                         </FormItem>
 
                     </Form>
-                </div>
+                    </Col>
+                </Row>
             </Card>
-        </Col>
+        <div class="demo-spin-container" v-if="spinLoading">
+            <Spin fix>
+                <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+                <div>加载中...</div>
+            </Spin>
+        </div>
     </div>
 </template>
 <script>
@@ -95,6 +101,7 @@
                 }
             };
             return {
+                spinLoading: true,
                 loading: false,
                 editUserForm: {
                     name: '',
@@ -132,6 +139,9 @@
                     uploadUrl: window.uploadUrl.uploadAvatar
                 },
             }
+        },
+        mounted() {
+         this.spinLoading = false;
         },
         methods: {
             handleSubmit() {

@@ -3,15 +3,16 @@
 </style>
 <template>
     <div>
-        <Col span="10">
-            <Card>
-                <p slot="title">
-                    <Icon type="edit"></Icon>
-                    编辑用户信息
-                </p>
-                <div>
+        <Card>
+            <p slot="title">
+                <Icon type="edit"></Icon>
+                编辑用户信息
+            </p>
+
+            <Row>
+                <Col span="10">
                     <Form ref="editUserForm" :model="editUserForm" :rules="ruleEditUser"
-                          label-position="right">
+                          label-position="right" :label-width="100">
                         <FormItem label="昵称：" prop="name">
                             <div style="display:inline-block;width:50%">
                                 <Input v-model="editUserForm.name"></Input>
@@ -20,7 +21,7 @@
                         <FormItem label="邮箱：">
                             <span>{{ editUserForm.email }}</span>
                         </FormItem>
-                        <FormItem label="是否可登录后台">
+                        <FormItem label="是否可登录后台：">
                             <RadioGroup v-model="editUserForm.is_admin">
                                 <Radio label="F">否</Radio>
                                 <Radio label="T">是</Radio>
@@ -50,19 +51,26 @@
                             </div>
                         </FormItem>
                         <FormItem>
-                            <Button type="primary" :loading="loading" @click="handleSubmit">保存 </Button>
+                            <Button type="primary" :loading="loading" @click="handleSubmit">保存</Button>
                         </FormItem>
 
                     </Form>
-                </div>
-            </Card>
-        </Col>
+                </Col>
+            </Row>
+        </Card>
+        <div class="demo-spin-container" v-if="spinLoading">
+            <Spin fix>
+                <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+                <div>加载中...</div>
+            </Spin>
+        </div>
     </div>
 </template>
 <script>
     export default {
         data() {
             return {
+                spinLoading: true,
                 loading: false,
                 editUserForm: {
                     id: this.$route.params.user_id,
@@ -91,22 +99,35 @@
             }
         },
         created() {
+        },
+        mounted() {
             let t = this;
             t.getUserInfo(t.editUserForm.id)
         },
         methods: {
             getUserInfo(id) {
                 let t = this;
-                t.$util.ajax.get('/admin/users/' + id).then(function (response) {
-                    let response_data = response.data;
-                    t.editUserForm = response_data.data;
-                    t.editUserForm.head_image.attachment_id = response_data.data.head_image.attachment_id;
-                }, function (error) {
+                if (id > 0) {
+                    t.$util.ajax.get('/admin/users/' + id).then(function (response) {
+                        let response_data = response.data;
+                        t.editUserForm = response_data.data;
+                        t.editUserForm.head_image.attachment_id = response_data.data.head_image.attachment_id;
+                        t.spinLoading = false;
+                    }, function (error) {
+                        t.$Notice.warning({
+                            title: '出错了',
+                            desc: error.message
+                        });
+                        t.spinLoading = false;
+                    })
+                } else {
                     t.$Notice.warning({
                         title: '出错了',
-                        desc: error.message
+                        desc: '没有可更新的数据'
                     });
-                })
+                    return false;
+                }
+                t.spinLoading = false;
             },
             handleSubmit() {
                 let t = this;

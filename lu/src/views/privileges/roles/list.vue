@@ -14,7 +14,7 @@
         <br>
 
         <Row>
-            <Table border :columns="columns" :data="dataList" :loading="loading"></Table>
+            <Table border :columns="columns" :data="dataList"></Table>
         </Row>
 
         <Modal v-model="addEditRoleModal.show" :closable='false' :mask-closable=false :width="500">
@@ -57,6 +57,12 @@
                 </Button>
             </div>
         </Modal>
+        <div class="demo-spin-container" v-if="loading">
+            <Spin fix>
+                <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+                <div>加载中...</div>
+            </Spin>
+        </div>
     </div>
 
 </template>
