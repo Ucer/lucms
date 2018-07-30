@@ -31,6 +31,11 @@ trait ScopeTrait
         return $query->where($column, $value);
     }
 
+    public function scopeColumnInSearch($query, $column, array $value)
+    {
+        return $query->whereIn($column, $value);
+    }
+
     public function scopeUserNameSearch($query, $user_name)
     {
         $user_ids = User::columnLike('name', $user_name)->pluck('id');
