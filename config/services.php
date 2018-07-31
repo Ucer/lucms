@@ -37,7 +37,19 @@ return [
 
     'baidu_translate' => [
         'appid' => env('BAIDU_TRANSLATE_APPID'),
-        'key'   => env('BAIDU_TRANSLATE_KEY'),
+        'key' => env('BAIDU_TRANSLATE_KEY'),
     ],
+
+    'aliyun_sms' => [
+        'account' => [
+            'access_key_id' => env('Access_Key_ID'),
+            'access_key_secret' => env('Access_Key_Secret'),
+        ],
+        'template' => [
+            'sign_name' => env('Sign_Name'),
+            'template_code' => env('TemplateCode')
+        ]
+
+    ]
 
 ];

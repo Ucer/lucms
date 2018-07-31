@@ -92,3 +92,6 @@ Route::post('upload/avatar', 'Api\UploadController@uploadAvatar')->name('uploads
 Route::post('upload/tinymce', 'Api\UploadController@tinymceUpload')->name('uploads.tinymce');
 Route::post('upload/advertisement', 'Api\UploadController@advertisementUpload')->name('uploads.advertisement');
 Route::post('upload/other', 'Api\UploadController@otherUpload')->name('uploads.other');
+
+Route::post('send_sms', 'Api\ThirdController@sendSms')->name('third.send_sms');
+

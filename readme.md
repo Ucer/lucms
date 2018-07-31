@@ -235,6 +235,7 @@ $ mv ../public/dashboard.blade.php ../resources/views
 | [laravel/horizon](https://laravel-china.org/docs/laravel/5.5/horizon/1345)     | 队列监控     | 队列监控 |
 | [rap2hpoutre/laravel-log-viewer](https://github.com/rap2hpoutre/laravel-log-viewer)     | laravel 日志查看     | 查看日志 |
 | [aliyuncs/oss-sdk-php](https://help.aliyun.com/document_detail/32099.html?spm=5176.87240.400427.47.CtLkv4)     | 啊里云 oss     | 对象存储 |
+| [overtrue/easy-sms](https://github.com/overtrue/easy-sms)     | 短信发送     | 找回密码 |
 
 
 ## 队列

@@ -45,6 +45,10 @@
                         <FormItem label="关键词" prop="keywords">
                             <Input type="textarea" v-model="addArticleForm.keywords"
                                    placeholder="以英文逗号隔开"></Input>
+                            <p>
+                                <Icon type="information"></Icon>
+                                <span class="color-warning">以英文逗号隔开</span>
+                            </p>
                         </FormItem>
                         <FormItem label="描述" prop="description">
                             <Input type="textarea" v-model="addArticleForm.description"

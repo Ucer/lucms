@@ -46,6 +46,10 @@
                         <FormItem label="关键词" prop="keywords">
                             <Input type="textarea" v-model="addArticleForm.keywords"
                                    placeholder="以英文逗号隔开"></Input>
+                            <p>
+                                <Icon type="information"></Icon>
+                                <span class="color-warning">以英文逗号隔开</span>
+                            </p>
                         </FormItem>
                         <FormItem label="描述" prop="description">
                             <Input type="textarea" v-model="addArticleForm.description"
@@ -129,7 +133,9 @@
                             <Row>
                                 <Col span="18">
                                     <Select v-model="addArticleForm.tags" multiple filterable placeholder="请选择文章标签">
-                                        <Option v-for="item in articleTagList" :value="item.id" :key="item.id">{{ item.name }} </Option>
+                                        <Option v-for="item in articleTagList" :value="item.id" :key="item.id">{{
+                                            item.name }}
+                                        </Option>
                                     </Select>
                                 </Col>
                                 <Col span="6" class="padding-left-10">
