@@ -56,10 +56,10 @@ class Advertisement extends Model
             $this->fill($input)->save();
 
             DB::commit();
-            return $this->succeed([], '操作成功');
+            return $this->baseSucceed([], '操作成功');
         } catch (\Exception $e) {
             DB::rollBack();
-            return $this->failed('内部错误');
+            return $this->baseFailed('内部错误');
         }
     }
 
@@ -80,11 +80,11 @@ class Advertisement extends Model
 
             $this->fill($input)->save();
             DB::commit();
-            return $this->succeed([], '操作成功');
+            return $this->baseSucceed([], '操作成功');
         } catch (\Exception $e) {
             throw $e;
             DB::rollBack();
-            return $this->failed('内部错误');
+            return $this->baseFailed('内部错误');
         }
     }
 
@@ -100,11 +100,11 @@ class Advertisement extends Model
             }
             $this->delete();
             DB::commit();
-            return $this->succeed([], '广告删除成功');
+            return $this->baseSucceed([], '广告删除成功');
         } catch (\Exception $e) {
             throw $e;
             DB::rollBack();
-            return $this->failed('内部错误');
+            return $this->baseFailed('内部错误');
         }
     }
 

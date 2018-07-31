@@ -26,10 +26,10 @@ class  AdvertisementPositionValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->succeed($this->data,$this->message);
+            return $this->baseSucceed($this->data,$this->message);
         } else {
             $this->message = $rest_validate;
-            return $this->failed($this->message);
+            return $this->baseFailed($this->message);
         }
 
     }
@@ -48,10 +48,10 @@ class  AdvertisementPositionValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->succeed($this->data,$this->message);
+            return $this->baseSucceed($this->data,$this->message);
         } else {
             $this->message = $rest_validate;
-            return $this->failed($this->message);
+            return $this->baseFailed($this->message);
         }
 
     }
@@ -74,7 +74,7 @@ class  AdvertisementPositionValidate extends Validate
     public function destroyValidate($advertisement_position)
     {
         $is_advertisement_has_this_position = Advertisement::where('advertisement_positions_id', $advertisement_position->id)->count();
-        if ($is_advertisement_has_this_position) return $this->failed('有广告正在使用该广告位，不允许删除');
-        return $this->succeed($this->data, $this->message);
+        if ($is_advertisement_has_this_position) return $this->baseFailed('有广告正在使用该广告位，不允许删除');
+        return $this->baseSucceed($this->data, $this->message);
     }
 }

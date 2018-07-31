@@ -143,10 +143,10 @@ class Role extends Model implements RoleContract
             $this->delete();
             $this->syncPermissions([]);
             DB::commit();
-            return $this->succeed([], '角色删除成功');
+            return $this->baseSucceed([], '角色删除成功');
         } catch (\Exception $e) {
             DB::rollBack();
-            return $this->failed('内部错误');
+            return $this->baseFailed('内部错误');
         }
     }
 }

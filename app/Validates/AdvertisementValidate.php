@@ -26,17 +26,17 @@ class  AdvertisementValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->succeed($this->data,$this->message);
+            return $this->baseSucceed($this->data,$this->message);
         } else {
             $this->message = $rest_validate;
-            return $this->failed($this->message);
+            return $this->baseFailed($this->message);
         }
 
     }
 
     public function updateValidate($request_data, $advertisemet_id = 0)
     {
-        if (!$advertisemet_id) return $this->failed('数据不存在');
+        if (!$advertisemet_id) return $this->baseFailed('数据不存在');
         $rules = [
             'name' => [
                 'required',
@@ -50,10 +50,10 @@ class  AdvertisementValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->succeed($this->data,$this->message);
+            return $this->baseSucceed($this->data,$this->message);
         } else {
             $this->message = $rest_validate;
-            return $this->failed($this->message);
+            return $this->baseFailed($this->message);
         }
 
     }

@@ -9,14 +9,13 @@ trait BaseResponseTrait
         return ['status' => $status, 'data' => $respond_data, 'message' => $message];
     }
 
-    public function succeed($respond_data = [], $message = 'Request success!')
+    public function baseSucceed($respond_data = [], $message = 'Request success!', $status = true)
     {
-        return $this->respond(true, $respond_data, $message);
+        return $this->respond($status, $respond_data, $message);
     }
 
-    public function failed($message = 'Request failed!', $respond_data = [])
+    public function baseFailed($message = 'Request failed!', $respond_data = [], $status = false)
     {
-        return $this->respond(false, $respond_data, $message);
+        return $this->respond($status, $respond_data, $message);
     }
-
 }

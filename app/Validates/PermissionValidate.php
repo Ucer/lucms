@@ -24,10 +24,10 @@ class  PermissionValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->succeed($this->data,$this->message);
+            return $this->baseSucceed($this->data,$this->message);
         } else {
             $this->message = $rest_validate;
-            return $this->failed($this->message);
+            return $this->baseFailed($this->message);
         }
 
     }
@@ -45,10 +45,10 @@ class  PermissionValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->succeed($this->data,$this->message);
+            return $this->baseSucceed($this->data,$this->message);
         } else {
             $this->message = $rest_validate;
-            return $this->failed($this->message);
+            return $this->baseFailed($this->message);
         }
 
     }
@@ -75,7 +75,7 @@ class  PermissionValidate extends Validate
         $is_role_has_this_permission = DB::table('role_has_permissions')
             ->where('permission_id', $permission->id)
             ->count();
-        if ($is_role_has_this_permission) return $this->failed('有角色在使用该权限,无法删除');
-        return $this->succeed($this->data, $this->message);
+        if ($is_role_has_this_permission) return $this->baseFailed('有角色在使用该权限,无法删除');
+        return $this->baseSucceed($this->data, $this->message);
     }
 }

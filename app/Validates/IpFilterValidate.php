@@ -26,10 +26,10 @@ class  IpFilterValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->succeed($this->data, $this->message);
+            return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
-            return $this->failed($this->message);
+            return $this->baseFailed($this->message);
         }
 
     }
@@ -49,10 +49,10 @@ class  IpFilterValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->succeed($this->data, $this->message);
+            return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
-            return $this->failed($this->message);
+            return $this->baseFailed($this->message);
         }
 
     }

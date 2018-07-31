@@ -36,9 +36,9 @@ class Log extends Model
             $this->fill($input);
             $this->user_id = $input['user_id'];
             $this->save();
-            return $this->succeed([], '操作成功');
+            return $this->baseSucceed([], '操作成功');
         } catch (\Exception $e) {
-            return $this->failed('内部错误');
+            return $this->baseFailed('内部错误');
         }
     }
 

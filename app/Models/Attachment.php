@@ -49,13 +49,13 @@ class Attachment extends Model
                 $this->delete();
             } else {
                 DB::rollBack();
-                return $this->failed('附件片删除错误');
+                return $this->baseFailed('附件片删除错误');
             }
             DB::commit();
-            return $this->succeed([], '附件限删除成功');
+            return $this->baseSucceed([], '附件限删除成功');
         } catch (\Exception $e) {
             DB::rollBack();
-            return $this->failed('内部错误');
+            return $this->baseFailed('内部错误');
         }
     }
 

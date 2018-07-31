@@ -28,11 +28,11 @@ class Tag extends Model
         DB::beginTransaction();
         try {
             DB::commit();
-            return $this->succeed([], '删除成功');
+            return $this->baseSucceed([], '删除成功');
         } catch (\Exception $e) {
             throw $e;
             DB::rollBack();
-            return $this->failed('内部错误');
+            return $this->baseFailed('内部错误');
         }
     }
 
