@@ -69,6 +69,9 @@ class User extends Authenticatable
     {
         $old_head_image = $this->head_image['attachment_id'];
         $new_head_image = $input['head_image'];
+        if ($input['id'] === 1) {
+            unset($input['email']);
+        }
         DB::beginTransaction();
         try {
             if (($old_head_image != $new_head_image)) {

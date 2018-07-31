@@ -99,9 +99,13 @@ class UserController extends AdminController
         return $this->message('角色分配成功');
     }
 
-    public function destroy(User $user)
+    public function destroy(User $user, UserValidate $validate)
     {
         if (!$user) return $this->failed('找不到用户', 404);
+
+        $rest_validate = $validate->destroyValidate($user);
+
+        if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
         $rest_destroy = $user->destroyUser();
         if ($rest_destroy['status'] === true) return $this->message($rest_destroy['message']);
         return $this->failed($rest_destroy['message'], 500);

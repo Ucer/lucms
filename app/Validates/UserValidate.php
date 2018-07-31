@@ -19,7 +19,7 @@ class  UserValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->baseSucceed($this->data,$this->message);
+            return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
             return $this->baseFailed($this->message);
@@ -34,12 +34,18 @@ class  UserValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->baseSucceed($this->data,$this->message);
+            return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
             return $this->baseFailed($this->message);
         }
 
+    }
+
+    public function destroyValidate($user)
+    {
+        if ($user->id === 1) return $this->baseFailed('不允许删除最高管理员');
+        return $this->baseSucceed();
     }
 
     protected function validate($request_data, $rules)
