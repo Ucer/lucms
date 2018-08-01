@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Redis;
 trait RedisTrait
 {
     protected $redisKeyType = [
-        'smsCode' => 'smsCode_', // 短信验证码
+        'demo' => 'demo_', // 示例_[xxx]
     ];
 
     protected function setRedis($redisKeyType,$key, $value)

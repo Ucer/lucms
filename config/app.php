@@ -178,6 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        App\Providers\EasySmsServiceProvider::class,
+
 
     ],
 

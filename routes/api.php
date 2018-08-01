@@ -94,4 +94,5 @@ Route::post('upload/advertisement', 'Api\UploadController@advertisementUpload')-
 Route::post('upload/other', 'Api\UploadController@otherUpload')->name('uploads.other');
 
 Route::post('send_sms', 'Api\ThirdController@sendSms')->name('third.send_sms');
+Route::post('check_sms_code', 'Api\ThirdController@checkSmsCode')->name('third.check_sms_code');
 
