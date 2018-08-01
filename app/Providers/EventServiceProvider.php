@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
         'Laravel\Passport\Events\AccessTokenCreated' => [
             'App\Listeners\PassportAccessTokenCreated',
         ],
+        'Laravel\Passport\Events\RefreshTokenCreated' => [
+            'App\Listeners\PassportAccessTokenRefreshed',
+        ],
     ];
 
     /**

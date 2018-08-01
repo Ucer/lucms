@@ -25,12 +25,12 @@ class PassportAccessTokenCreated
      */
     public function handle(\Laravel\Passport\Events\AccessTokenCreated $event)
     {
-        $provider = \Config::get('auth.guards.api.provider');
-        DB::table('oauth_access_token_providers')->insert([
-            "oauth_access_token_id" => $event->tokenId,
-            "provider" => $provider,
-            "created_at" => new Carbon(),
-            "updated_at" => new Carbon(),
-        ]);
+        DB::table('oauth_access_tokens')->where('id', '!=', $event->tokenId)
+            ->where('user_id', $event->userId)
+            ->where('client_id', $event->clientId)
+//            ->where('expires_at', '<', Carbon::now())
+            ->orWhere('revoked', true)
+            ->delete();
+
     }
 }
