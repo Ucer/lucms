@@ -236,6 +236,7 @@ $ mv ../public/dashboard.blade.php ../resources/views
 | [rap2hpoutre/laravel-log-viewer](https://github.com/rap2hpoutre/laravel-log-viewer)     | laravel 日志查看     | 查看日志 |
 | [aliyuncs/oss-sdk-php](https://help.aliyun.com/document_detail/32099.html?spm=5176.87240.400427.47.CtLkv4)     | 啊里云 oss     | 对象存储 |
 | [overtrue/easy-sms](https://github.com/overtrue/easy-sms)     | 短信发送     | 找回密码 |
+| [barryvdh/laravel-cors](https://github.com/barryvdh/laravel-cors)     | 跨越解决     | 开发环境方便测试 |
 
 
 ## 队列
