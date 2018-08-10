@@ -194,28 +194,7 @@ $ cnpm install
 $ npm run dev
 ```
 
-2). 开发环境跨域配置
-chrome 安装插件 Access-Control-Allow_Credentials
-
-服务器跨域，Apache请自行搜索处理或在 php 文件中处理。此处不建议在 php 中处理:
-
-nginx 配置如下：
-```sh
-.
-.
-.
-  add_header Access-Control-Allow-Origin http://localhost:8080;
-  add_header Access-Control-Allow-Headers *;
-  add_header Access-Control-Allow-Methods GET,POST,OPTIONS,PATCH,PUT;
-  .
-  .
-  .
-
-```
-
-> $ service nginx restart
-
-3). 生产环境
+2). 生产环境
 ```
 $ cd lu 
 $ npm run build
