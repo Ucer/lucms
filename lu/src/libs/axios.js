@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import baseURL from '_conf/url'
-import { Notice, Message } from 'iview'
+import { Notice } from 'iview'
 import Cookies from 'js-cookie'
 import { TOKEN_KEY } from '@/libs/util'
 class httpRequest {
@@ -42,9 +42,11 @@ class httpRequest {
       }
       // 后端服务在个别情况下回报201，待确认
       if (data.code !== 200) {
+        console.log(data)
         if (data.code === 401) {
           Cookies.remove(TOKEN_KEY)
           window.location.href = window.location.pathname + '#/login'
+          console.log(window.location.pathname)
           Notice.error({
             title: '出错了',
             desc: res.data.message
@@ -55,6 +57,10 @@ class httpRequest {
       return data
     }, (error) => {
       let { response } = error
+      if (response.status === 401) {
+        Cookies.remove(TOKEN_KEY)
+        window.location.href = window.location.pathname + '#/login'
+      }
       if (response.hasOwnProperty('data')) {
         Notice.error({
           title: '出错了',
@@ -66,7 +72,6 @@ class httpRequest {
           title: '出错了',
           desc: response.data.message
         })
-        Message.error(response.message)
         return Promise.reject(response)
       }
     })

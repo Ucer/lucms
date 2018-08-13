@@ -44,6 +44,27 @@ export default [
     ]
   },
   {
+      path: '/privileges',
+      name: 'access',
+      title: '权限管理',
+      component: Main,
+      access: ['Founder'],
+      meta: {
+        icon: 'key',
+      },
+      children: [
+          {
+              path: 'permission-list',
+              name: 'permission-list',
+              title: '权限列表',
+              meta: {
+                icon: 'ios-locked',
+              },
+              component: () => import('@/views/privileges/permissions/list.vue')
+          }
+      ]
+  },
+  {
     path: '',
     name: 'doc',
     meta: {
@@ -203,7 +224,7 @@ export default [
         path: 'level_2_2',
         name: 'level_2_2',
         meta: {
-          access: ['super_admin', 'lu_admin'],
+          access: ['Founder'],
           icon: 'md-funnel',
           showAlways: true,
           title: '二级-2'

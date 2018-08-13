@@ -23,8 +23,11 @@ export default {
       state.accessRole = role
     },
     setAccessToken (state, data) {
-      state.access_token_type = data.token.token_type
-      const token = data.token.token_type + ' ' + data.token.access_token
+      let token = ''
+      if (data.token) {
+        state.access_token_type = data.token.token_type
+        token = data.token.token_type + ' ' + data.token.access_token
+      }
       state.access_token = token
       setToken(token)
     }
@@ -50,8 +53,7 @@ export default {
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
-          commit('setToken', '')
-          commit('setAccess', [])
+          commit('setAccessToken', '')
           resolve()
         }).catch(err => {
           reject(err)
