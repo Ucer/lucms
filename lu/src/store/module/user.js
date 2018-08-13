@@ -3,42 +3,44 @@ import { setToken, getToken } from '@/libs/util'
 
 export default {
   state: {
-    userName: '',
     userId: '',
+    email: '',
     avatorImgPath: '',
-    token: getToken(),
-    access: ''
+    accessRole: '',
+    access_token: getToken()
   },
   mutations: {
-    setAvator (state, avatorPath) {
-      state.avatorImgPath = avatorPath
-    },
     setUserId (state, id) {
       state.userId = id
     },
-    setUserName (state, name) {
-      state.userName = name
+    setEmail (state, email) {
+      state.email = email
     },
-    setAccess (state, access) {
-      state.access = access
+    setAvator (state, avatorPath) {
+      state.avatorImgPath = avatorPath
     },
-    setToken (state, token) {
-      state.token = token
+    setAccessRole (state, role) {
+      state.accessRole = role
+    },
+    setAccessToken (state, data) {
+      state.access_token_type = data.token.token_type
+      const token = data.token.token_type + ' ' + data.token.access_token
+      state.access_token = token
       setToken(token)
     }
   },
   actions: {
     // 登录
-    handleLogin ({ commit }, {userName, password}) {
-      userName = userName.trim()
+    handleLogin ({ commit }, {email, password}) {
+      email = email.trim()
       return new Promise((resolve, reject) => {
         login({
-          userName,
+          email,
           password
         }).then(res => {
           const data = res.data
-          commit('setToken', data.token)
-          resolve()
+          commit('setAccessToken', data)
+          resolve(res)
         }).catch(err => {
           reject(err)
         })
@@ -63,12 +65,12 @@ export default {
     // 获取用户相关信息
     getUserInfo ({ state, commit }) {
       return new Promise((resolve, reject) => {
-        getUserInfo(state.token).then(res => {
+        getUserInfo(state.access_token).then(res => {
           const data = res.data
-          commit('setAvator', data.avator)
-          commit('setUserName', data.user_name)
+          commit('setEmail', data.email)
+          commit('setAvator', data.head_image.url)
           commit('setUserId', data.user_id)
-          commit('setAccess', data.access)
+          commit('setAccessRole', data.roles)
           resolve(data)
         }).catch(err => {
           reject(err)

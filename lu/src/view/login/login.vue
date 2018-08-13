@@ -27,9 +27,13 @@ export default {
       'handleLogin',
       'getUserInfo'
     ]),
-    handleSubmit ({ userName, password }) {
-      this.handleLogin({ userName, password }).then(res => {
-        console.log(res)
+    handleSubmit ({ email, password }) {
+      this.handleLogin({ email, password }).then(res => {
+        this.getUserInfo().then(res => {
+          this.$router.push({
+            name: 'home'
+          })
+        })
       })
     }
   }

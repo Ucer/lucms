@@ -46,6 +46,17 @@ class UserController extends AdminController
         return new UserResource($user);
     }
 
+    public function currentUser()
+    {
+        $authUser = Auth::user();
+        $return = $authUser->toArray();
+        foreach ($authUser->roles as $role) {
+            $return['roles'][] = $role['name'];
+        }
+
+        return $this->success($return);
+    }
+
     public function store(Request $request, User $user, UserValidate $validate)
     {
         $insert_data = $request->all();

@@ -22,9 +22,7 @@ class httpRequest {
   interceptors (instance, url) {
     // 添加请求拦截器
     instance.interceptors.request.use(config => {
-      if (!config.url.includes('/users')) {
-        config.headers['x-access-token'] = Cookies.get(TOKEN_KEY)
-      }
+      config.headers['Authorization'] = Cookies.get(TOKEN_KEY)
       // Spin.show()
       // 在发送请求之前做些什么
       return config
@@ -35,30 +33,26 @@ class httpRequest {
 
     // 添加响应拦截器
     instance.interceptors.response.use((res) => {
-      let { response } = res
       const is = this.destroy(url)
+      const data = res.data
       if (!is) {
         setTimeout(() => {
           // Spin.hide()
         }, 500)
       }
       // 后端服务在个别情况下回报201，待确认
-      if (response.code === 401) {
-        Cookies.remove(TOKEN_KEY)
-        window.location.href = window.location.pathname + '#/login'
-        Notice.error({
-          title: '出错了',
-          desc: response.data.message
-        })
-      } else {
-        if (response.data.message) {
+      if (data.code !== 200) {
+        if (data.code === 401) {
+          Cookies.remove(TOKEN_KEY)
+          window.location.href = window.location.pathname + '#/login'
           Notice.error({
             title: '出错了',
-            desc: response.data.message
+            desc: res.data.message
           })
         }
+        return false
       }
-      return response
+      return data
     }, (error) => {
       let { response } = error
       if (response.hasOwnProperty('data')) {

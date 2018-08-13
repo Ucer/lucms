@@ -1,8 +1,8 @@
 
 import axios from '@/libs/api.request'
-export const login = ({ userName, password }) => {
+export const login = ({ email, password }) => {
   const data = {
-    userName,
+    email,
     password
   }
   return axios.request({
@@ -14,10 +14,7 @@ export const login = ({ userName, password }) => {
 
 export const getUserInfo = (token) => {
   return axios.request({
-    url: 'get_info',
-    params: {
-      token
-    },
+    url: 'api/admin/users/current_user',
     method: 'get'
   })
 }

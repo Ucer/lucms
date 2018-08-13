@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import config from '@/config'
 import { forEach, hasOneOf } from '@/libs/tools'
 
-export const TOKEN_KEY = 'token'
+export const TOKEN_KEY = 'access_token'
 
 export const setToken = (token) => {
   Cookies.set(TOKEN_KEY, token, {expires: config.cookieExpires || 1})
@@ -32,7 +32,7 @@ const showThisMenuEle = (item, access) => {
 export const getMenuByRouter = (list, access) => {
   let res = []
   forEach(list, item => {
-    if (!item.meta || (item.meta && !item.meta.hideInMenu)) {
+    if (!item.meta || (item.meta && !item.meta.hideInMenu)) { // 要显示的菜单
       let obj = {
         icon: (item.meta && item.meta.icon) || '',
         name: item.name,
@@ -42,7 +42,9 @@ export const getMenuByRouter = (list, access) => {
         obj.children = getMenuByRouter(item.children, access)
       }
       if (item.meta && item.meta.href) obj.href = item.meta.href
-      if (showThisMenuEle(item, access)) res.push(obj)
+      if (showThisMenuEle(item, access)) {
+        res.push(obj)
+      }
     }
   })
   return res
@@ -120,7 +122,7 @@ export const getNewTagList = (list, newRoute) => {
 
 /**
  * @param {*} access 用户权限数组，如 ['super_admin', 'admin']
- * @param {*} route 路由列表
+ * @param {*} route 要判断的路由
  */
 const hasAccess = (access, route) => {
   if (route.meta && route.meta.access) return hasOneOf(access, route.meta.access)

@@ -15,7 +15,10 @@
       </Input>
     </FormItem>
     <FormItem>
-      <Button @click="handleSubmit" type="primary" long>登录</Button>
+      <Button type="primary" :loading="saveLoading" @click="handleSubmit">
+        <span v-if="!saveLoading">登录</span>
+        <span v-else>正在登录...</span>
+     </Button>
     </FormItem>
   </Form>
 </template>
@@ -43,9 +46,10 @@ export default {
   data () {
     return {
       form: {
-        userName: 'super_admin',
-        password: ''
-      }
+        userName: 'dev@lucms.com',
+        password: '123456'
+      },
+      saveLoading: false
     }
   },
   computed: {
@@ -58,12 +62,15 @@ export default {
   },
   methods: {
     handleSubmit () {
+      this.saveLoading = true
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.$emit('on-success-valid', {
-            userName: this.form.userName,
+            email: this.form.userName,
             password: this.form.password
           })
+        } else {
+          this.saveLoading = false
         }
       })
     }

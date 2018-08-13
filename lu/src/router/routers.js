@@ -203,7 +203,7 @@ export default [
         path: 'level_2_2',
         name: 'level_2_2',
         meta: {
-          access: ['super_admin'],
+          access: ['super_admin', 'lu_admin'],
           icon: 'md-funnel',
           showAlways: true,
           title: '二级-2'

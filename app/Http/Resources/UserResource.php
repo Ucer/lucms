@@ -16,6 +16,7 @@ class UserResource extends Resource
             'head_image' => $this->head_image,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'role' => $this->role
         ];
     }
 }

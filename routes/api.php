@@ -26,6 +26,7 @@ Route::namespace('Api')->group(function () {
 Route::namespace('Admin')->group(function () {
 
     Route::get('admin/users', 'UserController@usersList')->name('users.list');
+    Route::get('admin/users/current_user', 'UserController@currentUser')->name('users.current_user');
     Route::get('admin/users/{user}', 'UserController@show')->name('users.show');
     Route::post('admin/users', 'UserController@store')->name('users.store');
     Route::patch('admin/users/{user}', 'UserController@update')->name('users.update');
