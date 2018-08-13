@@ -36,6 +36,11 @@ lucms 是一个基于 `laravel5.5*` 与 `iviewjs` 开发的一套后台管理系
 - 新闻系统 —— 基础新闻管理
 - 系统安全 —— 日志记录、ip 过滤
 
+## 新版本预告
+
+- 整体架构升级 —— 使用 vuecli-3.0、iview_admin-2.0 
+- 整体代码优化、规范化
+
 ## 开发环境部署/安装
 
 本项目代码使用 PHP 框架 Laravel 5.5 开发，本地开发环境使用 Laravel Homestead。
