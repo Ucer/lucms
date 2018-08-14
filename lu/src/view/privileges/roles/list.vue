@@ -69,9 +69,7 @@ import {
 export default {
   data() {
     return {
-      searchForm: {
-        name: null,
-      },
+      searchForm: {},
       tableLoading: false,
       dataList: [],
       modalHeadImage: {

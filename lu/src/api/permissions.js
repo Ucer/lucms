@@ -1,5 +1,6 @@
 import axios from '@/libs/api.request'
 
+// =============== privileges/permissions/list.vue =========================
 export const getTableData = (searchData) => {
   return axios.request({
     url: '/api/admin/permissions',

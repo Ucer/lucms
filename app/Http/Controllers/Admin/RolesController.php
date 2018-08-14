@@ -18,8 +18,9 @@ class RolesController extends AdminController
     public function roleList(Request $request, Role $role)
     {
         $search_data = json_decode($request->get('search_data'), true);
-        if ($search_data['name']) {
-            $role = $role->columnLike('name', $search_data['name']);
+        $name = isset_and_not_empty($search_data,'name');
+        if ($name) {
+            $role = $role->columnLike('name', $name);
         }
         return new RoleCollection($role->get());
     }
