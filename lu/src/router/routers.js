@@ -44,20 +44,29 @@ export default [{
   path: '/privileges',
   name: 'access',
   component: Main,
-  access: ['Founder'],
+  access: ['Founder','sh'],
   meta: {
-    icon: 'key',
+    icon: 'ios-key',
     title: '权限管理',
   },
   children: [{
     path: 'permission-list',
     name: 'permission-list',
     meta: {
-      icon: 'ios-locked',
+      icon: 'ios-lock',
       title: '权限列表',
     },
     component: () =>
       import ('@/view/privileges/permissions/list.vue')
+  },{
+    path: 'role-list',
+    name: 'role-list',
+    meta: {
+      icon: 'ios-people',
+      title: '角色列表',
+    },
+    component: () =>
+      import ('@/view/privileges/roles/list.vue')
   }]
 }, {
   path: '',

@@ -18,13 +18,6 @@ export const addEditPermission = (saveData) => {
   })
 }
 
-export const handleSubmit = (saveData) => {
-  return axios.request({
-    url: '/api/admin/permissions',
-    data: saveData,
-    method: 'post'
-  })
-}
 
 export const deletePermission = (permission) => {
   return axios.request({
