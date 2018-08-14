@@ -1,10 +1,10 @@
 import Axios from 'axios'
 import baseURL from '_conf/url'
-import { Notice } from 'iview'
+import {Notice} from 'iview'
 import Cookies from 'js-cookie'
-import { TOKEN_KEY } from '@/libs/util'
+import {TOKEN_KEY} from '@/libs/util'
 class httpRequest {
-  constructor () {
+  constructor() {
     this.options = {
       method: '',
       url: ''
@@ -13,13 +13,13 @@ class httpRequest {
     this.queue = {}
   }
   // 销毁请求实例
-  destroy (url) {
+  destroy(url) {
     delete this.queue[url]
     const queue = Object.keys(this.queue)
     return queue.length
   }
   // 请求拦截
-  interceptors (instance, url) {
+  interceptors(instance, url) {
     // 添加请求拦截器
     instance.interceptors.request.use(config => {
       config.headers['Authorization'] = Cookies.get(TOKEN_KEY)
@@ -33,51 +33,24 @@ class httpRequest {
 
     // 添加响应拦截器
     instance.interceptors.response.use((res) => {
-      const is = this.destroy(url)
-      const data = res.data
-      if (!is) {
-        setTimeout(() => {
-          // Spin.hide()
-        }, 500)
-      }
-      // 后端服务在个别情况下回报201，待确认
-      if (data.code !== 200) {
-        console.log(data)
-        if (data.code === 401) {
-          Cookies.remove(TOKEN_KEY)
-          window.location.href = window.location.pathname + '#/login'
-          console.log(window.location.pathname)
-          Notice.error({
-            title: '出错了',
-            desc: res.data.message
-          })
-        }
-        return false
-      }
-      return data
+      return res.data
     }, (error) => {
-      let { response } = error
+      let {response} = error
       if (response.status === 401) {
         Cookies.remove(TOKEN_KEY)
         window.location.href = window.location.pathname + '#/login'
       }
       if (response.hasOwnProperty('data')) {
-        Notice.error({
-          title: '出错了',
-          desc: response.data.message
-        })
+        Notice.error({title: '出错了', desc: response.data.message})
         return Promise.reject(response.data)
       } else {
-        Notice.error({
-          title: '出错了',
-          desc: response.data.message
-        })
+        Notice.error({title: '出错了', desc: response.data.message})
         return Promise.reject(response)
       }
     })
   }
   // 创建实例
-  create () {
+  create() {
     let conf = {
       baseURL: baseURL,
       // timeout: 2000,
@@ -89,11 +62,11 @@ class httpRequest {
     return Axios.create(conf)
   }
   // 合并请求实例
-  mergeReqest (instances = []) {
+  mergeReqest(instances = []) {
     //
   }
   // 请求实例
-  request (options) {
+  request(options) {
     var instance = this.create()
     this.interceptors(instance, options.url)
     options = Object.assign({}, options)

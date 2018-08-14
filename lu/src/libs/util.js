@@ -1,18 +1,22 @@
 import Cookies from 'js-cookie'
 // cookie保存的天数
 import config from '@/config'
-import { forEach, hasOneOf } from '@/libs/tools'
+import {forEach, hasOneOf} from '@/libs/tools'
 
 export const TOKEN_KEY = 'access_token'
 
 export const setToken = (token) => {
-  Cookies.set(TOKEN_KEY, token, {expires: config.cookieExpires || 1})
+  Cookies.set(TOKEN_KEY, token, {
+    expires: config.cookieExpires || 1
+  })
 }
 
 export const getToken = () => {
   const token = Cookies.get(TOKEN_KEY)
-  if (token) return token
-  else return false
+  if (token)
+    return token
+  else
+    return false
 }
 
 export const hasChild = (item) => {
@@ -21,9 +25,12 @@ export const hasChild = (item) => {
 
 const showThisMenuEle = (item, access) => {
   if (item.meta && item.meta.access && item.meta.access.length) {
-    if (hasOneOf(item.meta.access, access)) return true
-    else return false
-  } else return true
+    if (hasOneOf(item.meta.access, access))
+      return true
+    else
+      return false
+  } else
+    return true
 }
 /**
  * @param {Array} list 通过路由列表得到菜单列表
@@ -41,7 +48,8 @@ export const getMenuByRouter = (list, access) => {
       if ((hasChild(item) || (item.meta && item.meta.showAlways)) && showThisMenuEle(item, access)) {
         obj.children = getMenuByRouter(item.children, access)
       }
-      if (item.meta && item.meta.href) obj.href = item.meta.href
+      if (item.meta && item.meta.href)
+        obj.href = item.meta.href
       if (showThisMenuEle(item, access)) {
         res.push(obj)
       }
@@ -68,10 +76,15 @@ export const getBreadCrumbList = (routeMetched, homeRoute) => {
   res = res.filter(item => {
     return !item.meta.hideInMenu
   })
-  return [Object.assign(homeRoute, { to: homeRoute.path }), ...res]
+  return [
+    Object.assign(homeRoute, {to: homeRoute.path}),
+    ...res
+  ]
 }
 
-export const showTitle = (item, vm) => vm.$config.useI18n ? vm.$t(item.name) : ((item.meta && item.meta.title) || item.name)
+export const showTitle = (item, vm) => vm.$config.useI18n
+  ? vm.$t(item.name)
+  : ((item.meta && item.meta.title) || item.name)
 
 /**
  * @description 本地存储和获取标签导航列表
@@ -84,7 +97,9 @@ export const setTagNavListInLocalstorage = list => {
  */
 export const getTagNavListFromLocalstorage = () => {
   const list = localStorage.tagNaveList
-  return list ? JSON.parse(list) : []
+  return list
+    ? JSON.parse(list)
+    : []
 }
 
 /**
@@ -99,9 +114,11 @@ export const getHomeRoute = routers => {
     let item = routers[i]
     if (item.children && item.children.length) {
       let res = getHomeRoute(item.children)
-      if (res.name) return res
+      if (res.name)
+        return res
     } else {
-      if (item.name === 'home') homeRoute = item
+      if (item.name === 'home')
+        homeRoute = item
     }
   }
   return homeRoute
@@ -113,10 +130,12 @@ export const getHomeRoute = routers => {
  * @description 如果该newRoute已经存在则不再添加
  */
 export const getNewTagList = (list, newRoute) => {
-  const { name, path, meta } = newRoute
+  const {name, path, meta} = newRoute
   let newList = [...list]
-  if (newList.findIndex(item => item.name === name) >= 0) return newList
-  else newList.push({ name, path, meta })
+  if (newList.findIndex(item => item.name === name) >= 0)
+    return newList
+  else
+    newList.push({name, path, meta})
   return newList
 }
 
@@ -125,8 +144,10 @@ export const getNewTagList = (list, newRoute) => {
  * @param {*} route 要判断的路由
  */
 const hasAccess = (access, route) => {
-  if (route.meta && route.meta.access) return hasOneOf(access, route.meta.access)
-  else return true
+  if (route.meta && route.meta.access)
+    return hasOneOf(access, route.meta.access)
+  else
+    return true
 }
 
 /**
@@ -173,8 +194,10 @@ export const getNextName = (list, name) => {
   if (list.length === 2) {
     res = 'home'
   } else {
-    if (list.findIndex(item => item.name === name) === list.length - 1) res = list[list.length - 2].name
-    else res = list[list.findIndex(item => item.name === name) + 1].name
+    if (list.findIndex(item => item.name === name) === list.length - 1)
+      res = list[list.length - 2].name
+    else
+      res = list[list.findIndex(item => item.name === name) + 1].name
   }
   return res
 }
@@ -202,7 +225,7 @@ export const getArrayFromFile = (file) => {
     let reader = new FileReader()
     reader.readAsText(file) // 以文本格式读取
     let arr = []
-    reader.onload = function (evt) {
+    reader.onload = function(evt) {
       let data = evt.target.result // 读到的数据
       let pasteData = data.trim()
       arr = pasteData.split((/[\n\u0085\u2028\u2029]|\r\n?/g)).map(row => {
@@ -210,8 +233,10 @@ export const getArrayFromFile = (file) => {
       }).map(item => {
         return item[0].split(',')
       })
-      if (format === 'csv') resolve(arr)
-      else reject(new Error('[Format Error]:你上传的不是Csv文件'))
+      if (format === 'csv')
+        resolve(arr)
+      else
+        reject(new Error('[Format Error]:你上传的不是Csv文件'))
     }
   })
 }
@@ -227,10 +252,7 @@ export const getTableDataFromArray = (array) => {
   if (array.length > 1) {
     let titles = array.shift()
     columns = titles.map(item => {
-      return {
-        title: item,
-        key: item
-      }
+      return {title: item, key: item}
     })
     tableData = array.map(item => {
       let res = {}
@@ -240,10 +262,7 @@ export const getTableDataFromArray = (array) => {
       return res
     })
   }
-  return {
-    columns,
-    tableData
-  }
+  return {columns, tableData}
 }
 
 export const findNodeUpper = (ele, tag) => {
@@ -263,8 +282,10 @@ export const findNodeDownward = (ele, tag) => {
     let len = ele.childNodes.length
     while (++i < len) {
       let child = ele.childNodes[i]
-      if (child.tagName === tagName) return child
-      else return findNodeDownward(child, tag)
+      if (child.tagName === tagName)
+        return child
+      else
+        return findNodeDownward(child, tag)
     }
   }
 }
