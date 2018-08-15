@@ -14,6 +14,8 @@ import '@/assets/icons/iconfont.css'
 
 import apiRequest from './libs/api.request'
 import appUrl from '../config/url'
+import Cookies from 'js-cookie'
+import {TOKEN_KEY} from '@/libs/util'
 /*
     // import '@/mock'
     // 实际打包时应该不引入mock
@@ -25,11 +27,13 @@ Object.defineProperty(Vue.prototype, '$apiRequest', {
   value: apiRequest
 })
 
+window.access_token = Cookies.get(TOKEN_KEY)
+
 window.uploadUrl = {
-  uploadAvatar: appUrl + '/upload/avatar',
-  uploadAdvertisement: appUrl + '/upload/advertisement',
-  tinymceUpload: appUrl + '/upload/tinymce',
-  uploadOther: appUrl + '/upload/other'
+  uploadAvatar: appUrl + '/api/upload/avatar',
+  uploadAdvertisement: appUrl + '/api/upload/advertisement',
+  tinymceUpload: appUrl + '/api/upload/tinymce',
+  uploadOther: appUrl + '/api/upload/other'
 }
 
 Vue.use(iView, {

@@ -58,3 +58,18 @@ export const deleteUser = (user) => {
     method: 'delete'
   })
 }
+
+// =============== privileges/users/components/add-user.vue =========================
+
+export const addUser = (formData) => {
+  return axios.request({url: '/api/admin/users/', data: formData, method: 'post'})
+}
+
+export const editUser = (userId,formData) => {
+  return axios.request({url: '/api/admin/users/'+ userId, data: formData, method: 'patch'})
+}
+
+
+export const getUserInfoById = (userId) => {
+  return axios.request({url: 'api/admin/users/' + userId, method: 'get'})
+}

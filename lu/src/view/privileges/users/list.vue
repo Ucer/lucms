@@ -58,7 +58,8 @@
                 </Button>
     </div>
   </Modal>
-  <add-user :modal='addUserModal.show' @on-cancel-modal=''></add-user>
+  <add-user v-if='addUserModal.show === true' @on-add-user-success='getTableDataExcute(1)' @on-add-user-modal-hide="addUsermodalHide"></add-user>
+  <edit-user v-if='editUserModal.show === true' :user-id='editUserModal.userId' @on-edit-user-success='getTableDataExcute(1)' @on-edit-user-modal-hide="editUsermodalHide"> </edit-user>
 
 </div>
 </template>
@@ -66,6 +67,7 @@
 
 <script>
 import AddUser from './components/add-user'
+import EditUser from './components/edit-user'
 
 import {
   getTableData,
@@ -83,6 +85,7 @@ import {
 export default {
   components: {
     AddUser,
+    EditUser
   },
   data() {
     return {
@@ -115,6 +118,10 @@ export default {
       },
       addUserModal: {
         show: false
+      },
+      editUserModal: {
+        show: false,
+        userId: 0
       },
       columns: [{
           title: 'ID',
@@ -219,7 +226,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.addUserModal.show = this.addUserModal.show === true ? false : true
+                    this.editUserModal.show = true
+                    this.editUserModal.userId = params.row.id
                     // let argu = {
                     //   user_id: params.row.id
                     // };
@@ -257,7 +265,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteUser(params.row.id, params.index);
+                    t.deleteUserExcute(params.row.id, params.index);
                   }
                 }
               }, [
@@ -364,10 +372,14 @@ export default {
       })
     },
     addBtn() {
-      this.$router.push({
-        name: 'add-user',
-      });
+      this.addUserModal.show = true
     },
+    addUsermodalHide() {
+      this.addUserModal.show = false
+    },
+    editUsermodalHide() {
+      this.editUserModal.show = false
+    }
   },
 }
 </script>

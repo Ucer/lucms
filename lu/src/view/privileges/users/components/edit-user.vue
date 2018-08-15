@@ -1,7 +1,7 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="title">添加用户</p>
+    <p slot="header">修改用户信息</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="昵称：" prop="name">
         <Input v-model="formData.name"></Input>
@@ -9,10 +9,10 @@
       <FormItem label="邮箱：">
         <Input v-model="formData.email"></Input>
       </FormItem>
-      <FormItem label="登录密码：" prop="password">
+      <FormItem label="登录密码：">
         <Input type="password" v-model="formData.password"></Input>
       </FormItem>
-      <FormItem label="登录密码确认：" prop="password_confirmation">
+      <FormItem label="登录密码确认：">
         <Input type="password" v-model="formData.password_confirmation"></Input>
       </FormItem>
       <FormItem label="可登录后台：">
@@ -35,7 +35,7 @@
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="addUserExcute">保存
+      <Button type="primary" @click="editUserExcute">保存
                 </Button>
     </div>
   </Modal>
@@ -43,31 +43,18 @@
 </template>
 <script>
 import {
-  addUser
+  editUser,
+  getUserInfoById
 } from '@/api/user'
 
 export default {
+  props: {
+    userId: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
-    const validatePassword = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入登录密码'))
-      } else {
-        if (this.formData.password !== '') {
-          // 对第二个密码框单独验证
-          this.$refs.formData.validateField('password_confirmation')
-        }
-        callback()
-      }
-    }
-    const validatePasswordConfirm = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入确认密码'))
-      } else if (value !== this.formData.password) {
-        callback(new Error('两次密码不一致 '))
-      } else {
-        callback()
-      }
-    }
     return {
       modalShow: true,
       saveLoading: false,
@@ -112,35 +99,48 @@ export default {
             type: 'email',
             message: '邮箱格式不正确',
             trigger: 'blur'
-          },
+          }
         ],
-        password: [{
-          validator: validatePassword,
-          trigger: 'blur'
-        }],
-        password_confirmation: [{
-          validator: validatePasswordConfirm,
-          trigger: 'blur'
-        }],
       },
     }
   },
-  watch: {
-    modal: function() {
-      this.modalShow = true
+  created() {
+    if (this.userId > 0) {
+      this.getUserInfoByIdExcute()
     }
   },
   methods: {
-    addUserExcute() {
+    getUserInfoByIdExcute() {
+      let t = this;
+      t.spinLoading = true;
+      getUserInfoById(t.userId).then(res => {
+        let res_data = res.data
+        t.formData = {
+          id: res_data.id,
+          name: res_data.name,
+          email: res_data.email,
+          is_admin: res_data.is_admin,
+          password: '',
+          password_confirmation: '',
+          head_image: {
+            attachment_id: res_data.head_image.attachment_id,
+            url: res_data.head_image.url
+          },
+        }
+        t.spinLoading = false;
+      })
+
+    },
+    editUserExcute() {
       let t = this;
       t.saveLoading = true
       t.$refs.formData.validate((valid) => {
         if (valid) {
-          addUser(t.formData).then(res => {
+          editUser(t.userId, t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
-            t.$emit('on-add-user-success')
-            t.$emit('on-add-user-modal-hide')
+            t.$emit('on-edit-user-success')
+            this.$emit('on-edit-user-modal-hide')
             t.$Notice.success({
               title: res.message
             })
@@ -154,7 +154,7 @@ export default {
     },
     cancel() {
       this.modalShow = false
-      this.$emit('on-add-user-modal-hide')
+      this.$emit('on-edit-user-modal-hide')
     },
     handleSuccess(res, file) {
       file.url = res.data.url;
@@ -173,7 +173,7 @@ export default {
         title: '超出文件大小限制',
         desc: '文件 ' + file.name + ' 太大，不能超过 ' + this.uploadConfig.max_size + 'kb'
       });
-    },
+    }
   }
 }
 </script>
