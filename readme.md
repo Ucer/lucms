@@ -193,7 +193,6 @@ $ npm run dev
 ```
 $ cd lu 
 $ npm run build
-$ mv ../public/dashboard.blade.php ../resources/views
 ```
 
 ## 扩展包使用情况
