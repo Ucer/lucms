@@ -72,7 +72,7 @@ export default[
         path: 'administrator-list',
         name: 'administrator-list',
         meta: {
-          icon: 'person-stalker',
+          icon: 'md-people',
           title: '用户列表'
         },
         component: () => import ('@/view/privileges/users/list.vue')
