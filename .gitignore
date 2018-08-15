@@ -18,3 +18,4 @@ node_modules
 build/env.js
 /public/lu
 /resources/views/dashboard.blade.php
+/lu/config/env.js

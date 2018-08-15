@@ -160,18 +160,17 @@ $ ln -s /srv/wwwroot/homestead-code/lucms/storage/app/public/* ./storage/
 
 1). 全局修改基本域名 http://lucms.test => https://xxxxx
 
-`lucms/lu/src/libs/util.js`
+`lucms/lu/vue.config.js`
 ```js
-const ajaxUrl = env === 'development'
-    ? 'http://lucms.test/api'
-    : env === 'production'
-        ? 'http://lucms.test/api'
-        : 'http://lucms.test/api';
+const BASE_URL = env === 'development'
+  ? '/iview-admin/'
+  : 'https://lucms.com/lu/dist/'
 ```
 
-`lucms/lu/src/main.js`
+`lucms/lu/config/url.js`
 ```js
-const app_url = '//lucms.test/api';
+const DEV_URL = 'http://lucms.test/'
+const PRO_URL = 'https://lucms.com/'
 ```
 
 `lucms/lu/build/webpack.prod.config.js`
