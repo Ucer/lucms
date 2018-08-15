@@ -36,7 +36,7 @@
     <Table border :columns="columns" :data="feeds.data"></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
-        <Page :total="feeds.total" :current="feeds.current_page" :page-size="feeds.per_page" class="paging" show-elevator show-total @on-change="handleOnPageChange"></Page>
+        <Page :total="feeds.total" :current="feeds.current_page" :page-size="feeds.per_page" class="paging" show-elevator show-total show-sizer @on-change="handleOnPageChange"></Page>
       </div>
     </div>
   </Row>
@@ -68,6 +68,7 @@ import {
   getTableData,
   getAllRole,
   getUserRoles,
+  giveUserRole,
   deleteUser
 } from '@/api/user'
 

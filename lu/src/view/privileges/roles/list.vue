@@ -209,7 +209,6 @@ export default {
     let t = this
     t.getTableDataExcute()
     t.getAllPermissionExcute()
-    t.addEditRoleExcute()
   },
   methods: {
     renderFormat(item) {
