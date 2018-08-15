@@ -19,3 +19,5 @@ build/env.js
 /public/lu
 /resources/views/dashboard.blade.php
 /lu/config/env.js
+/lu/config/url.js
+lu/vue.config.js

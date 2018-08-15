@@ -160,6 +160,12 @@ $ ln -s /srv/wwwroot/homestead-code/lucms/storage/app/public/* ./storage/
 
 1). 全局修改基本域名 http://lucms.test => https://xxxxx
 
+```html
+cp  lu/example.vue.config.js lu/vue.config.js
+cp  lu/config/example.env.js lu/config/env.js
+cp  lu/config/example.url.js lu/config/url.js
+```
+
 `lucms/lu/vue.config.js`
 ```js
 const BASE_URL = env === 'development'
@@ -173,21 +179,6 @@ const DEV_URL = 'http://lucms.test/'
 const PRO_URL = 'https://lucms.com/'
 ```
 
-`lucms/lu/build/webpack.prod.config.js`
-```js
-.
-.
-.
-    output: {
-        //publicPath: 'http://lucms.test/lu/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名
-        publicPath: 'http://lucms.codehaoshi.com/lu/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名
-        filename: '[name].[hash].js',
-        chunkFilename: '[name].[hash].chunk.js'
-    },
-. 
-.
-.
-```
 
 ### vuejs 安装与运行
 
