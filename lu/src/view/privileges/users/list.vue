@@ -58,12 +58,15 @@
                 </Button>
     </div>
   </Modal>
+  <add-user :modal='addUserModal.show' @on-cancel-modal=''></add-user>
 
 </div>
 </template>
 
 
 <script>
+import AddUser from './components/add-user'
+
 import {
   getTableData,
   getAllRole,
@@ -78,6 +81,9 @@ import {
 } from '@/api/common'
 
 export default {
+  components: {
+    AddUser,
+  },
   data() {
     return {
       searchForm: {},
@@ -106,6 +112,9 @@ export default {
           width: '400px',
           height: '400px'
         }
+      },
+      addUserModal: {
+        show: false
       },
       columns: [{
           title: 'ID',
@@ -210,13 +219,14 @@ export default {
                 },
                 on: {
                   click: () => {
-                    let argu = {
-                      user_id: params.row.id
-                    };
-                    this.$router.push({
-                      name: 'edit-user',
-                      params: argu
-                    });
+                    this.addUserModal.show = this.addUserModal.show === true ? false : true
+                    // let argu = {
+                    //   user_id: params.row.id
+                    // };
+                    // this.$router.push({
+                    //   name: 'edit-user',
+                    //   params: argu
+                    // });
                   }
                 }
 
