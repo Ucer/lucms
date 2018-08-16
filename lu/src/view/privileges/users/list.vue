@@ -1,18 +1,19 @@
 
 <template>
-<div id="privileges-users-list">
+<div>
   <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
     <Col span="2">
     <Select v-model="searchForm.enable" placeholder="请选择状态">
-                    <Option value="" key="">全部</Option>
-                    <Option v-for="(item,key) in tableStatus.enable" :value="key" :key="key">{{ item }}</Option>
-                </Select>
+        <Option value="" key="">全部</Option>
+        <Option v-for="(item,key) in tableStatus.enable" :value="key" :key="key">{{ item }}</Option>
+      </Select>
     </Col>
+
     <Col span="2">
     <Select v-model="searchForm.is_admin" placeholder="管理员">
-                    <Option value="" key="">全部</Option>
-                    <Option v-for="(item,key) in tableStatus.is_admin" :value="key" :key="key">{{ item }}</Option>
-                </Select>
+      <Option value="" key="">全部</Option>
+      <Option v-for="(item,key) in tableStatus.is_admin" :value="key" :key="key">{{ item }}</Option>
+    </Select>
     </Col>
     <Col span="3">
     <Input icon="search" placeholder="请输入邮箱搜索..." v-model="searchForm.email" />
@@ -40,6 +41,7 @@
       </div>
     </div>
   </Row>
+
   <Modal v-model="modalHeadImage.show">
     <p slot="header">图片预览</p>
     <div class="text-center">
@@ -48,26 +50,27 @@
     <div slot="footer">
     </div>
   </Modal>
+
   <Modal v-model="roleModal.show" :closable='false' :mask-closable=false width="1000">
     <h3 slot="header" style="color:#2D8CF0">分配权限</h3>
     <Transfer v-if="roleModal.show" :data="roleModal.allRoles" :target-keys="roleModal.hasRoles" :render-format="renderFormat" :operations="['移除角色','添加角色']" :list-style="roleModal.listStyle" filterable @on-change="handleTransferChange">
     </Transfer>
     <div slot="footer">
       <Button type="text" @click="cancelRoleModal">取消</Button>
-      <Button type="primary" @click="giveUserRoleExcute">保存
-                </Button>
+      <Button type="primary" @click="giveUserRoleExcute">保存 </Button>
     </div>
   </Modal>
-  <add-user v-if='addUserModal.show === true' @on-add-user-success='getTableDataExcute(1)' @on-add-user-modal-hide="addUsermodalHide"></add-user>
-  <edit-user v-if='editUserModal.show === true' :user-id='editUserModal.userId' @on-edit-user-success='getTableDataExcute(1)' @on-edit-user-modal-hide="editUsermodalHide"> </edit-user>
+
+  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(1)' @on-add-modal-hide="addModalHide"></add-component>
+  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(1)' @on-edit-modal-hide="editModalHide"> </edit-component>
 
 </div>
 </template>
 
 
 <script>
-import AddUser from './components/add-user'
-import EditUser from './components/edit-user'
+import AddComponent from './components/add-user'
+import EditComponent from './components/edit-user'
 
 import {
   getTableData,
@@ -84,8 +87,8 @@ import {
 
 export default {
   components: {
-    AddUser,
-    EditUser
+    AddComponent,
+    EditComponent
   },
   data() {
     return {
@@ -116,12 +119,12 @@ export default {
           height: '400px'
         }
       },
-      addUserModal: {
+      addModal: {
         show: false
       },
-      editUserModal: {
+      editModal: {
         show: false,
-        userId: 0
+        id: 0
       },
       columns: [{
           title: 'ID',
@@ -226,8 +229,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.editUserModal.show = true
-                    this.editUserModal.userId = params.row.id
+                    this.editModal.show = true
+                    this.editModal.id = params.row.id
                     // let argu = {
                     //   user_id: params.row.id
                     // };
@@ -372,13 +375,13 @@ export default {
       })
     },
     addBtn() {
-      this.addUserModal.show = true
+      this.addModal.show = true
     },
-    addUsermodalHide() {
-      this.addUserModal.show = false
+    addModalHide() {
+      this.addModal.show = false
     },
-    editUsermodalHide() {
-      this.editUserModal.show = false
+    editModalHide() {
+      this.editModal.show = false
     }
   },
 }

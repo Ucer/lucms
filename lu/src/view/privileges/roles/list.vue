@@ -1,5 +1,5 @@
 <template>
-<div id="privileges-users-list">
+<div>
   <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
     <Col span="3">
     <Input icon="search" placeholder="请输入角色名称..." v-model="searchForm.name" />
@@ -23,50 +23,40 @@
     <Table border :columns="columns" :data="dataList"></Table>
   </Row>
 
-  <Modal v-model="addEditRoleModal.show" :closable='false' :mask-closable=false :width="500">
-    <h3 slot="header" style="color:#2D8CF0">编辑角色</h3>
-    <Form ref="addEditRoleForm" :model="addEditRoleForm" :label-width="100" label-position="right" :rules="ruleAddEditRole">
-      <FormItem label="角色名称" prop="name">
-        <Input v-model="addEditRoleForm.name" placeholder="请输角色名称"></Input>
-      </FormItem>
-      <FormItem label="看守器" prop="guard_name">
-        <Input v-model="addEditRoleForm.guard_name" placeholder="请输入看守器"></Input>
-      </FormItem>
-      <FormItem label="角色描述" prop="description">
-        <Input v-model="addEditRoleForm.description" placeholder="请输入角色描述"></Input>
-      </FormItem>
-
-    </Form>
-    <div slot="footer">
-      <Button @click="cancelEditPass">取消</Button>
-      <Button type="primary" @click="addEditRoleExcute" :loading="addEditRoleModal.saveLoading">保存</Button>
-    </div>
-  </Modal>
   <Modal v-model="permissionModal.show" :closable='false' :mask-closable=false width="1000">
     <h3 slot="header" style="color:#2D8CF0">分配权限</h3>
     <Transfer v-if="permissionModal.show" :data="permissionModal.allPermissions" :target-keys="permissionModal.hasPermissions" :render-format="renderFormat" :operations="['移除权限','添加权限']" :list-style="permissionModal.listStyle" filterable @on-change="handleTransferChange">
     </Transfer>
     <div slot="footer">
       <Button type="text" @click="cancelPermissionModal">取消</Button>
-      <Button type="primary" @click="giveRolePermissionExcute">保存
-                </Button>
+      <Button type="primary" @click="giveRolePermissionExcute">保存 </Button>
     </div>
   </Modal>
+
+  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute' @on-add-modal-hide="addModalHide"></add-component>
+  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute' @on-edit-modal-hide="editModalHide"> </edit-component>
+
 </div>
 </template>
 
 
 <script>
+import AddComponent from './components/add-role'
+import EditComponent from './components/edit-role'
+
 import {
   getAllPermission,
   getTableData,
-  addEditRole,
   getRolePermissions,
   giveRolePermission,
   deleteRole
 } from '@/api/roles'
 
 export default {
+  components: {
+    AddComponent,
+    EditComponent
+  },
   data() {
     return {
       searchForm: {},
@@ -75,10 +65,6 @@ export default {
       modalHeadImage: {
         show: false,
         url: null
-      },
-      addEditRoleModal: {
-        show: false,
-        saveLoading: false,
       },
       permissionModal: {
         id: 0,
@@ -91,23 +77,12 @@ export default {
           height: '400px'
         }
       },
-      ruleAddEditRole: {
-        name: [{
-          required: true,
-          message: '请填写角色限名称',
-          trigger: 'blur'
-        }],
-        guard_name: [{
-          required: true,
-          message: '请填写看守器',
-          trigger: 'blur'
-        }],
+      addModal: {
+        show: false
       },
-      addEditRoleForm: {
-        id: 0,
-        name: '',
-        guard_name: '',
-        description: ''
+      editModal: {
+        show: false,
+        id: 0
       },
       columns: [{
           title: 'ID',
@@ -151,8 +126,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    t.addEditRoleForm = t.dataList[params.index]
-                    t.addEditRoleModal.show = true
+                    this.editModal.show = true
+                    this.editModal.id = params.row.id
                   }
                 }
 
@@ -204,7 +179,6 @@ export default {
       ]
     }
   },
-
   created() {
     let t = this
     t.getTableDataExcute()
@@ -236,25 +210,6 @@ export default {
         t.tableLoading = false
       })
     },
-    addEditRoleExcute() {
-      let t = this
-      t.$refs.addEditRoleForm.validate((valid) => {
-        if (valid) {
-          t.addEditRoleModal.saveLoading = true
-
-          addEditRole(t.addEditRoleForm).then(res => {
-            t.$Notice.success({
-              title: res.message
-            })
-            t.getTableDataExcute()
-            t.addEditRoleModal.saveLoading = false
-            t.addEditRoleModal.show = false
-          }, function(error) {
-            t.addEditRoleModal.saveLoading = false
-          })
-        }
-      })
-    },
     handleTransferChange(newTargetKeys) {
       this.permissionModal.hasPermissions = newTargetKeys
     },
@@ -273,25 +228,6 @@ export default {
         t.permissionModal.show = false
       })
     },
-    cancelEditPass() {
-      let t = this
-      t.addEditRoleModal.show = false
-      t.addEditRoleModal.saveLoading = false
-      t.cleanModal()
-    },
-    cleanModal() {
-      let t = this
-      t.addEditRoleForm = {
-        id: 0,
-        name: '',
-        guard_name: '',
-        description: ''
-      }
-    },
-    addBtn() {
-      this.cleanModal()
-      this.addEditRoleModal.show = true
-    },
     deleteRoleExcute(role, key) {
       let t = this
       deleteRole(role).then(res => {
@@ -301,6 +237,15 @@ export default {
         })
       })
     },
-  },
+    addBtn() {
+      this.addModal.show = true
+    },
+    addModalHide() {
+      this.addModal.show = false
+    },
+    editModalHide() {
+      this.editModal.show = false
+    }
+  }
 }
 </script>

@@ -51,3 +51,12 @@ export const deleteRole = (role) => {
     method: 'delete'
   })
 }
+
+// =============== privileges/roles/components/edit-role.vue =========================
+
+export const getRoleInfoById = (role) => {
+  return axios.request({
+    url: '/api/admin/roles/' + role,
+    method: 'get'
+  })
+}

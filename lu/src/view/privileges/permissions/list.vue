@@ -25,36 +25,26 @@
     <Table border :columns="columns" :data="dataList"></Table>
   </Row>
 
-  <Modal v-model="addEditPermissionModal.show" :closable='false' :mask-closable=false :width="500">
-    <h3 slot="header" style="color:#2D8CF0">编辑权限</h3>
-    <Form ref="addEditPermissionForm" :model="addEditPermissionForm" :label-width="100" label-position="right" :rules="ruleAddEditPermission">
-      <FormItem label="权限名称" prop="name">
-        <Input v-model="addEditPermissionForm.name" placeholder="请输入权限名称"></Input>
-      </FormItem>
-      <FormItem label="看守器" prop="guard_name">
-        <Input v-model="addEditPermissionForm.guard_name" placeholder="请输入看守器"></Input>
-      </FormItem>
-      <FormItem label="权限描述" prop="description">
-        <Input v-model="addEditPermissionForm.description" placeholder="请输入权限描述"></Input>
-      </FormItem>
+  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute' @on-add-modal-hide="addModalHide"></add-component>
+  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute' @on-edit-modal-hide="editModalHide"> </edit-component>
 
-    </Form>
-    <div slot="footer">
-      <Button type="text" @click="cancelEditPass">取消</Button>
-      <Button type="primary" @click="addEditPermissionExcute" :loading="addEditPermissionModal.saveLoading">保存</Button>
-    </div>
-  </Modal>
 </div>
 </template>
 
 <script>
+import AddComponent from './components/add-permission'
+import EditComponent from './components/edit-permission'
+
 import {
   getTableData,
-  addEditPermission,
   deletePermission
 } from '@/api/permissions'
 
 export default {
+  components: {
+    AddComponent,
+    EditComponent
+  },
   data() {
     return {
       searchForm: {},
@@ -64,27 +54,12 @@ export default {
         show: false,
         url: null
       },
-      addEditPermissionModal: {
+      addModal: {
+        show: false
+      },
+      editModal: {
         show: false,
-        saveLoading: false,
-      },
-      ruleAddEditPermission: {
-        name: [{
-          required: true,
-          message: '请填写权限名称',
-          trigger: 'blur'
-        }],
-        guard_name: [{
-          required: true,
-          message: '请填写看守器',
-          trigger: 'blur'
-        }],
-      },
-      addEditPermissionForm: {
-        id: 0,
-        name: '',
-        guard_name: '',
-        description: '',
+        id: 0
       },
       columns: [{
         title: 'ID',
@@ -119,8 +94,8 @@ export default {
               },
               on: {
                 click: () => {
-                  t.addEditPermissionForm = t.dataList[params.index]
-                  t.addEditPermissionModal.show = true
+                    this.editModal.show = true
+                    this.editModal.id = params.row.id
                 }
               }
 
@@ -158,15 +133,6 @@ export default {
     this.getTableDataExcute()
   },
   methods: {
-    cleanModal() {
-      let t = this
-      t.addEditPermissionForm = {
-        id: 0,
-        name: '',
-        guard_name: '',
-        description: ''
-      }
-    },
     getTableDataExcute() {
       let t = this
       t.loading = true
@@ -178,37 +144,6 @@ export default {
         t.tableLoading = false
       })
     },
-    addEditPermissionExcute() {
-      let t = this
-      t.$refs.addEditPermissionForm.validate((valid) => {
-        if (valid) {
-          t.addEditPermissionModal.saveLoading = true
-
-          addEditPermission(t.addEditPermissionForm).then(res => {
-            t.$Notice.success({
-              title: '操作成功',
-              desc: res.message
-            })
-
-            t.getTableDataExcute()
-            t.addEditPermissionModal.show = false
-            t.addEditPermissionModal.saveLoading = false
-          }, function(error) {
-            t.addEditPermissionModal.saveLoading = false
-          })
-        }
-      })
-    },
-    cancelEditPass() {
-      let t = this
-      t.addEditPermissionModal.show = false
-      t.addEditPermissionModal.saveLoading = false
-      t.cleanModal()
-    },
-    addBtn() {
-      this.cleanModal()
-      this.addEditPermissionModal.show = true
-    },
     deletePermissionExcute(permission, key) {
       let t = this
       deletePermission(permission).then(res => {
@@ -217,6 +152,15 @@ export default {
           title: res.message
         })
       })
+    },
+    addBtn() {
+      this.addModal.show = true
+    },
+    addModalHide() {
+      this.addModal.show = false
+    },
+    editModalHide() {
+      this.editModal.show = false
     }
   }
 }

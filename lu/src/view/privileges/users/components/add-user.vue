@@ -35,8 +35,7 @@
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="addUserExcute">保存
-                </Button>
+      <Button type="primary" @click="addUserExcute" :loading='saveLoading'>保存 </Button>
     </div>
   </Modal>
 </div>
@@ -125,11 +124,6 @@ export default {
       },
     }
   },
-  watch: {
-    modal: function() {
-      this.modalShow = true
-    }
-  },
   methods: {
     addUserExcute() {
       let t = this;
@@ -139,8 +133,8 @@ export default {
           addUser(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
-            t.$emit('on-add-user-success')
-            t.$emit('on-add-user-modal-hide')
+            t.$emit('on-add-modal-success')
+            t.$emit('on-add-modal-hide')
             t.$Notice.success({
               title: res.message
             })
@@ -154,7 +148,7 @@ export default {
     },
     cancel() {
       this.modalShow = false
-      this.$emit('on-add-user-modal-hide')
+      this.$emit('on-add-modal-hide')
     },
     handleSuccess(res, file) {
       file.url = res.data.url;

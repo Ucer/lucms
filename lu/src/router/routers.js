@@ -43,7 +43,7 @@ export default[
     ]
   }, {
     path: '/privileges',
-    name: 'access',
+    name: 'privileges',
     component: Main,
     meta: {
       icon: 'ios-key',
@@ -52,7 +52,7 @@ export default[
     },
     children: [
       {
-        path: 'permission-list',
+        path: '/permission-list',
         name: 'permission-list',
         meta: {
           icon: 'ios-lock',
@@ -60,7 +60,7 @@ export default[
         },
         component: () => import ('@/view/privileges/permissions/list.vue')
       }, {
-        path: 'role-list',
+        path: '/role-list',
         name: 'role-list',
         meta: {
           icon: 'ios-people',
@@ -69,13 +69,32 @@ export default[
         },
         component: () => import ('@/view/privileges/roles/list.vue')
       }, {
-        path: 'administrator-list',
+        path: '/administrator-list',
         name: 'administrator-list',
         meta: {
           icon: 'md-people',
           title: '用户列表'
         },
         component: () => import ('@/view/privileges/users/list.vue')
+      }
+    ]
+  }, {
+    path: '/news-system',
+    name: 'news-system',
+    component: Main,
+    meta: {
+      title: '新闻系统',
+      icon: 'ios-cog'
+    },
+    children: [
+      {
+        path: '/advertisement-positions',
+        name: 'advertisement-positions',
+        meta: {
+          icon: 'speakerphone',
+          title: '广告位'
+        },
+        component: () => import ('@/view/news-system/advertisement-positions/list.vue')
       }
     ]
   }, {

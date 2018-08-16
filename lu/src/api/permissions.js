@@ -26,3 +26,12 @@ export const deletePermission = (permission) => {
     method: 'delete'
   })
 }
+
+// =============== privileges/permissions/components/edit-permission.vue =========================
+
+export const getPermissionInfoById = (permission) => {
+  return axios.request({
+    url: '/api/admin/permissions/' + permission,
+    method: 'get'
+  })
+}

@@ -18,11 +18,16 @@ class RolesController extends AdminController
     public function roleList(Request $request, Role $role)
     {
         $search_data = json_decode($request->get('search_data'), true);
-        $name = isset_and_not_empty($search_data,'name');
+        $name = isset_and_not_empty($search_data, 'name');
         if ($name) {
             $role = $role->columnLike('name', $name);
         }
         return new RoleCollection($role->get());
+    }
+
+    public function show(Role $role)
+    {
+        return $this->success($role);
     }
 
     public function addEditRole(Request $request, Role $role, RoleValidate $validate)

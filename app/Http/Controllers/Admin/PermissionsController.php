@@ -28,6 +28,11 @@ class PermissionsController extends AdminController
         return new PermissionCollection($permissions);
     }
 
+    public function show(Permission $permission)
+    {
+        return $this->success($permission);
+    }
+
 
     public function allPermissions(Permission $permission)
     {

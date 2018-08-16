@@ -35,10 +35,17 @@
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="editUserExcute">保存
+      <Button type="primary" @click="editUserExcute" :loading='saveLoading'>保存
                 </Button>
     </div>
+    <div class="demo-spin-container" v-if='spinLoading === true'>
+      <Spin fix>
+        <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+        <div>加载中...</div>
+      </Spin>
+    </div>
   </Modal>
+
 </div>
 </template>
 <script>
@@ -49,7 +56,7 @@ import {
 
 export default {
   props: {
-    userId: {
+    modalId: {
       type: Number,
       default: 0
     }
@@ -58,6 +65,7 @@ export default {
     return {
       modalShow: true,
       saveLoading: false,
+      spinLoading: true,
       formData: {
         name: '',
         email: '',
@@ -105,15 +113,16 @@ export default {
     }
   },
   created() {
-    if (this.userId > 0) {
+    if (this.modalId > 0) {
       this.getUserInfoByIdExcute()
     }
+    this.spinLoading = true
   },
   methods: {
     getUserInfoByIdExcute() {
       let t = this;
       t.spinLoading = true;
-      getUserInfoById(t.userId).then(res => {
+      getUserInfoById(t.modalId).then(res => {
         let res_data = res.data
         t.formData = {
           id: res_data.id,
@@ -136,11 +145,11 @@ export default {
       t.saveLoading = true
       t.$refs.formData.validate((valid) => {
         if (valid) {
-          editUser(t.userId, t.formData).then(res => {
+          editUser(t.modalId, t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
-            t.$emit('on-edit-user-success')
-            this.$emit('on-edit-user-modal-hide')
+            t.$emit('on-edit-modal-success')
+            this.$emit('on-edit-modal-hide')
             t.$Notice.success({
               title: res.message
             })
@@ -154,7 +163,7 @@ export default {
     },
     cancel() {
       this.modalShow = false
-      this.$emit('on-edit-user-modal-hide')
+      this.$emit('on-edit-modal-hide')
     },
     handleSuccess(res, file) {
       file.url = res.data.url;
