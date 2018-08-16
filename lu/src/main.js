@@ -23,9 +23,9 @@ import {TOKEN_KEY} from '@/libs/util'
      env === 'development' ? require('@/mock') : ''
      */
 
-Object.defineProperty(Vue.prototype, '$apiRequest', {
-  value: apiRequest
-})
+// Object.defineProperty(Vue.prototype, '$apiRequest', {
+//   value: apiRequest
+// })
 
 window.access_token = Cookies.get(TOKEN_KEY)
 

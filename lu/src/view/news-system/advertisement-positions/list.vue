@@ -11,7 +11,7 @@
     </Select>
     </Col>
     <Col span="2">
-    <Button type="primary" icon="ios-search" @click="getTableData(1)">Search</Button>
+    <Button type="primary" icon="ios-search" @click="getTableDataExcute(1)">Search</Button>
     </Col>
     <Col span="2">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
@@ -34,26 +34,30 @@
     </div>
   </Row>
 
-  <add-advertisement-position v-if='addAdvertisementPositionModal.show === true' @on-add-success='getTableDataExcute(1)' @on-add-modal-hide="addAdvertisementPositionModalHide"></add-advertisement-position>
+  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(1)' @on-add-modal-hide="addModalHide" :table-status='tableStatus'></add-component>
+  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(1)' @on-edit-modal-hide="editModalHide" :table-status='tableStatus'> </edit-component>
 
 </div>
 </template>
 
 
 <script>
+import AddComponent from './components/add-user'
+import EditComponent from './components/edit-user'
+
 import {
   getTableStatus
 } from '@/api/common'
 
 import {
-  getTableData
+  getTableData,
+  deleteAdvertisementPosition
 } from '@/api/advertisement-position'
-
-import addAdvertisementPosition from './components/add-advertisement-position'
 
 export default {
   components: {
-    addAdvertisementPosition
+    AddComponent,
+    EditComponent
   },
   data() {
     return {
@@ -68,183 +72,134 @@ export default {
         current_page: 1,
         per_page: 10
       },
-      addAdvertisementPositionModal: {
-        show: false,
+      addModal: {
+        show: false
       },
-      editAdvertisementPositionModal: {
+      editModal: {
         show: false,
         id: 0
       },
       columns: [{
-          title: 'ID',
-          key: 'id',
-          sortable: true,
-          width: 100
-        },
-        {
-          title: '广告位名称',
-          key: 'name'
-        },
-        {
-          title: '广告位描述',
-          key: 'description'
-        },
-        {
-          title: '类型',
-          render: (h, params) => {
-            return h('div', [
-              h('Tag', {
-                props: {
-                  type: 'dot',
-                  color: 'green'
-                }
-              }, this.tableStatus.type[params.row.type])
-            ]);
-          },
-        },
-        {
-          title: '创建时间',
-          key: 'created_at',
-          sortable: true,
-        },
-        {
-          title: '更新时间',
-          key: 'created_at'
-        },
-        {
-          title: '操作',
-          render: (h, params) => {
-            let t = this;
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'success',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    t.addEditAdvertisementPositionForm = t.feeds.data[params.index];
-                    t.addEditAdvertisementPositionModal.show = true;
-                  }
-                }
+          columns: [{
+              title: 'ID',
+              key: 'id',
+              sortable: true,
+              width: 100
+            },
+            {
+              title: '广告位名称',
+              key: 'name'
+            },
+            {
+              title: '广告位描述',
+              key: 'description'
+            },
+            {
+              title: '类型',
+              render: (h, params) => {
+                return h('div', [
+                  h('Tag', {
+                    props: {
+                      type: 'dot',
+                      color: 'green'
+                    }
+                  }, this.tableStatus.type[params.row.type])
+                ])
+              },
+            },
+            {
+              title: '创建时间',
+              key: 'created_at',
+              sortable: true,
+            },
+            {
+              title: '更新时间',
+              key: 'created_at'
+            },
+            {
+              title: '操作',
+              render: (h, params) => {
+                let t = this;
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'success',
+                      size: 'small'
+                    },
+                    on: {
+                      click: () => {
+                        this.editModal.show = true
+                        this.editModal.id = params.row.id
+                      }
+                    }
 
-              }, 'Edit'),
-              h('Poptip', {
-                props: {
-                  confirm: true,
-                  title: '您确定要删除「' + params.row.name + '」广告位？',
-                  transfer: true
-                },
-                on: {
-                  'on-ok': () => {
-                    t.deleteBtn(params.row.id, params.index);
-                  }
-                }
-              }, [
-                h('Button', {
-                  style: {
-                    margin: '0 5px'
-                  },
-                  props: {
-                    type: 'error',
-                    size: 'small',
-                    placement: 'top'
-                  }
-                }, '删除'),
-              ])
+                  }, 'Edit'),
+                  h('Poptip', {
+                    props: {
+                      confirm: true,
+                      title: '您确定要删除「' + params.row.name + '」广告位？',
+                      transfer: true
+                    },
+                    on: {
+                      'on-ok': () => {
+                        t.deleteAdvertisementPositionExcute(params.row.id, params.index);
+                      }
+                    }
+                  }, [
+                    h('Button', {
+                      style: {
+                        margin: '0 5px'
+                      },
+                      props: {
+                        type: 'error',
+                        size: 'small',
+                        placement: 'top'
+                      }
+                    }, '删除'),
+                  ])
 
-            ])
-          }
+                ])
+              }
+            },
+          ]
+        }
+      },
+      created() {
+        let t = this;
+        t.getTableStatusExcute('advertisement_positions/type')
+        t.getTableDataExcute(t.feeds.current_page)
+      },
+      methods: {
+        handleOnPageChange: function(to_page) {
+          this.getTableDataExcute(to_page)
         },
-      ]
-    }
-  },
-  created() {
-    let t = this;
-    t.getTableStatusExcute('advertisement_positions/type');
-    t.getTableDataExcute(t.feeds.current_page);
-  },
-  methods: {
-    handleOnPageChange: function(to_page) {
-      this.getTableData(to_page)
-    },
-    getTableStatusExcute(params) {
-      let t = this;
-      getTableStatus(params).then(res => {
-        t.tableStatus.type = res.data;
-      })
-    },
-    getTableDataExcute(to_page) {
-      let t = this;
-      t.tableLoading = true;
-      t.feeds.current_page = to_page;
-      getTableData(to_page, t.feeds.per_page, t.searchForm).then(res => {
-        t.feeds.data = res.data;
-        t.feeds.total = res.meta.total;
-        t.tableLoading = false;
-      }, function(error) {
-        t.tableLoading = false;
-      })
-
-    },
-    cleanModal() {
-      let t = this;
-      t.addEditAdvertisementPositionForm = {
-        id: 0,
-        name: '',
-        type: '',
-        description: ''
-      };
-    },
-    handleSubmit() {
-      let t = this;
-      t.$refs.addEditAdvertisementPositionForm.validate((valid) => {
-        if (valid) {
-          t.addEditAdvertisementPositionModal.saveLoading = true;
-          t.$util.ajax.post('/admin/advertisement_positions', t.addEditAdvertisementPositionForm).then(function(response) {
-            let response_data = response.data;
-            t.$Notice.success({
-              title: response_data.message
-            });
-            t.getTableData(1);
-            t.addEditAdvertisementPositionModal.saveLoading = false;
-            t.addEditAdvertisementPositionModal.show = false;
+        getTableStatusExcute(params) {
+          let t = this;
+          getTableStatus(params).then(res => {
+            t.tableStatus.type = res.data
+          })
+        },
+        getTableDataExcute(to_page) {
+          let t = this;
+          t.tableLoading = true;
+          t.feeds.current_page = to_page;
+          getTableData(to_page, t.feeds.per_page, t.searchForm).then(res => {
+            t.feeds.data = res.data;
+            t.feeds.total = res.meta.total
+            t.tableLoading = false;
           }, function(error) {
-            t.$Notice.warning({
-              title: '出错了',
-              desc: error.message
-            });
-            t.addEditAdvertisementPositionModal.saveLoading = false;
+            t.tableLoading = false
+          })
+        },
+        deleteAdvertisementPositionExcute(advertisement_position, key) {
+          let t = this
+          deleteAdvertisementPosition(advertisement_position).then(res => {
+            t.feeds.data.splice(key, 1)
+            t.$Notice.success({
+              title: res.message
+            })
           })
         }
-      });
-    },
-    cancelEditPass() {
-      let t = this;
-      t.addEditAdvertisementPositionModal.show = false;
-      t.addEditAdvertisementPositionModal.saveLoading = false;
-      t.cleanModal();
-    },
-    addBtn() {
-      this.cleanModal();
-      this.addEditAdvertisementPositionModal.show = true;
-    },
-    deleteBtn(advertisement_position, key) {
-      let t = this;
-      t.$util.ajax.delete('/admin/advertisement_positions/' + advertisement_position).then(function(response) {
-        let response_data = response.data;
-        t.feeds.data.splice(key, 1);
-        t.$Notice.success({
-          title: response_data.message
-        });
-      }, function(error) {
-
-        t.$Notice.warning({
-          title: '出错了',
-          desc: error.message
-        });
-      });
-    },
-  },
-}
+      },
+    }
 </script>
