@@ -1,7 +1,7 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="title">编辑权限</p>
+    <p slot="header">编辑权限</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="权限名称" prop="name">
         <Input v-model="formData.name" placeholder="请输入权限名称"></Input>

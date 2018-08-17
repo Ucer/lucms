@@ -1,7 +1,7 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="title">添加角色</p>
+    <p slot="header">添加角色</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="角色名称" prop="name">
         <Input v-model="formData.name" placeholder="请输角色名称"></Input>

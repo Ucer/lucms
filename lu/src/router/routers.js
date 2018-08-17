@@ -91,10 +91,18 @@ export default[
         path: '/advertisement-positions',
         name: 'advertisement-positions',
         meta: {
-          icon: 'speakerphone',
+          icon: 'ios-disc',
           title: '广告位'
         },
         component: () => import ('@/view/news-system/advertisement-positions/list.vue')
+      }, {
+        path: 'advertisement-list',
+        name: 'advertisement-list',
+        meta: {
+          icon: 'ios-volume-up',
+          title: '广告列表'
+        },
+        component: () => import ('@/view/news-system/advertisements/list.vue')
       }
     ]
   }, {

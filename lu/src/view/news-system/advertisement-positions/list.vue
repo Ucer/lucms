@@ -117,7 +117,7 @@ export default {
         {
           title: '操作',
           render: (h, params) => {
-            let t = this;
+            let t = this
             return h('div', [
               h('Button', {
                 props: {
@@ -140,7 +140,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteAdvertisementPositionExcute(params.row.id, params.index);
+                    t.deleteAdvertisementPositionExcute(params.row.id, params.index)
                   }
                 }
               }, [
@@ -163,7 +163,7 @@ export default {
     }
   },
   created() {
-    let t = this;
+    let t = this
     t.getTableStatusExcute('advertisement_positions/type')
     t.getTableDataExcute(t.feeds.current_page)
   },
@@ -172,19 +172,19 @@ export default {
       this.getTableDataExcute(to_page)
     },
     getTableStatusExcute(params) {
-      let t = this;
+      let t = this
       getTableStatus(params).then(res => {
         t.tableStatus.type = res.data
       })
     },
     getTableDataExcute(to_page) {
-      let t = this;
-      t.tableLoading = true;
-      t.feeds.current_page = to_page;
+      let t = this
+      t.tableLoading = true
+      t.feeds.current_page = to_page
       getTableData(to_page, t.feeds.per_page, t.searchForm).then(res => {
-        t.feeds.data = res.data;
+        t.feeds.data = res.data
         t.feeds.total = res.meta.total
-        t.tableLoading = false;
+        t.tableLoading = false
       }, function(error) {
         t.tableLoading = false
       })

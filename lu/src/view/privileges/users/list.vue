@@ -140,7 +140,7 @@ export default {
           title: '头像',
           key: '',
           render: (h, params) => {
-            let t = this;
+            let t = this
             return h('div', [
               h('img', {
                 attrs: {
@@ -154,12 +154,12 @@ export default {
                 },
                 on: {
                   click: (value) => {
-                    t.modalHeadImage.show = true;
-                    t.modalHeadImage.url = params.row.head_image.url;
+                    t.modalHeadImage.show = true
+                    t.modalHeadImage.url = params.row.head_image.url
                   }
                 }
               }),
-            ]);
+            ])
           }
         },
         {
@@ -171,9 +171,9 @@ export default {
           width: 150,
           render: (h, params) => {
 
-            const row = params.row;
-            const color = row.is_admin === 'T' ? 'green' : 'red';
-            const text = row.is_admin === 'T' ? '可登录' : '不可登录';
+            const row = params.row
+            const color = row.is_admin === 'T' ? 'green' : 'red'
+            const text = row.is_admin === 'T' ? '可登录' : '不可登录'
 
             return h('div', [
               h('Tag', {
@@ -181,7 +181,7 @@ export default {
                   color: color
                 }
               }, text)
-            ]);
+            ])
           }
         },
         {
@@ -199,7 +199,7 @@ export default {
                   this.switchEnableExcute(params.index)
                 }
               }
-            });
+            })
           }
         },
         {
@@ -216,7 +216,7 @@ export default {
           title: '操作',
           key: '',
           render: (h, params) => {
-            let t = this;
+            let t = this
             return h('div', [
               h('Button', {
                 props: {
@@ -252,8 +252,8 @@ export default {
                 on: {
                   click: () => {
                     t.getUserRolesExcute(params.row.id);
-                    t.roleModal.show = true;
-                    t.roleModal.id = params.row.id;
+                    t.roleModal.show = true
+                    t.roleModal.id = params.row.id
                   }
                 }
 
@@ -267,7 +267,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteUserExcute(params.row.id, params.index);
+                    t.deleteUserExcute(params.row.id, params.index)
                   }
                 }
               }, [
@@ -290,43 +290,43 @@ export default {
     }
   },
   created() {
-    let t = this;
-    t.getTableStatusExcute('users');
-    t.getAllRoleExcute();
-    t.getTableDataExcute(t.feeds.current_page);
+    let t = this
+    t.getTableStatusExcute('users')
+    t.getAllRoleExcute()
+    t.getTableDataExcute(t.feeds.current_page)
   },
   methods: {
     handleOnPageChange: function(to_page) {
       this.getTableDataExcute(to_page)
     },
     getTableStatusExcute(params) {
-      let t = this;
+      let t = this
       getTableStatus(params).then(res => {
-        t.tableStatus.enable = res.data.enable;
-        t.tableStatus.is_admin = res.data.is_admin;
+        t.tableStatus.enable = res.data.enable
+        t.tableStatus.is_admin = res.data.is_admin
       })
     },
     getTableDataExcute(to_page) {
-      let t = this;
-      t.tableLoading = true;
-      t.feeds.current_page = to_page;
+      let t = this
+      t.tableLoading = true
+      t.feeds.current_page = to_page
       getTableData(to_page, t.feeds.per_page, t.searchForm).then(res => {
-        t.feeds.data = res.data;
-        t.feeds.total = res.meta.total;
-        t.tableLoading = false;
+        t.feeds.data = res.data
+        t.feeds.total = res.meta.total
+        t.tableLoading = false
       }, function(error) {
-        t.tableLoading = false;
+        t.tableLoading = false
       })
 
     },
     switchEnableExcute(index) {
-      let t = this;
-      let new_status = 'T';
+      let t = this
+      let new_status = 'T'
       if (t.feeds.data[index].enable === 'T') {
-        new_status = 'F';
+        new_status = 'F'
       }
       switchEnable(t.feeds.data[index].id, 'users', new_status).then(res => {
-        t.feeds.data[index].enable = new_status;
+        t.feeds.data[index].enable = new_status
         t.$Notice.success({
           title: res.message
         })
@@ -335,28 +335,28 @@ export default {
     getAllRoleExcute() {
       let t = this
       getAllRole().then(res => {
-        t.roleModal.allRoles = res.data;
+        t.roleModal.allRoles = res.data
       })
     },
     handleTransferChange(newTargetKeys) {
-      this.roleModal.hasRoles = newTargetKeys;
+      this.roleModal.hasRoles = newTargetKeys
     },
     getUserRolesExcute(id) {
       getUserRoles(id).then(res => {
-        this.roleModal.hasRoles = res.data;
+        this.roleModal.hasRoles = res.data
       })
     },
     renderFormat(item) {
       return item.label + '「' + item.description + '」'
     },
     giveUserRoleExcute() {
-      let t = this;
+      let t = this
       giveUserRole(t.roleModal.id, t.roleModal.hasRoles).then((res) => {
         t.$Notice.success({
           title: '操作成功',
           desc: res.message
-        });
-        t.roleModal.show = false;
+        })
+        t.roleModal.show = false
       })
     },
     cancelRoleModal() {

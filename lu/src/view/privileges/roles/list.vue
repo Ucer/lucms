@@ -214,7 +214,7 @@ export default {
       this.permissionModal.hasPermissions = newTargetKeys
     },
     getRolePermissionsExcute(id) {
-      let t = this;
+      let t = this
       getRolePermissions(id).then(res => {
         t.permissionModal.hasPermissions = res.data
       })
