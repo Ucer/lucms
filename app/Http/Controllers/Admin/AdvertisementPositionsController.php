@@ -32,6 +32,11 @@ class AdvertisementPositionsController extends AdminController
         return new AdvertisementPositionCollection($advertisementPosition->paginate($per_page));
     }
 
+    public function show(AdvertisementPosition $advertisementPosition)
+    {
+        return $this->success($advertisementPosition);
+    }
+
     public function allAdvertisementPositions(AdvertisementPosition $advertisementPosition)
     {
         return $this->success(collect($advertisementPosition->get())->keyBy('id'));

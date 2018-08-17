@@ -20,11 +20,13 @@ export const deleteAdvertisementPosition = (advertisement_position) => {
   })
 }
 
-
 export const addEditAdvertisementPosition = (saveData) => {
+  return axios.request({url: '/api/admin/advertisement_positions', data: saveData, method: 'post'})
+}
+
+export const getAdvertisementPositionInfoById = (advertisementPosition) => {
   return axios.request({
-    url: '/api/admin/advertisement_positions',
-    data: saveData,
-    method: 'post'
+    url: 'api/admin/advertisement_positions/' + advertisementPosition,
+    method: 'get'
   })
 }

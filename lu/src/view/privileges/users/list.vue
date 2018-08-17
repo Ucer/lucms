@@ -178,7 +178,6 @@ export default {
             return h('div', [
               h('Tag', {
                 props: {
-                  type: 'dot',
                   color: color
                 }
               }, text)

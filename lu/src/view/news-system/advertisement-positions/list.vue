@@ -42,8 +42,8 @@
 
 
 <script>
-import AddComponent from './components/add-user'
-import EditComponent from './components/edit-user'
+import AddComponent from './components/add-advertisement-position'
+import EditComponent from './components/edit-advertisement-position'
 
 import {
   getTableStatus
@@ -64,7 +64,7 @@ export default {
       searchForm: {},
       tableLoading: false,
       tableStatus: {
-        type: [],
+        type: []
       },
       feeds: {
         data: [],
@@ -80,126 +80,133 @@ export default {
         id: 0
       },
       columns: [{
-          columns: [{
-              title: 'ID',
-              key: 'id',
-              sortable: true,
-              width: 100
-            },
-            {
-              title: '广告位名称',
-              key: 'name'
-            },
-            {
-              title: '广告位描述',
-              key: 'description'
-            },
-            {
-              title: '类型',
-              render: (h, params) => {
-                return h('div', [
-                  h('Tag', {
-                    props: {
-                      type: 'dot',
-                      color: 'green'
-                    }
-                  }, this.tableStatus.type[params.row.type])
-                ])
-              },
-            },
-            {
-              title: '创建时间',
-              key: 'created_at',
-              sortable: true,
-            },
-            {
-              title: '更新时间',
-              key: 'created_at'
-            },
-            {
-              title: '操作',
-              render: (h, params) => {
-                let t = this;
-                return h('div', [
-                  h('Button', {
-                    props: {
-                      type: 'success',
-                      size: 'small'
-                    },
-                    on: {
-                      click: () => {
-                        this.editModal.show = true
-                        this.editModal.id = params.row.id
-                      }
-                    }
+          title: 'ID',
+          key: 'id',
+          sortable: true,
+          width: 100
+        },
+        {
+          title: '广告位名称',
+          key: 'name'
+        },
+        {
+          title: '广告位描述',
+          key: 'description'
+        },
+        {
+          title: '类型',
+          render: (h, params) => {
+            return h('div', [
+              h('Tag', {
+                props: {
+                  color: 'green'
+                }
+              }, this.tableStatus.type[params.row.type])
+            ])
+          },
+        },
+        {
+          title: '创建时间',
+          key: 'created_at',
+          sortable: true,
+        },
+        {
+          title: '更新时间',
+          key: 'created_at'
+        },
+        {
+          title: '操作',
+          render: (h, params) => {
+            let t = this;
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'success',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.editModal.show = true
+                    this.editModal.id = params.row.id
+                  }
+                }
 
-                  }, 'Edit'),
-                  h('Poptip', {
-                    props: {
-                      confirm: true,
-                      title: '您确定要删除「' + params.row.name + '」广告位？',
-                      transfer: true
-                    },
-                    on: {
-                      'on-ok': () => {
-                        t.deleteAdvertisementPositionExcute(params.row.id, params.index);
-                      }
-                    }
-                  }, [
-                    h('Button', {
-                      style: {
-                        margin: '0 5px'
-                      },
-                      props: {
-                        type: 'error',
-                        size: 'small',
-                        placement: 'top'
-                      }
-                    }, '删除'),
-                  ])
+              }, 'Edit'),
+              h('Poptip', {
+                props: {
+                  confirm: true,
+                  title: '您确定要删除「' + params.row.name + '」广告位？',
+                  transfer: true
+                },
+                on: {
+                  'on-ok': () => {
+                    t.deleteAdvertisementPositionExcute(params.row.id, params.index);
+                  }
+                }
+              }, [
+                h('Button', {
+                  style: {
+                    margin: '0 5px'
+                  },
+                  props: {
+                    type: 'error',
+                    size: 'small',
+                    placement: 'top'
+                  }
+                }, '删除'),
+              ])
 
-                ])
-              }
-            },
-          ]
-        }
-      },
-      created() {
-        let t = this;
-        t.getTableStatusExcute('advertisement_positions/type')
-        t.getTableDataExcute(t.feeds.current_page)
-      },
-      methods: {
-        handleOnPageChange: function(to_page) {
-          this.getTableDataExcute(to_page)
+            ])
+          }
         },
-        getTableStatusExcute(params) {
-          let t = this;
-          getTableStatus(params).then(res => {
-            t.tableStatus.type = res.data
-          })
-        },
-        getTableDataExcute(to_page) {
-          let t = this;
-          t.tableLoading = true;
-          t.feeds.current_page = to_page;
-          getTableData(to_page, t.feeds.per_page, t.searchForm).then(res => {
-            t.feeds.data = res.data;
-            t.feeds.total = res.meta.total
-            t.tableLoading = false;
-          }, function(error) {
-            t.tableLoading = false
-          })
-        },
-        deleteAdvertisementPositionExcute(advertisement_position, key) {
-          let t = this
-          deleteAdvertisementPosition(advertisement_position).then(res => {
-            t.feeds.data.splice(key, 1)
-            t.$Notice.success({
-              title: res.message
-            })
-          })
-        }
-      },
+      ]
     }
+  },
+  created() {
+    let t = this;
+    t.getTableStatusExcute('advertisement_positions/type')
+    t.getTableDataExcute(t.feeds.current_page)
+  },
+  methods: {
+    handleOnPageChange: function(to_page) {
+      this.getTableDataExcute(to_page)
+    },
+    getTableStatusExcute(params) {
+      let t = this;
+      getTableStatus(params).then(res => {
+        t.tableStatus.type = res.data
+      })
+    },
+    getTableDataExcute(to_page) {
+      let t = this;
+      t.tableLoading = true;
+      t.feeds.current_page = to_page;
+      getTableData(to_page, t.feeds.per_page, t.searchForm).then(res => {
+        t.feeds.data = res.data;
+        t.feeds.total = res.meta.total
+        t.tableLoading = false;
+      }, function(error) {
+        t.tableLoading = false
+      })
+    },
+    deleteAdvertisementPositionExcute(advertisementPosition, key) {
+      let t = this
+      deleteAdvertisementPosition(advertisementPosition).then(res => {
+        t.feeds.data.splice(key, 1)
+        t.$Notice.success({
+          title: res.message
+        })
+      })
+    },
+    addBtn() {
+      this.addModal.show = true
+    },
+    addModalHide() {
+      this.addModal.show = false
+    },
+    editModalHide() {
+      this.editModal.show = false
+    }
+  }
+}
 </script>

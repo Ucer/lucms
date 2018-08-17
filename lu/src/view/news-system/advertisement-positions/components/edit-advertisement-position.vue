@@ -3,19 +3,21 @@
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
     <p slot="title">添加角色</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
-      <FormItem label="角色名称" prop="name">
-        <Input v-model="formData.name" placeholder="请输角色名称"></Input>
+      <FormItem label="广告位名称" prop="name">
+        <Input v-model="formData.name" placeholder="请输入广告位名称"></Input>
       </FormItem>
-      <FormItem label="看守器" prop="guard_name">
-        <Input v-model="formData.guard_name" placeholder="请输入看守器"></Input>
+      <FormItem label="广告位类型" prop="type">
+        <Select v-model="formData.type" filterable>
+          <Option v-for="(item,key) in tableStatus.type" :value="key" :key="key">{{ item }}</Option>
+        </Select>
       </FormItem>
-      <FormItem label="角色描述" prop="description">
-        <Input v-model="formData.description" placeholder="请输入角色描述"></Input>
+      <FormItem label="广告位描述" prop="description">
+        <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>
       </FormItem>
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="addEditRoleExcute" :loading='saveLoading'>保存 </Button>
+      <Button type="primary" @click="addEditAdvertisementPositionExcute" :loading='saveLoading'>保存 </Button>
     </div>
     <div class="demo-spin-container" v-if='spinLoading === true'>
       <Spin fix>
@@ -28,12 +30,16 @@
 </template>
 <script>
 import {
-  addEditRole,
-  getRoleInfoById
-} from '@/api/roles'
+  addEditAdvertisementPosition,
+  getAdvertisementPositionInfoById
+} from '@/api/advertisement-position'
 
 export default {
   props: {
+    tableStatus: {
+      type: Object,
+      default: {}
+    },
     modalId: {
       type: Number,
       default: 0
@@ -45,18 +51,18 @@ export default {
       saveLoading: false,
       formData: {
         name: '',
-        guard_name: '',
-        description: ''
+        description: '',
+        type: 0
       },
       rules: {
         name: [{
           required: true,
-          message: '请填写角色限名称',
+          message: '请填写广告位名称',
           trigger: 'blur'
         }],
-        guard_name: [{
+        type: [{
           required: true,
-          message: '请填写看守器',
+          message: '请选择类型',
           trigger: 'blur'
         }],
       },
@@ -64,32 +70,32 @@ export default {
   },
   created() {
     if (this.modalId > 0) {
-      this.getRoleInfoByIdExcute()
+      this.getAdvertisementPositionInfoByIdExcute()
     }
     this.spinLoading = true
   },
   methods: {
-    getRoleInfoByIdExcute() {
+    getAdvertisementPositionInfoByIdExcute() {
       let t = this;
       t.spinLoading = true;
-      getRoleInfoById(t.modalId).then(res => {
+      getAdvertisementPositionInfoById(t.modalId).then(res => {
         let res_data = res.data
         t.formData = {
           id: res_data.id,
           name: res_data.name,
-          guard_name: res_data.guard_name,
-          description: res_data.description
+          description: res_data.description,
+          type: res_data.type
         }
         t.spinLoading = false;
       })
 
     },
-    addEditRoleExcute() {
+    addEditAdvertisementPositionExcute() {
       let t = this
       t.saveLoading = true
       t.$refs.formData.validate((valid) => {
         if (valid) {
-          addEditRole(t.formData).then(res => {
+          addEditAdvertisementPosition(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
             t.$emit('on-edit-modal-success')
