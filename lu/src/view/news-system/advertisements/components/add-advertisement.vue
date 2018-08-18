@@ -14,6 +14,9 @@
             <Radio label="T">启用</Radio>
           </RadioGroup>
         </FormItem>
+        <FormItem label="广告内容：">
+          <editor v-model="formData.content" @on-change="editContentChange" :upload-config='uploadConfig'></editor>
+        </FormItem>
       </Form>
       </Col>
 
@@ -38,6 +41,23 @@
           <FormItem label="有效期：">
             <DatePicker type="datetimerange" placement="bottom-end" placeholder="请选择有效期，不选永久有效" confirm @on-clear="timeClear" @on-change="timeChanged" style="width:100%"></DatePicker>
           </FormItem>
+          <p class="margin-top-10" v-if="typeIsModel">
+            <Icon type="ios-fastforward"></Icon>
+            <b>键值对选择：</b>
+            <transition name="publish-time">
+              <div class="publish-time-picker-con">
+                <div class="margin-top-10"> 模型 &nbsp;&nbsp;
+                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.model" placeholder="如：App\Models\Article"></Input>
+                </div>
+                <div class="margin-top-10"> 字段 &nbsp;&nbsp;
+                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.column" placeholder="如：slug"></Input>
+                </div>
+                <div class="margin-top-10"> 字段值
+                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.value" placeholder="mark-down-preview"></Input>
+                </div>
+              </div>
+            </transition>
+          </p>
         </Form>
       </Card>
       </Col>
@@ -55,7 +75,11 @@ import {
   addAdvertisement
 } from '@/api/advertisement'
 
+import Editor from '_c/editor'
 export default {
+  components: {
+    Editor
+  },
   props: {
     advertisementPositionsIds: {
       type: Object,
@@ -64,6 +88,7 @@ export default {
   },
   data() {
     return {
+      html:'',
       modalShow: true,
       saveLoading: false,
       formData: {
@@ -80,7 +105,18 @@ export default {
         start_at: '',
         end_at: '',
         weight: 20,
-
+        content: '',
+      },
+      uploadConfig: {
+        headers: {
+          'Authorization': window.access_token
+        },
+        wang_size: 1 * 1024 * 1024, // 1M
+        uploadUrl: window.uploadUrl.tinymceUpload,
+        params: {},
+        max_length: 3,
+        file_name: 'tinymce',
+        z_index:10000
       },
       rules: {
         name: [{
@@ -90,6 +126,11 @@ export default {
         }],
       },
     }
+  },
+  computed: {
+    typeIsModel() {
+      return (this.formData.advertisement_positions_type == 'model') ? true : false;
+    },
   },
   methods: {
     addAdvertisementExcute() {
@@ -129,7 +170,10 @@ export default {
     cancel() {
       this.$emit('on-add-modal-hide')
       this.modalShow = false
+    },
+    editContentChange(html, text) {
+      this.html = html
     }
-  }
+  },
 }
 </script>
