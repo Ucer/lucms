@@ -22,15 +22,7 @@
         </RadioGroup>
       </FormItem>
       <FormItem label="头像：">
-        <div style="display:inline-block;width:50%">
-          <Upload :show-upload-list="false" :on-success="handleSuccess" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :headers="uploadConfig.headers" :max-size="uploadConfig.max_size" :format="uploadConfig.format" name="avatar" type="drag"
-            :action="uploadConfig.uploadUrl" style="display: inline-block;width:58px;">
-            <div style="width: 58px;height:58px;line-height: 58px;">
-              <Icon type="camera" size="20"></Icon>
-            </div>
-          </Upload>
-          <img class="head_image" :src="formData.head_image.url" alt="" v-if="formData.head_image.url">
-        </div>
+        <upload v-model="formData.head_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
       </FormItem>
     </Form>
     <div slot="footer">
@@ -45,7 +37,12 @@ import {
   addUser
 } from '@/api/user'
 
+import Upload from '_c/common/upload'
+
 export default {
+  components: {
+    Upload
+  },
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value === '') {
@@ -78,7 +75,7 @@ export default {
         password_confirmation: '',
         head_image: {
           attachment_id: 0,
-          url: '',
+          url: ''
         },
       },
       uploadConfig: {
@@ -88,6 +85,18 @@ export default {
         format: ['jpg', 'jpeg', 'png'],
         max_size: 500,
         uploadUrl: window.uploadUrl.uploadAvatar
+      },
+      imguploadConfig: {
+        headers: {
+          'Authorization': window.access_token
+        },
+        format: ['jpg', 'jpeg', 'png', 'gif'],
+        max_size: 500,
+        upload_url: window.uploadUrl.uploadAvatar,
+        file_name: 'avatar',
+        multiple: false,
+        file_num: 1,
+        default_list: []
       },
       rules: {
         name: [{
@@ -127,9 +136,9 @@ export default {
   methods: {
     addUserExcute() {
       let t = this;
-      t.saveLoading = true
       t.$refs.formData.validate((valid) => {
         if (valid) {
+          t.saveLoading = true
           addUser(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
@@ -150,24 +159,10 @@ export default {
       this.modalShow = false
       this.$emit('on-add-modal-hide')
     },
-    handleSuccess(res, file) {
-      file.url = res.data.url;
-      file.name = res.data.original_name;
-      this.formData.head_image.attachment_id = res.data.attachment_id;
-      this.formData.head_image.url = res.data.url;
+    editContentChange(html, text) {
+      // console.log(this.formData.content)
     },
-    handleFormatError(file) {
-      this.$Notice.warning({
-        title: '文件格式不正确',
-        desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg 或 png 格式的图片。'
-      });
-    },
-    handleMaxSize(file) {
-      this.$Notice.warning({
-        title: '超出文件大小限制',
-        desc: '文件 ' + file.name + ' 太大，不能超过 ' + this.uploadConfig.max_size + 'kb'
-      });
-    },
+    uploadChange(fileList, formatFileList) {}
   }
 }
 </script>

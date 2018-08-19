@@ -6,13 +6,16 @@
       <Col span="16">
       <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
         <FormItem label="广告标题" prop="name">
-          <Input v-model="formData.name"></Input>
+          <Input v-model="formData.name" />
         </FormItem>
         <FormItem label="是否启用：">
           <RadioGroup v-model="formData.enable">
             <Radio label="F">禁用</Radio>
             <Radio label="T">启用</Radio>
           </RadioGroup>
+        </FormItem>
+        <FormItem label="封面：">
+          <upload v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
         </FormItem>
         <FormItem label="广告内容：">
           <editor v-model="formData.content" @on-change="editContentChange" :upload-config='uploadConfig'></editor>
@@ -33,10 +36,10 @@
             </Select>
           </FormItem>
           <FormItem label="链接地址：">
-            <Input v-model="formData.link_url" placeholder="请输入链接地址如： http://lucms.com"></Input>
+            <Input v-model="formData.link_url" placeholder="请输入链接地址如： http://lucms.com" />
           </FormItem>
           <FormItem label="排序：">
-            <Input v-model="formData.weight" placeholder="请输入序号"></Input>
+            <Input v-model="formData.weight" placeholder="请输入序号" />
           </FormItem>
           <FormItem label="有效期：">
             <DatePicker type="datetimerange" placement="bottom-end" placeholder="请选择有效期，不选永久有效" confirm @on-clear="timeClear" @on-change="timeChanged" style="width:100%"></DatePicker>
@@ -47,13 +50,13 @@
             <transition name="publish-time">
               <div class="publish-time-picker-con">
                 <div class="margin-top-10"> 模型 &nbsp;&nbsp;
-                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.model" placeholder="如：App\Models\Article"></Input>
+                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.model" placeholder="如：App\Models\Article" />
                 </div>
                 <div class="margin-top-10"> 字段 &nbsp;&nbsp;
-                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.column" placeholder="如：slug"></Input>
+                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.column" placeholder="如：slug" />
                 </div>
                 <div class="margin-top-10"> 字段值
-                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.value" placeholder="mark-down-preview"></Input>
+                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.value" placeholder="mark-down-preview" />
                 </div>
               </div>
             </transition>
@@ -76,9 +79,11 @@ import {
 } from '@/api/advertisement'
 
 import Editor from '_c/editor'
+import Upload from '_c/common/upload'
 export default {
   components: {
-    Editor
+    Editor,
+    Upload
   },
   props: {
     advertisementPositionsIds: {
@@ -88,7 +93,6 @@ export default {
   },
   data() {
     return {
-      html:'',
       modalShow: true,
       saveLoading: false,
       formData: {
@@ -106,6 +110,10 @@ export default {
         end_at: '',
         weight: 20,
         content: '',
+        cover_image: {
+          attachment_id: 0,
+          url: ''
+        }
       },
       uploadConfig: {
         headers: {
@@ -116,7 +124,20 @@ export default {
         params: {},
         max_length: 3,
         file_name: 'tinymce',
-        z_index:10000
+        z_index: 10000,
+        heightStyle: 'wang-editor-text-300'
+      },
+      imguploadConfig: {
+        headers: {
+          'Authorization': window.access_token
+        },
+        format: ['jpg', 'jpeg', 'png', 'gif'],
+        max_size: 800, // 800KB
+        upload_url: window.uploadUrl.uploadAdvertisement,
+        file_name: 'advertisement',
+        multiple: false,
+        file_num: 1,
+        default_list: []
       },
       rules: {
         name: [{
@@ -129,15 +150,15 @@ export default {
   },
   computed: {
     typeIsModel() {
-      return (this.formData.advertisement_positions_type == 'model') ? true : false;
+      return (this.formData.advertisement_positions_type == 'model') ? true : false
     },
   },
   methods: {
     addAdvertisementExcute() {
       let t = this
-      t.saveLoading = true
       t.$refs.formData.validate((valid) => {
         if (valid) {
+          t.saveLoading = true
           addAdvertisement(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
@@ -147,33 +168,35 @@ export default {
               title: res.message
             })
           }, function(error) {
-            t.saveLoading = false;
+            t.saveLoading = false
           })
         }
       })
     },
     positionHasChanged() {
-      let t = this;
-      var key = t.formData.advertisement_positions_id;
-      t.formData.advertisement_positions_type = t.advertisementPositionsIds[key].type;
+      let t = this
+      var key = t.formData.advertisement_positions_id
+      t.formData.advertisement_positions_type = t.advertisementPositionsIds[key].type
     },
     timeChanged: function(value, date_type) {
-      let t = this;
-      t.formData.start_at = value[0];
-      t.formData.end_at = value[1];
+      let t = this
+      t.formData.start_at = value[0]
+      t.formData.end_at = value[1]
     },
     timeClear() {
-      let t = this;
-      t.formData.start_at = '';
-      t.formData.end_at = '';
+      let t = this
+      t.formData.start_at = ''
+      t.formData.end_at = ''
     },
     cancel() {
       this.$emit('on-add-modal-hide')
       this.modalShow = false
     },
     editContentChange(html, text) {
-      this.html = html
-    }
+      // console.log(this.formData.content)
+    },
+    uploadChange(fileList, formatFileList) {}
+
   },
 }
 </script>

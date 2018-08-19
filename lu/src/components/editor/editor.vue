@@ -1,15 +1,20 @@
 <template>
 <div>
   <div id="toolbar" class="wang-editor-toolbar"> </div>
-  <div :id="editorId" class="wang-editor-text-400"></div>
+  <div :id="editorId" :class="uploadConfig.heightStyle"></div>
   <Collapse>
     <Panel name="1">
       预览
       <p slot="content" v-html='editorHtml'></p>
     </Panel>
     <Panel name="2">
-      源代码
-      <p slot="code" v-html='editorText'></p>
+      修改源代码
+      <p slot="content">
+        <Input v-model="editorHtml" type="textarea" :rows="6" />
+        <Button size='small' type="success" icon="ios-create-outline" @click="editSourceCode">
+          修改
+        </Button>
+      </p>
     </Panel>
   </Collapse>
 </div>
@@ -65,7 +70,8 @@ export default {
         params: {},
         max_length: 3,
         file_name: 'tinymce',
-        z_index: 10000
+        z_index: 10000,
+        heightStyle: 'wang-editor-text-400'
       }
     }
   },
@@ -73,7 +79,6 @@ export default {
     return {
       showHtml: true,
       editorHtml: '',
-      editorText: ''
     }
   },
   computed: {
@@ -89,7 +94,6 @@ export default {
       this.$emit('input', this.valueType === 'html' ? html : text)
       this.$emit('on-change', html, text)
       this.editorHtml = html
-      this.editorText = text
     }
     this.editor.customConfig.onchangeTimeout = this.changeInterval
     this.editor.customConfig.uploadImgServer = this.uploadConfig.uploadUrl // 上传图片到服务器
@@ -149,8 +153,25 @@ export default {
     this.editor.create()
 
     // 如果本地有存储加载本地存储内容
-    let html = localStorage.editorCache
+    let html = ''
+    if (this.cache) {
+      html = localStorage.editorCache
+    } else {
+      html = this.value
+    }
     if (html) this.editor.txt.html(html)
+    this.editorHtml = html
+    let text = this.editor.txt.text()
+    this.$emit('input', this.valueType === 'html' ? html : text)
+    this.$emit('on-change', html, text)
+  },
+  methods: {
+    editSourceCode() {
+      this.editor.txt.html(this.editorHtml)
+      this.$Notice.success({
+        title: '修改成功'
+      })
+    }
   }
 }
 </script>

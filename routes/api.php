@@ -50,6 +50,7 @@ Route::namespace('Admin')->group(function () {
 
 
     Route::get('admin/attachments', 'AttachmentsController@attachmentList')->name('attachments.list');
+    Route::delete('admin/attachments/{attachment}/force_destroy', 'AttachmentsController@forceDestroy')->name('attachments.force_destroy');
     Route::delete('admin/attachments/{attachment}', 'AttachmentsController@destroy')->name('attachments.destroy');
 
     Route::get('admin/advertisement_positions', 'AdvertisementPositionsController@advertisementPositionList')->name('advertisement_positions.list');

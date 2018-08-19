@@ -30,10 +30,10 @@ import {TOKEN_KEY} from '@/libs/util'
 window.access_token = Cookies.get(TOKEN_KEY)
 
 window.uploadUrl = {
-  uploadAvatar: appUrl + '/api/upload/avatar',
-  uploadAdvertisement: appUrl + '/api/upload/advertisement',
-  tinymceUpload: appUrl + '/api/upload/tinymce',
-  uploadOther: appUrl + '/api/upload/other'
+  uploadAvatar: appUrl + 'api/upload/avatar',
+  uploadAdvertisement: appUrl + 'api/upload/advertisement',
+  tinymceUpload: appUrl + 'api/upload/tinymce',
+  uploadOther: appUrl + 'api/upload/other'
 }
 
 Vue.use(iView, {

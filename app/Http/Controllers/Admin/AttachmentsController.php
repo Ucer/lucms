@@ -55,4 +55,12 @@ class AttachmentsController extends AdminController
             return $this->failed($rest_destroy_validate['message']);
         }
     }
+
+    public function forceDestroy(Attachment $attachment)
+    {
+        if (!$attachment) return $this->failed('找不到附件', 404);
+            $rest_destroy = $attachment->destroyAttachment();
+            if ($rest_destroy['status'] === true) return $this->message($rest_destroy['message']);
+            return $this->failed($rest_destroy['message'], 500);
+    }
 }

@@ -4,7 +4,7 @@
     <p slot="header">添加角色</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="广告位名称" prop="name">
-        <Input v-model="formData.name" placeholder="请输入广告位名称"></Input>
+        <Input v-model="formData.name" placeholder="请输入广告位名称" />
       </FormItem>
       <FormItem label="广告位类型" prop="type">
         <Select v-model="formData.type" filterable>
@@ -12,7 +12,7 @@
         </Select>
       </FormItem>
       <FormItem label="广告位描述" prop="description">
-        <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>
+        <Input type="textarea" v-model="formData.description" placeholder="请输入描述" />
       </FormItem>
     </Form>
     <div slot="footer">
@@ -92,9 +92,9 @@ export default {
     },
     addEditAdvertisementPositionExcute() {
       let t = this
-      t.saveLoading = true
       t.$refs.formData.validate((valid) => {
         if (valid) {
+          t.saveLoading = true
           addEditAdvertisementPosition(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false

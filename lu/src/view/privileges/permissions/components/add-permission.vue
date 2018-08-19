@@ -52,9 +52,9 @@ export default {
   methods: {
     addEditPermissionExcute() {
       let t = this
-      t.saveLoading = true
       t.$refs.formData.validate((valid) => {
         if (valid) {
+          t.saveLoading = true
           addEditPermission(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false

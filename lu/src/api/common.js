@@ -18,3 +18,10 @@ export const switchEnable = (id, table, value) => {
     method: 'post'
   })
 }
+
+export const deleteAttachment = (attachmentId) => {
+  return axios.request({
+    url: '/api/admin/attachments/' + attachmentId + '/force_destroy',
+    method: 'delete'
+  })
+}

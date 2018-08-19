@@ -24,8 +24,17 @@ export const deleteAdvertisement = (advertisement) => {
   })
 }
 
-
 // =============== news-system/advertisements/components/add-advertisement.vue =========================
 export const addAdvertisement = (formData) => {
   return axios.request({url: '/api/admin/advertisements', data: formData, method: 'post'})
+}
+
+export const editAdvertisement = (formData, advertisement) => {
+  return axios.request({url: '/api/admin/advertisements/' + advertisement, data: formData, method: 'patch'})
+}
+export const getAdvertisementInfoById = (advertisement) => {
+  return axios.request({
+    url: 'api/admin/advertisements/' + advertisement,
+    method: 'get'
+  })
 }
