@@ -60,7 +60,12 @@ class UserController extends AdminController
     public function store(Request $request, User $user, UserValidate $validate)
     {
         $insert_data = $request->all();
-        $insert_data['head_image'] = $insert_data['head_image']['attachment_id'];
+        if (isset($data['head_image']['attachment_id'])) {
+            $attachement_id = $insert_data['head_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $insert_data['head_image'] = $attachement_id;
 
         $rest_validate = $validate->storeValidate($insert_data);
 
@@ -81,8 +86,13 @@ class UserController extends AdminController
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
+        if (isset($data['head_image']['attachment_id'])) {
+            $attachement_id = $update_data['head_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $data['head_image'] = $attachement_id;
 
-        $update_data['head_image'] = $update_data['head_image']['attachment_id'];
         $res = $user->updateUser($update_data);
 
         if ($res['status'] === true) {

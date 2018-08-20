@@ -22,7 +22,7 @@ class  AdvertisementValidate extends Validate
             'content' => 'required',
             'advertisement_positions_id' => 'required|integer|min:1',
             'link_url' => 'required|url',
-            'cover_image' => 'required|integer|min:1'
+//            'cover_image' => 'required|integer|min:1'
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
@@ -46,7 +46,7 @@ class  AdvertisementValidate extends Validate
             'content' => 'required',
             'advertisement_positions_id' => 'required|integer|min:1',
             'link_url' => 'required|url',
-            'cover_image' => 'required|integer|min:1'
+//            'cover_image' => 'required|integer|min:1'
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {

@@ -79,6 +79,7 @@ export default {
     return {
       showHtml: true,
       editorHtml: '',
+      _uid: window.access_token
     }
   },
   computed: {

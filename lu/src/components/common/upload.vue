@@ -138,8 +138,10 @@ export default {
     this.uploadList = this.$refs.upload.fileList
 
     let formatFileList = this.fomatFile()
-    this.$emit('input', formatFileList)
-    this.$emit('on-upload-change', this.uploadList, formatFileList)
+    if (formatFileList != 'undefined') {
+      this.$emit('input', formatFileList)
+      this.$emit('on-upload-change', this.uploadList, formatFileList)
+    }
   }
 }
 </script>

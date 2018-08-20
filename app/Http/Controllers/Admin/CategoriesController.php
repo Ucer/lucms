@@ -34,7 +34,12 @@ class CategoriesController extends AdminController
     {
         $data = $request->all();
         $category_id = $request->post('id', 0);
-        $data['cover_image'] = $data['cover_image']['attachment_id'];
+        if (isset($data['cover_image']['attachment_id'])) {
+            $attachement_id = $data['cover_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $data['cover_image'] = $attachement_id;
         if (is_null($data['description'])) unset($data['description']);
 
         if ($category_id > 0) {

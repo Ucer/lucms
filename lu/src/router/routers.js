@@ -93,6 +93,14 @@ export default[
           title: '广告列表'
         },
         component: () => import ('@/view/news-system/advertisements/list.vue')
+      }, {
+        path: '/category-list',
+        name: 'category-list',
+        meta: {
+          icon: 'navicon',
+          title: '分类管理'
+        },
+        component: () => import ('@/view/news-system/categories/list.vue')
       }
     ]
   }, {

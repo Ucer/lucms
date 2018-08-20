@@ -48,7 +48,12 @@ class AdvertisementsController extends AdminController
     public function store(Request $request, Advertisement $advertisement, AdvertisementValidate $validate)
     {
         $insert_data = $request->all();
-        $insert_data['cover_image'] = $insert_data['cover_image']['attachment_id'];
+        if (isset($data['cover_image']['attachment_id'])) {
+            $attachement_id = $insert_data['cover_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $insert_data['cover_image'] = $attachement_id;
 
         if ($insert_data['advertisement_positions_type'] == 'model') {
             $model_column_value = $insert_data['model_column_value'];
@@ -75,7 +80,12 @@ class AdvertisementsController extends AdminController
     public function update(Request $request, Advertisement $advertisement, AdvertisementValidate $validate)
     {
         $insert_data = $request->all();
-        $insert_data['cover_image'] = $insert_data['cover_image']['attachment_id'];
+        if (isset($data['cover_image']['attachment_id'])) {
+            $attachement_id = $insert_data['cover_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $insert_data['cover_image'] = $attachement_id;
 
         if ($insert_data['advertisement_positions_type'] == 'model') {
             $model_column_value = $insert_data['model_column_value'];
