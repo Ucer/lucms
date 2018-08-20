@@ -71,6 +71,12 @@
       <Button type="text" @click="cancel">取消</Button>
       <Button type="primary" @click="editAdvertisementExcute" :loading='saveLoading'>保存 </Button>
     </div>
+    <div class="demo-spin-container" v-if='spinLoading === true'>
+      <Spin fix>
+        <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+        <div>加载中...</div>
+      </Spin>
+    </div>
   </Modal>
 </div>
 </template>
@@ -101,6 +107,7 @@ export default {
     return {
       modalShow: true,
       saveLoading: false,
+      spinLoading: true,
       effectiveDate: ['', ''],
       formdataFinished: false,
       formData: {
@@ -156,11 +163,10 @@ export default {
       },
     }
   },
-  created() {
+  mounted() {
     if (this.modalId > 0) {
       this.getAdvertisementInfoByIdExcute()
     }
-    this.spinLoading = true
   },
   computed: {
     typeIsModel() {
@@ -170,7 +176,6 @@ export default {
   methods: {
     getAdvertisementInfoByIdExcute() {
       let t = this
-      t.spinLoading = true
       getAdvertisementInfoById(t.modalId).then(res => {
         let res_data = res.data
         t.formData = {

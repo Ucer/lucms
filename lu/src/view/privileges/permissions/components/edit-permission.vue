@@ -43,6 +43,7 @@ export default {
     return {
       modalShow: true,
       saveLoading: false,
+      spinLoading: true,
       formData: {
         name: '',
         guard_name: '',
@@ -62,16 +63,14 @@ export default {
       },
     }
   },
-  created() {
+  mounted() {
     if (this.modalId > 0) {
       this.getPermissionInfoByIdExcute()
     }
-    this.spinLoading = true
   },
   methods: {
     getPermissionInfoByIdExcute() {
       let t = this;
-      t.spinLoading = true;
       getPermissionInfoById(t.modalId).then(res => {
         let res_data = res.data
         t.formData = {

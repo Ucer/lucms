@@ -49,6 +49,7 @@ export default {
     return {
       modalShow: true,
       saveLoading: false,
+      spinLoading = true,
       formData: {
         name: '',
         description: '',
@@ -68,16 +69,14 @@ export default {
       },
     }
   },
-  created() {
+  mounted() {
     if (this.modalId > 0) {
       this.getAdvertisementPositionInfoByIdExcute()
     }
-    this.spinLoading = true
   },
   methods: {
     getAdvertisementPositionInfoByIdExcute() {
       let t = this;
-      t.spinLoading = true;
       getAdvertisementPositionInfoById(t.modalId).then(res => {
         let res_data = res.data
         t.formData = {

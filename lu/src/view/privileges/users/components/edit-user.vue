@@ -113,11 +113,10 @@ export default {
       },
     }
   },
-  created() {
+  mounted() {
     if (this.modalId > 0) {
       this.getUserInfoByIdExcute()
     }
-    this.spinLoading = true
   },
   methods: {
     getUserInfoByIdExcute() {

@@ -167,7 +167,11 @@ export default {
   },
   methods: {
     editSourceCode() {
-      this.editor.txt.html(this.editorHtml)
+      let html = this.editorHtml
+      this.editor.txt.html(html)
+      let text = this.editor.txt.text()
+      this.$emit('input', this.valueType === 'html' ? html : text)
+      this.$emit('on-change', html, text)
       this.$Notice.success({
         title: '修改成功'
       })
