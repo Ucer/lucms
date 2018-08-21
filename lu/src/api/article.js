@@ -1,4 +1,3 @@
-
 import axios from '@/libs/api.request'
 
 // =============== news-system/articles/list.vue =========================
@@ -23,4 +22,8 @@ export const deleteArticle = (article) => {
     url: '/api/admin/articles/' + article,
     method: 'delete'
   })
+}
+
+export const getArticleTags = () => {
+  return axios.request({url: '/api/admin/tags', method: 'get'})
 }

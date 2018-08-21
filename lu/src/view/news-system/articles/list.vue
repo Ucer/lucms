@@ -53,8 +53,8 @@
     </div>
   </Row>
 
-  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(1)' @on-add-modal-hide="addModalHide" :article-categories='articleCategories'></add-component>
-  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(1)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories'> </edit-component>
+  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(1)' @on-add-modal-hide="addModalHide" :article-categories='articleCategories' :article-tags='articleTagList'></add-component>
+  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(1)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'> </edit-component>
 
 </div>
 </template>
@@ -73,6 +73,7 @@ import {
 import {
   getTableData,
   getArticleCategories,
+  getArticleTags,
   deleteArticle
 } from '@/api/article'
 
@@ -100,6 +101,7 @@ export default {
         per_page: 10
       },
       articleCategories: {},
+      articleTagList: {},
       addModal: {
         show: false
       },
@@ -307,10 +309,11 @@ export default {
       ]
     }
   },
-  created() {
+  mounted() {
     let t = this
     t.getTableStatusExcute('articles')
     t.getArticleCategoriesExcute()
+    t.getArticleTagsExcute()
     t.getTableDataExcute(t.feeds.current_page)
   },
   methods: {
@@ -330,6 +333,12 @@ export default {
       let t = this
       getArticleCategories().then(res => {
         t.articleCategories = res.data;
+      })
+    },
+    getArticleTagsExcute() {
+      let t = this;
+      getArticleTags().then(res => {
+        t.articleTagList = res.data;
       })
     },
     getTableDataExcute(to_page) {

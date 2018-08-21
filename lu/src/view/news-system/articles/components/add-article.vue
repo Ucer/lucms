@@ -25,7 +25,7 @@
           <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>
         </FormItem>
         <FormItem label="文章内容：">
-          <textarea id="addArticleEditor"></textarea>
+          <markdown-editor v-model="formData.content" :cache='true' />
         </FormItem>
       </Form>
       </Col>
@@ -46,13 +46,68 @@
           <FormItem label="排序：">
             <Input v-model="formData.weight" placeholder="请输入序号"></Input>
           </FormItem>
+          <FormItem label="置顶：">
+            <Select size="small" style="width:20%" v-model="formData.top">
+              <Option value="F">否</Option>
+              <Option value="T">是</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="推荐：">
+            <Select size="small" style="width:20%" v-model="formData.recommend">
+              <Option value="F">否</Option>
+              <Option value="T">是</Option>
+            </Select>
+          </FormItem>
+          <p class="margin-top-10">
+            <Icon type="eye"></Icon>&nbsp;&nbsp;公开度：&nbsp;<b>{{ Openness }}</b>
+            <Button v-show="!editOpenness" size="small" type="text">修改
+                                </Button>
+            <transition name="openness-con">
+              <div v-show="editOpenness" class="publish-time-picker-con">
+                <RadioGroup v-model="formData.access_type" vertical>
+                  <Radio label="PUB"> 公开</Radio>
+                  <Radio label="PWD"> 密码
+                    <Input v-show="formData.access_type === 'PWD'" v-model="formData.access_value" style="width:50%" size="small" placeholder="请输入密码" />
+                  </Radio>
+                  <Radio label="PRI">私密</Radio>
+                </RadioGroup>
+                <div>
+                  <Button type="primary">确认</Button>
+                </div>
+              </div>
+            </transition>
+          </p>
         </Form>
       </Card>
+      <div class="margin-top-10">
+        <Card>
+          <p slot="title">
+            <Icon type="ios-pricetags-outline"></Icon>
+            标签
+          </p>
+          <Row>
+            <Col span="18">
+            <Select v-model="formData.tags" multiple filterable placeholder="请选择文章标签">
+                <Option v-for="item in articleTags" :value="item.id" :key="item.id">{{ item.name }} </Option>
+            </Select>
+            </Col>
+            <Col span="6" class="padding-left-10">
+            <Button long type="ghost">新建</Button>
+            </Col>
+          </Row>
+        </Card>
+      </div>
       </Col>
     </Row>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
       <Button type="primary" @click="addArticleExcute" :loading='saveLoading'>保存 </Button>
+    </div>
+    <div class="demo-spin-container" v-if='spinLoading === true'>
+      <Spin fix>
+        <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+        <div>加载中...</div>
+      </Spin>
     </div>
   </Modal>
 </div>
@@ -64,14 +119,19 @@ import {
 
 import Upload from '_c/common/upload'
 import InputHelper from '_c/common/input-helper'
+import MarkdownEditor from '_c/markdown'
 export default {
   components: {
     Upload,
-    InputHelper
+    InputHelper,
+    MarkdownEditor
   },
   props: {
     articleCategories: {
       type: Object,
+      default: {}
+    },
+    articleTags: {
       default: {}
     }
   },
@@ -79,6 +139,7 @@ export default {
     return {
       modalShow: true,
       saveLoading: false,
+      spinLoading: true,
       formData: {
         tags: 0,
         content: '',
@@ -92,10 +153,12 @@ export default {
           url: '',
         },
       },
+      editOpenness: false,
+      Openness: '公开',
       rules: {
-        name: [{
+        title: [{
           required: true,
-          message: '请填写分类名称',
+          message: '请填写文章标题',
           trigger: 'blur'
         }],
       },
@@ -113,9 +176,13 @@ export default {
       },
     }
   },
+  mounted() {
+    this.spinLoading = false
+  },
   methods: {
     addArticleExcute() {
       let t = this
+      console.log(this.formData)
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
