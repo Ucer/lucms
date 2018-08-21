@@ -11,22 +11,12 @@ class Tag extends Model
         'name',
     ];
 
-    public function articles()
-    {
-        return $this->morphToMany(
-            'App\Models\Article',
-            'model',
-            'model_has_tags',
-            'tag_id'
-        );
-    }
-
-
     public function destroyTag()
     {
 
         DB::beginTransaction();
         try {
+            $this->delete();
             DB::commit();
             return $this->baseSucceed([], '删除成功');
         } catch (\Exception $e) {

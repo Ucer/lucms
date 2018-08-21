@@ -22,6 +22,13 @@ class RolesController extends AdminController
         if ($name) {
             $role = $role->columnLike('name', $name);
         }
+
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $role = $role->orderBy($order_by[0], $order_by[1]);
+        }
+
         return new RoleCollection($role->get());
     }
 

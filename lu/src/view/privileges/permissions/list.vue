@@ -22,7 +22,7 @@
         <div>加载中...</div>
       </Spin>
     </div>
-    <Table border :columns="columns" :data="dataList"></Table>
+    <Table border :columns="columns" :data="dataList"  @on-sort-change='onSortChange'></Table>
   </Row>
 
   <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute' @on-add-modal-hide="addModalHide"></add-component>
@@ -47,7 +47,9 @@ export default {
   },
   data() {
     return {
-      searchForm: {},
+      searchForm: {
+        order_by: 'id,desc'
+      },
       tableLoading: false,
       dataList: [],
       modalHeadImage: {
@@ -64,7 +66,7 @@ export default {
       columns: [{
         title: 'ID',
         key: 'id',
-        sortable: true,
+        sortable: 'customer',
         width: 100
       }, {
         title: '权限名称',
@@ -78,7 +80,6 @@ export default {
       }, {
         title: '创建时间',
         key: 'created_at',
-        sortable: true,
       }, {
         title: '更新时间',
         key: 'created_at'
@@ -94,8 +95,8 @@ export default {
               },
               on: {
                 click: () => {
-                    this.editModal.show = true
-                    this.editModal.id = params.row.id
+                  this.editModal.show = true
+                  this.editModal.id = params.row.id
                 }
               }
 
@@ -143,6 +144,11 @@ export default {
       }, function(error) {
         t.tableLoading = false
       })
+    },
+    onSortChange: function(data) {
+      const order = data.column.key + ',' + data.order
+      this.searchForm.order_by = order
+      this.getTableDataExcute()
     },
     deletePermissionExcute(permission, key) {
       let t = this

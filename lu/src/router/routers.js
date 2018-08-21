@@ -101,6 +101,14 @@ export default[
           title: '分类管理'
         },
         component: () => import ('@/view/news-system/categories/list.vue')
+      }, {
+        path: '/tag-list',
+        name: 'tag-list',
+        meta: {
+          icon: 'ios-pricetags',
+          title: '标签管理'
+        },
+        component: () => import ('@/view/news-system/tags/list.vue')
       }
     ]
   }, {

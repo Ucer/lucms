@@ -137,7 +137,7 @@ class Permission extends Model implements PermissionContract
         return app(PermissionRegistrar::class)->getPermissions();
     }
 
-    public function destroy()
+    public function destroyPermission()
     {
         DB::beginTransaction();
         try {

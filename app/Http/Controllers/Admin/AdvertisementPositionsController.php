@@ -28,6 +28,11 @@ class AdvertisementPositionsController extends AdminController
         if ($type) {
             $advertisementPosition = $advertisementPosition->typeSearch($type);
         }
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $advertisementPosition = $advertisementPosition->orderBy($order_by[0], $order_by[1]);
+        }
 
         return new AdvertisementPositionCollection($advertisementPosition->paginate($per_page));
     }

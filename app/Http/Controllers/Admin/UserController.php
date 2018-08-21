@@ -22,6 +22,7 @@ class UserController extends AdminController
     {
         $per_page = $request->get('per_page', 10);
         $search_data = json_decode($request->get('search_data'), true);
+
         $email = isset_and_not_empty($search_data, 'email');
         if ($email) {
             $user = $user->columnLike('email', $email);
@@ -35,6 +36,12 @@ class UserController extends AdminController
         $is_admin = isset_and_not_empty($search_data, 'is_admin');
         if ($is_admin) {
             $user = $user->isAdminSearch($is_admin);
+        }
+
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $user = $user->orderBy($order_by[0], $order_by[1]);
         }
 
         return new UserCollection($user->paginate($per_page));

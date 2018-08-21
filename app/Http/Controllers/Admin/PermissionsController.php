@@ -23,6 +23,13 @@ class PermissionsController extends AdminController
         if ($name) {
             $permission = $permission->columnLike('name', $name);
         }
+
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $permission = $permission->orderBy($order_by[0], $order_by[1]);
+        }
+
         $permissions = $permission->get();
 
         return new PermissionCollection($permissions);

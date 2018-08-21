@@ -21,6 +21,11 @@ class CategoriesController extends AdminController
         if ($name) {
             $category = $category->columnLike('name', $name);
         }
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $category = $category->orderBy($order_by[0], $order_by[1]);
+        }
 
         return $this->success($category->get());
     }

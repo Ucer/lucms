@@ -33,7 +33,7 @@
         <div>加载中...</div>
       </Spin>
     </div>
-    <Table border :columns="columns" :data="feeds.data"></Table>
+    <Table border :columns="columns" :data="feeds.data" @on-sort-change='onSortChange'></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :total="feeds.total" :current="feeds.current_page" :page-size="feeds.per_page" class="paging" show-elevator show-total show-sizer @on-change="handleOnPageChange"></Page>
@@ -51,6 +51,7 @@
 <script>
 import AddComponent from './components/add-advertisement'
 import EditComponent from './components/edit-advertisement'
+import ExpandRow from './components/list-table-expand';
 
 import {
   getTableStatus,
@@ -66,11 +67,14 @@ import {
 export default {
   components: {
     AddComponent,
-    EditComponent
+    EditComponent,
+    ExpandRow
   },
   data() {
     return {
-      searchForm: {},
+      searchForm: {
+        order_by: 'id,desc'
+      },
       tableLoading: false,
       tableStatus: {
         enable: []
@@ -90,6 +94,17 @@ export default {
         id: 0
       },
       columns: [{
+          title: '>>',
+          type: 'expand',
+          width: 50,
+          render: (h, params) => {
+            return h(ExpandRow, {
+              props: {
+                row: params.row
+              }
+            })
+          }
+        }, {
           title: 'ID',
           key: 'id',
           sortable: true,
@@ -256,6 +271,11 @@ export default {
       }, function(error) {
         t.tableLoading = false
       })
+    },
+    onSortChange: function(data) {
+      const order = data.column.key + ',' + data.order
+      this.searchForm.order_by = order
+      this.getTableDataExcute(1)
     },
     switchEnableExcute(index) {
       let t = this

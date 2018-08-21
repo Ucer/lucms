@@ -26,7 +26,7 @@
         <div>加载中...</div>
       </Spin>
     </div>
-    <Table border :columns="columns" :data="feeds.data"></Table>
+    <Table border :columns="columns" :data="feeds.data" @on-sort-change='onSortChange'></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :total="feeds.total" :current="feeds.current_page" :page-size="feeds.per_page" class="paging" show-elevator show-total show-sizer @on-change="handleOnPageChange"></Page>
@@ -61,7 +61,9 @@ export default {
   },
   data() {
     return {
-      searchForm: {},
+      searchForm: {
+        order_by: 'id,desc'
+      },
       tableLoading: false,
       tableStatus: {
         type: []
@@ -82,7 +84,7 @@ export default {
       columns: [{
           title: 'ID',
           key: 'id',
-          sortable: true,
+          sortable: 'customer',
           width: 100
         },
         {
@@ -108,7 +110,6 @@ export default {
         {
           title: '创建时间',
           key: 'created_at',
-          sortable: true,
         },
         {
           title: '更新时间',
@@ -176,6 +177,11 @@ export default {
       getTableStatus(params).then(res => {
         t.tableStatus.type = res.data
       })
+    },
+    onSortChange: function(data) {
+      const order = data.column.key + ',' + data.order
+      this.searchForm.order_by = order
+      this.getTableDataExcute()
     },
     getTableDataExcute(to_page) {
       let t = this

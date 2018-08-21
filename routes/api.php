@@ -41,11 +41,11 @@ Route::namespace('Admin')->group(function () {
     Route::delete('admin/permissions/{permission}', 'PermissionsController@destroy')->name('permissions.destroy');
 
     Route::get('admin/roles', 'RolesController@roleList')->name('roles.list');
+    Route::get('admin/all_roles', 'RolesController@allRoles')->name('roles.all');
     Route::post('admin/roles', 'RolesController@addEdit')->name('roles.add_edit');
     Route::get('admin/roles/{role}', 'RolesController@show')->name('roles.show');
     Route::get('admin/roles/{role}/permissions', 'RolesController@getRolePermissions')->name('roles.get_role_permissions');
     Route::post('admin/give/{role}/permissions', 'RolesController@giveRolePermissions')->name('roles.give_role_permissions');
-    Route::get('admin/all_roles', 'RolesController@allRoles')->name('roles.all');
     Route::delete('admin/roles/{role}', 'RolesController@destroy')->name('roles.destroy');
 
 
@@ -75,7 +75,9 @@ Route::namespace('Admin')->group(function () {
 
 
     Route::get('admin/tags', 'TagsController@tagList')->name('tags.list');
+    Route::get('admin/tags/{tag}', 'TagsController@show')->name('tags.show');
     Route::post('admin/tags', 'TagsController@addEditTag')->name('tags.add_edit');
+    Route::delete('admin/tags/{tag}', 'TagsController@destroy')->name('tags.destroy');
 
 
     Route::get('admin/articles', 'ArticlesController@articleList')->name('articles.list');
