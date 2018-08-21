@@ -42,8 +42,9 @@ Vue.use(iView, {
 Vue.config.productionTip = false
 /* @description 全局注册应用配置 */
 Vue.prototype.$config = config
-/*  注册指令 */
+/* 注册指令 */
 importDirective(Vue)
+
 
 /* eslint-disable no-new */
 new Vue({

@@ -32,6 +32,14 @@ class ArticlesController extends AdminController
         $month = '';
         $order = 'created_at';
         $order_type = 'desc';
+
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $order = $order_by[0];
+            $order_type = $order_by[1];
+        }
+
         $list = $article->getArticlesWithFilter($filter, $user_id, $title, $tag_id, $category_id, $recommend, $top, $enable, $year, $month, $order, $order_type, $per_page);
         return new ArticleCollection($list);
     }

@@ -109,6 +109,14 @@ export default[
           title: '标签管理'
         },
         component: () => import ('@/view/news-system/tags/list.vue')
+      }, {
+        path: '/article-list',
+        name: 'article-list',
+        meta: {
+          icon: 'ios-list',
+          title: '文章管理'
+        },
+        component: () => import ('@/view/news-system/articles/list.vue')
       }
     ]
   }, {
