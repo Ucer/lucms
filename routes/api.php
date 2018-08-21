@@ -35,13 +35,13 @@ Route::namespace('Admin')->group(function () {
     Route::delete('admin/users/{user}', 'UserController@destroy')->name('users.destroy');
 
     Route::get('admin/permissions', 'PermissionsController@permissionList')->name('permissions.list');
-    Route::post('admin/permissions', 'PermissionsController@addEditPermission')->name('permissions.add_edit');
+    Route::post('admin/permissions', 'PermissionsController@addEdit')->name('permissions.add_edit');
     Route::get('admin/all_permissions', 'PermissionsController@allPermissions')->name('permissions.all');
     Route::get('admin/permissions/{permission}', 'PermissionsController@show')->name('permissions.show');
     Route::delete('admin/permissions/{permission}', 'PermissionsController@destroy')->name('permissions.destroy');
 
     Route::get('admin/roles', 'RolesController@roleList')->name('roles.list');
-    Route::post('admin/roles', 'RolesController@addEditRole')->name('roles.add_edit');
+    Route::post('admin/roles', 'RolesController@addEdit')->name('roles.add_edit');
     Route::get('admin/roles/{role}', 'RolesController@show')->name('roles.show');
     Route::get('admin/roles/{role}/permissions', 'RolesController@getRolePermissions')->name('roles.get_role_permissions');
     Route::post('admin/give/{role}/permissions', 'RolesController@giveRolePermissions')->name('roles.give_role_permissions');
@@ -56,7 +56,7 @@ Route::namespace('Admin')->group(function () {
     Route::get('admin/advertisement_positions', 'AdvertisementPositionsController@advertisementPositionList')->name('advertisement_positions.list');
     Route::get('admin/advertisement_positions/all', 'AdvertisementPositionsController@allAdvertisementPositions')->name('advertisement_positions.all');
     Route::get('admin/advertisement_positions/{advertisement_position}', 'AdvertisementPositionsController@show')->name('advertisement_positions.show');
-    Route::post('admin/advertisement_positions', 'AdvertisementPositionsController@addEditAdvertisementPosition')->name('advertisement_positions.add_edit');
+    Route::post('admin/advertisement_positions', 'AdvertisementPositionsController@addEdit')->name('advertisement_positions.add_edit');
     Route::delete('admin/advertisement_positions/{advertisement_position}', 'AdvertisementPositionsController@destroy')->name('advertisement_positions.destroy');
 
 
@@ -70,6 +70,8 @@ Route::namespace('Admin')->group(function () {
     Route::get('admin/categories', 'CategoriesController@categoryList')->name('categories.list');
     Route::post('admin/categories', 'CategoriesController@addEditCategory')->name('categories.add_edit');
     Route::get('admin/categories/all', 'CategoriesController@allCategories')->name('categories.all');
+    Route::get('admin/categories/{category}', 'CategoriesController@show')->name('categories.show');
+    Route::delete('admin/categories/{category}', 'CategoriesController@destroy')->name('categories.destroy');
 
 
     Route::get('admin/tags', 'TagsController@tagList')->name('tags.list');

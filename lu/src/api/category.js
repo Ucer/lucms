@@ -1,4 +1,3 @@
-
 import axios from '@/libs/api.request'
 
 // =============== news-system/categories/list.vue =========================
@@ -20,9 +19,12 @@ export const deleteCategory = (category) => {
 }
 
 export const addEditCategory = (saveData) => {
+  return axios.request({url: '/api/admin/categories', data: saveData, method: 'post'})
+}
+
+export const getCategoryInfoById = (catetgoryId) => {
   return axios.request({
-    url: '/api/admin/categories',
-    data: saveData,
-    method: 'post'
+    url: 'api/admin/categories/' + catetgoryId,
+    method: 'get'
   })
 }

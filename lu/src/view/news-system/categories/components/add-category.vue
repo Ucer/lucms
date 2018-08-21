@@ -36,7 +36,11 @@ export default {
       saveLoading: false,
       formData: {
         name: '',
-        description: ''
+        description: '',
+        cover_image: {
+          attachment_id: 0,
+          url:''
+        }
       },
       rules: {
         name: [{

@@ -97,7 +97,7 @@ export default[
         path: '/category-list',
         name: 'category-list',
         meta: {
-          icon: 'navicon',
+          icon: 'ios-navigate',
           title: '分类管理'
         },
         component: () => import ('@/view/news-system/categories/list.vue')

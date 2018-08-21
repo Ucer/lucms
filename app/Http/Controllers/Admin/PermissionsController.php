@@ -48,21 +48,21 @@ class PermissionsController extends AdminController
         return $this->success($return);
     }
 
-    public function addEditPermission(Request $request, Permission $permission, PermissionValidate $validate)
+    public function addEdit(Request $request, Permission $permission, PermissionValidate $validate)
     {
-        $update_data = $request->only('id', 'name', 'guard_name', 'description');
+        $data = $request->only('id', 'name', 'guard_name', 'description');
         $permission_id = $request->post('id', 0);
         if ($permission_id > 0) {
             $permission = $permission->findOrFail($permission_id);
-            $rest_validate = $validate->updateValidate($update_data, $permission_id);
+            $rest_validate = $validate->updateValidate($data, $permission_id);
         } else {
-            $rest_validate = $validate->storeValidate($update_data);
+            $rest_validate = $validate->storeValidate($data);
         }
 
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
-        $res = $permission->saveData($update_data);
+        $res = $permission->saveData($data);
         if ($res) return $this->message('操作成功');
         return $this->failed('内部错误');
     }

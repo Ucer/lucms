@@ -30,7 +30,7 @@ class RolesController extends AdminController
         return $this->success($role);
     }
 
-    public function addEditRole(Request $request, Role $role, RoleValidate $validate)
+    public function addEdit(Request $request, Role $role, RoleValidate $validate)
     {
         $update_data = $request->only('id', 'name', 'guard_name', 'description');
         $role_id = $request->post('id', 0);

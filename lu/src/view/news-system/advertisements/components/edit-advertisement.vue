@@ -193,7 +193,7 @@ export default {
           start_at: res_data.start_at,
           end_at: res_data.end_at,
           weight: 20,
-          content: res_data.content,
+          content: res_data.content.html,
           cover_image: {
             attachment_id: res_data.cover_image.attachment_id,
             url: res_data.cover_image.url,

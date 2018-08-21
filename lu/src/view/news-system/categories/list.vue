@@ -37,7 +37,7 @@ import EditComponent from './components/edit-category'
 
 import {
   getTableData,
-  deleteRole
+  deleteCategory
 } from '@/api/category'
 
 export default {
@@ -135,7 +135,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteRoleExcute(params.row.id, params.index);
+                    t.deleteCategoryExcute(params.row.id, params.index);
                   }
                 }
               }, [
@@ -175,7 +175,7 @@ export default {
     },
     deleteCategoryExcute(category, key) {
       let t = this
-      deleteCategory(advertisementPosition).then(res => {
+      deleteCategory(category).then(res => {
         t.dataList.splice(key, 1)
         t.$Notice.success({
           title: res.message

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Handlers\MarkdownerHandler;
 use DB;
 
 class Advertisement extends Model
@@ -27,7 +28,18 @@ class Advertisement extends Model
 
     protected function setContentAttribute($value)
     {
-        $this->attributes['content'] = clean($value, 'advertisement_content');
+        $value = clean($value, 'advertisement_content');
+        $data = [
+            'raw' => '',
+            'html' => $value
+//            'html' => (new MarkdownerHandler())->convertMarkdownToHtml($value)
+        ];
+        $this->attributes['content'] = json_encode($data);
+    }
+
+    protected function getContentAttribute($value)
+    {
+        return json_decode($value,true);
     }
 
     protected function getCoverImageAttribute($value)

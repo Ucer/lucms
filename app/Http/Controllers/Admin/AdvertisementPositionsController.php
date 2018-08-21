@@ -43,7 +43,7 @@ class AdvertisementPositionsController extends AdminController
     }
 
 
-    public function addEditAdvertisementPosition(Request $request, AdvertisementPosition $advertisementPosition, AdvertisementPositionValidate $validate)
+    public function addEdit(Request $request, AdvertisementPosition $advertisementPosition, AdvertisementPositionValidate $validate)
     {
         $data = $request->only('id', 'name', 'type', 'description');
         $advertisement_position_id = $request->post('id', 0);

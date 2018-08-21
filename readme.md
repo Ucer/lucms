@@ -210,6 +210,7 @@ $ npm run build
 | [aliyuncs/oss-sdk-php](https://help.aliyun.com/document_detail/32099.html?spm=5176.87240.400427.47.CtLkv4)     | 啊里云 oss     | 对象存储 |
 | [overtrue/easy-sms](https://github.com/overtrue/easy-sms)     | 短信发送     | 找回密码 |
 | [barryvdh/laravel-cors](https://github.com/barryvdh/laravel-cors)     | 跨越解决     | 开发环境方便测试 |
+| [league/html-to-markdown](https://github.com/thephpleague/html-to-markdown)     | markdown 转 html     | 富文本编辑器 markdown 支持 |
 
 
 ## 队列

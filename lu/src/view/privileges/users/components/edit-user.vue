@@ -121,7 +121,6 @@ export default {
   methods: {
     getUserInfoByIdExcute() {
       let t = this;
-      t.spinLoading = true;
       getUserInfoById(t.modalId).then(res => {
         let res_data = res.data
         t.formData = {

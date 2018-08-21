@@ -30,6 +30,11 @@ class CategoriesController extends AdminController
         return $this->success(collect($category->get())->keyBy('id'));
     }
 
+    public function show(Category $category)
+    {
+        return $this->success($category);
+    }
+
     public function addEditCategory(Request $request, Category $category, CategoryValidate $validate)
     {
         $data = $request->all();

@@ -73,13 +73,15 @@ export default {
     handleRemove(file) {
       const fileList = this.$refs.upload.fileList
 
-      deleteAttachment(file.attachment_id).then(res => {
-
-        this.$Notice.success({
-          title: '操作成功',
-          desc: '文件删除成功'
+      if (file.attachment_id > 0) {
+        deleteAttachment(file.attachment_id).then(res => {
+          this.$Notice.success({
+            title: '操作成功',
+            desc: '文件删除成功'
+          })
         })
-      })
+      }
+
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1)
 
       let formatFileList = this.fomatFile()
