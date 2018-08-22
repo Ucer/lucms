@@ -120,6 +120,25 @@ export default[
       }
     ]
   }, {
+    path: '/resources',
+    name: 'resources',
+    component: Main,
+    meta: {
+      title: '资源管理',
+      icon: 'link'
+    },
+    children: [
+      {
+        path: '/attachments',
+        name: 'attachments',
+        meta: {
+          icon: 'link',
+          title: '附件列表'
+        },
+        component: () => import ('@/view/resources/attachments/list.vue')
+      }
+    ]
+  }, {
     path: '/401',
     name: 'error_401',
     meta: {

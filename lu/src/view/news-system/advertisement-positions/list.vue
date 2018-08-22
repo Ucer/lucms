@@ -29,7 +29,7 @@
     <Table border :columns="columns" :data="feeds.data" @on-sort-change='onSortChange'></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
-        <Page :total="feeds.total" :current="feeds.current_page" :page-size="feeds.per_page" class="paging" show-elevator show-total show-sizer @on-change="handleOnPageChange"></Page>
+        <Page :total="feeds.total" :current="feeds.current_page" :page-size="feeds.per_page" class="paging" show-elevator show-total show-sizer @on-change="handleOnPageChange" @on-page-size-change='onPageSizeChange'></Page>
       </div>
     </div>
   </Row>
@@ -171,6 +171,10 @@ export default {
   methods: {
     handleOnPageChange: function(to_page) {
       this.getTableDataExcute(to_page)
+    },
+    onPageSizeChange: function(per_page) {
+      this.feeds.per_page = per_page
+      this.getTableDataExcute(1)
     },
     getTableStatusExcute(params) {
       let t = this

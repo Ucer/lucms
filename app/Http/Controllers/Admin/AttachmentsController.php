@@ -39,6 +39,12 @@ class AttachmentsController extends AdminController
             $attachment = $attachment->storagePositionSearch($storage_position);
         }
 
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $attachment = $attachment->orderBy($order_by[0], $order_by[1]);
+        }
+
         $attachment = $attachment->with('user')->paginate($per_page);
         return new AttachmentCollection($attachment);
     }
