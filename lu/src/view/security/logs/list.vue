@@ -44,7 +44,7 @@
 
 
 <script>
-import ExpandRow from './components/list-table-expand';
+import ExpandRow from './components/list-table-expand'
 
 import {
   getTableStatus
@@ -52,7 +52,7 @@ import {
 
 import {
   getTableData
-} from '@/api/logs'
+} from '@/api/log'
 
 export default {
   components: {

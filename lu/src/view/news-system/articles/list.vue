@@ -63,7 +63,7 @@
 <script>
 import AddComponent from './components/add-article'
 import EditComponent from './components/edit-article'
-import ExpandRow from './components/list-table-expand';
+import ExpandRow from './components/list-table-expand'
 
 import {
   getTableStatus,

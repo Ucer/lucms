@@ -53,7 +53,7 @@
 
 
 <script>
-import ExpandRow from './components/list-table-expand';
+import ExpandRow from './components/list-table-expand'
 
 import {
   getTableStatus,

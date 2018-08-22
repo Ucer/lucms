@@ -51,7 +51,7 @@
 <script>
 import AddComponent from './components/add-advertisement'
 import EditComponent from './components/edit-advertisement'
-import ExpandRow from './components/list-table-expand';
+import ExpandRow from './components/list-table-expand'
 
 import {
   getTableStatus,

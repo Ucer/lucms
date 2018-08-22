@@ -12,7 +12,8 @@ fs.writeFileSync(path.join(__dirname, './config/env.js'), `export default '${env
 `)
 
 const BASE_URL = env === 'development'
-  ? '/iview-admin/'
+  // ? '/localhost-test/'
+  ? ''
   : 'https://lucms.com/lu/dist/'
 
 module.exports = {
