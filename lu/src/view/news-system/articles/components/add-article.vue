@@ -60,8 +60,7 @@
           </FormItem>
           <p class="margin-top-10">
             <Icon type="eye"></Icon>&nbsp;&nbsp;公开度：&nbsp;<b>{{ Openness }}</b>
-            <Button v-show="!editOpenness" size="small" type="text">修改
-                                </Button>
+            <Button v-show="!editOpenness" size="small" type="text" @click="handleEditOpenness">修改</Button>
             <transition name="openness-con">
               <div v-show="editOpenness" class="publish-time-picker-con">
                 <RadioGroup v-model="formData.access_type" vertical>
@@ -72,7 +71,7 @@
                   <Radio label="PRI">私密</Radio>
                 </RadioGroup>
                 <div>
-                  <Button type="primary">确认</Button>
+                  <Button type="primary" @click="handleSaveOpenness">确认</Button>
                 </div>
               </div>
             </transition>
@@ -92,7 +91,7 @@
             </Select>
             </Col>
             <Col span="6" class="padding-left-10">
-            <Button long type="ghost">新建</Button>
+            <Input v-model="newTagName" search enter-button="新建" placeholder="标签名字" @on-search="addEditTagExcute" />
             </Col>
           </Row>
         </Card>
@@ -114,8 +113,13 @@
 </template>
 <script>
 import {
-  addArticleExcute
+  addArticle,
+  getArticleTags
 } from '@/api/article'
+
+import {
+  addEditTag
+} from '@/api/tag'
 
 import Upload from '_c/common/upload'
 import InputHelper from '_c/common/input-helper'
@@ -131,9 +135,6 @@ export default {
       type: Object,
       default: {}
     },
-    articleTags: {
-      default: {}
-    }
   },
   data() {
     return {
@@ -152,9 +153,13 @@ export default {
           attachment_id: 0,
           url: '',
         },
+        access_type: 'PUB',
+        access_value: ''
       },
       editOpenness: false,
       Openness: '公开',
+      newTagName: '',
+      articleTags: {},
       rules: {
         title: [{
           required: true,
@@ -178,11 +183,17 @@ export default {
   },
   mounted() {
     this.spinLoading = false
+    this.getArticleTagsExcute()
   },
   methods: {
+    getArticleTagsExcute() {
+      let t = this;
+      getArticleTags().then(res => {
+        t.articleTags = res.data;
+      })
+    },
     addArticleExcute() {
       let t = this
-      console.log(this.formData)
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
@@ -204,7 +215,28 @@ export default {
       this.modalShow = false
       this.$emit('on-add-modal-hide')
     },
-    uploadChange(fileList, formatFileList) {}
+    uploadChange(fileList, formatFileList) {},
+    handleEditOpenness() {
+      this.editOpenness = !this.editOpenness;
+    },
+    handleSaveOpenness() {
+      var access_type = this.formData.access_type;
+      if (this.passwordValidate()) {
+        this.Openness = (access_type === 'PUB') ? '公开' : (access_type === 'PWD') ? '密码' : '私密';
+        this.editOpenness = false;
+      }
+    },
+    addEditTagExcute() {
+      let t = this;
+      addEditTag({
+        name: t.newTagName
+      }).then(res => {
+        t.getArticleTagsExcute()
+        t.$Notice.success({
+          title: res.message
+        })
+      })
+    }
   }
 }
 </script>

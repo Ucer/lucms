@@ -56,8 +56,14 @@ class ArticlesController extends AdminController
     public function store(Request $request, Article $article, ArticleValidate $validate)
     {
         $insert_data = $request->all();
-        $insert_data['cover_image'] = $insert_data['cover_image']['attachment_id'];
         $insert_data = array_merge($insert_data, ['created_year' => date('Y'), 'created_month' => date('m')]);
+
+        if (isset($insert_data['cover_image']['attachment_id'])) {
+            $attachement_id = $insert_data['cover_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $insert_data['cover_image'] = $attachement_id;
 
         $rest_validate = $validate->storeValidate($insert_data);
 
@@ -74,7 +80,13 @@ class ArticlesController extends AdminController
         if (!$article) return $this->failed('找不到数据', 404);
 
         $update_data = $request->all();
-        $update_data['cover_image'] = $update_data['cover_image']['attachment_id'];
+
+        if (isset($update_data['cover_image']['attachment_id'])) {
+            $attachement_id = $update_data['cover_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $update_data['cover_image'] = $attachement_id;
 
         $rest_validate = $validate->updateValidate($update_data, $article->id);
 

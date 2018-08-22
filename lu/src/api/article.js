@@ -27,3 +27,8 @@ export const deleteArticle = (article) => {
 export const getArticleTags = () => {
   return axios.request({url: '/api/admin/tags', method: 'get'})
 }
+
+
+export const addArticle = (formData) => {
+  return axios.request({url: '/api/admin/articles', data: formData, method: 'post'})
+}

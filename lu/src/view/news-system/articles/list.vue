@@ -73,7 +73,6 @@ import {
 import {
   getTableData,
   getArticleCategories,
-  getArticleTags,
   deleteArticle
 } from '@/api/article'
 
@@ -313,7 +312,6 @@ export default {
     let t = this
     t.getTableStatusExcute('articles')
     t.getArticleCategoriesExcute()
-    t.getArticleTagsExcute()
     t.getTableDataExcute(t.feeds.current_page)
   },
   methods: {
@@ -333,12 +331,6 @@ export default {
       let t = this
       getArticleCategories().then(res => {
         t.articleCategories = res.data;
-      })
-    },
-    getArticleTagsExcute() {
-      let t = this;
-      getArticleTags().then(res => {
-        t.articleTagList = res.data;
       })
     },
     getTableDataExcute(to_page) {
