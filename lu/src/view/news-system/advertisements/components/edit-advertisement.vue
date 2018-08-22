@@ -16,7 +16,7 @@
           </RadioGroup>
         </FormItem>
         <FormItem label="封面：">
-          <upload v-if="formdataFinished" v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
+          <upload v-if="formdataFinished" :is-delete='false' v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
         </FormItem>
         <FormItem label="广告内容：">
           <editor v-if="formdataFinished" :cache="false" v-model="formData.content" :value="formData.content" @on-change="editContentChange" :upload-config='uploadConfig'></editor>

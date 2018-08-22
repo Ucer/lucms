@@ -34,6 +34,10 @@ import {
 
 export default {
   props: {
+    isDelete: {
+      type: Boolean,
+      default: true
+    },
     uploadConfig: {
       type: Object,
       default: {
@@ -73,7 +77,7 @@ export default {
     handleRemove(file) {
       const fileList = this.$refs.upload.fileList
 
-      if (file.attachment_id > 0) {
+      if (file.attachment_id > 0 && (this.isDelete === true)) {
         deleteAttachment(file.attachment_id).then(res => {
           this.$Notice.success({
             title: '操作成功',

@@ -7,7 +7,7 @@
         <Input v-model="formData.name" placeholder="请输分类名称"></Input>
       </FormItem>
       <FormItem label="封面：">
-        <upload v-if='formdataFinished' v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
+        <upload  v-if='formdataFinished' :is-delete='false' v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
       </FormItem>
       <FormItem label="描述" prop="description">
         <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>

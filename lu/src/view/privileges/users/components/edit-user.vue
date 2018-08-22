@@ -22,7 +22,7 @@
         </RadioGroup>
       </FormItem>
       <FormItem label="头像：">
-        <upload v-if='formdataFinished' v-model="formData.head_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
+        <upload v-if='formdataFinished' v-model="formData.head_image" :is-delete='false' :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
       </FormItem>
     </Form>
     <div slot="footer">
