@@ -24,11 +24,21 @@ export const deleteArticle = (article) => {
   })
 }
 
-export const getArticleTags = () => {
-  return axios.request({url: '/api/admin/tags', method: 'get'})
-}
-
-
 export const addArticle = (formData) => {
   return axios.request({url: '/api/admin/articles', data: formData, method: 'post'})
+}
+
+export const editArticle = (articleId, formData) => {
+  return axios.request({
+    url: '/api/admin/articles/' + articleId,
+    data: formData,
+    method: 'patch'
+  })
+}
+
+export const getArticleInfoById = (articleId) => {
+  return axios.request({
+    url: 'api/admin/articles/' + articleId,
+    method: 'get'
+  })
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Handlers\MarkdownerHandler;
 use App\Models\Traits\ArticleFilterTrait;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,17 @@ class Article extends Model
 
     protected function setContentAttribute($value)
     {
-        $this->attributes['content'] = clean($value, 'article_content');
+//        $value = clean($value, 'article_content');
+        $data = [
+            'raw' => $value,
+            'html' => (new MarkdownerHandler())->convertMarkdownToHtml($value)
+        ];
+        $this->attributes['content'] = json_encode($data);
+    }
+
+    protected function getContentAttribute($value)
+    {
+        return json_decode($value,true);
     }
 
     protected function getCoverImageAttribute($value)

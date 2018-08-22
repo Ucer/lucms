@@ -88,8 +88,14 @@ export default {
       this.editor.codemirror.on('blur', () => {
         this.$emit('on-blur', this.editor.value())
       })
-      let value = this.editor.value()
-      this.$emit('input', value)
+      let raw = ''
+      if (this.cache) {
+        raw = this.editor.value()
+      } else {
+        raw = this.value
+        this.editor.value(raw)
+      }
+      this.$emit('input', raw)
     },
   },
   mounted() {

@@ -13,6 +13,10 @@ export const getTableData = (to_page, per_page, searchData) => {
   })
 }
 
+export const getTagList = () => {
+  return axios.request({url: '/api/admin/tags', method: 'get'})
+}
+
 export const deleteTag = (tag) => {
   return axios.request({
     url: '/api/admin/tags/' + tag,

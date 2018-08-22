@@ -1,7 +1,7 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false fullscreen>
-    <p slot="header">添加分类</p>
+    <p slot="header">添加文章</p>
     <Row>
       <Col span="16">
       <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
@@ -22,7 +22,7 @@
           <input-helper text="以英文逗号隔开"></input-helper>
         </FormItem>
         <FormItem label="描述：" prop="description">
-          <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>
+          <Input type="textarea" v-model="formData.descriptions" placeholder="请输入描述"></Input>
         </FormItem>
         <FormItem label="文章内容：">
           <markdown-editor v-model="formData.content" :cache='true' />
@@ -113,12 +113,12 @@
 </template>
 <script>
 import {
-  addArticle,
-  getArticleTags
+  addArticle
 } from '@/api/article'
 
 import {
-  addEditTag
+  addEditTag,
+  getTagList
 } from '@/api/tag'
 
 import Upload from '_c/common/upload'
@@ -142,19 +142,22 @@ export default {
       saveLoading: false,
       spinLoading: true,
       formData: {
-        tags: 0,
-        content: '',
-        category_id: 0,
-        enable: 'F',
-        weight: 20,
-        recommend: 'F',
-        top: 'F',
+        title:'',
         cover_image: {
           attachment_id: 0,
           url: '',
         },
+        enable: 'F',
+        keywords: '',
+        descriptions: '',
+        content: '',
+        category_id: 0,
+        weight: 20,
+        top: 'F',
+        recommend: 'F',
         access_type: 'PUB',
-        access_value: ''
+        access_value: '',
+        tags: 0,
       },
       editOpenness: false,
       Openness: '公开',
@@ -183,12 +186,12 @@ export default {
   },
   mounted() {
     this.spinLoading = false
-    this.getArticleTagsExcute()
+    this.getTagListExcute()
   },
   methods: {
-    getArticleTagsExcute() {
+    getTagListExcute() {
       let t = this;
-      getArticleTags().then(res => {
+      getTagList().then(res => {
         t.articleTags = res.data;
       })
     },
@@ -225,6 +228,22 @@ export default {
         this.Openness = (access_type === 'PUB') ? '公开' : (access_type === 'PWD') ? '密码' : '私密';
         this.editOpenness = false;
       }
+    },
+    passwordValidate() {
+      var access_type = this.formData.access_type;
+      var access_value = this.formData.access_value;
+      if (access_type === 'PWD') {
+        var patt = /^[a-zA-Z0-9]{4,8}$/;
+        if (!patt.test(access_value)) {
+          this.$Notice.error({
+            title: '出错了',
+            desc: '密码只能是4到8位的数字与字母'
+          });
+          return false;
+        }
+
+      }
+      return true;
     },
     addEditTagExcute() {
       let t = this;

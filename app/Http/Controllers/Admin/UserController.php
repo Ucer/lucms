@@ -93,12 +93,12 @@ class UserController extends AdminController
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
-        if (isset($data['head_image']['attachment_id'])) {
+        if (isset($update_data['head_image']['attachment_id'])) {
             $attachement_id = $update_data['head_image']['attachment_id'];
         } else {
             $attachement_id = 0;
         }
-        $data['head_image'] = $attachement_id;
+        $update_data['head_image'] = $attachement_id;
 
         $res = $user->updateUser($update_data);
 

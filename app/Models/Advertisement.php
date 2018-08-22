@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Handlers\MarkdownerHandler;
 use DB;
 
 class Advertisement extends Model

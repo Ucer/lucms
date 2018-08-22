@@ -123,7 +123,7 @@ export default {
         {
           title: 'ID',
           key: 'id',
-          sortable: true,
+          sortable: 'customer',
           width: 100
         },
         {
@@ -199,7 +199,6 @@ export default {
             return h('div', [
               h('Tag', {
                 props: {
-                  type: 'dot',
                   color: color
                 }
               }, text)
@@ -221,7 +220,6 @@ export default {
             return h('div', [
               h('Tag', {
                 props: {
-                  type: 'dot',
                   color: color
                 }
               }, text)
@@ -255,34 +253,31 @@ export default {
           title: '操作',
           render: (h, params) => {
             let t = this;
-            let canAccess = t.canAccess;
             var delete_btn = '';
 
-            if (canAccess) {
-              delete_btn = h('Poptip', {
-                props: {
-                  confirm: true,
-                  title: '您确定要删除「' + params.row.name + '」？',
-                  transfer: true
-                },
-                on: {
-                  'on-ok': () => {
-                    t.deleteBtn(params.row.id, params.index);
-                  }
+            delete_btn = h('Poptip', {
+              props: {
+                confirm: true,
+                title: '您确定要删除「' + params.row.name + '」？',
+                transfer: true
+              },
+              on: {
+                'on-ok': () => {
+                  t.deleteArticleExcute(params.row.id, params.index);
                 }
-              }, [
-                h('Button', {
-                  style: {
-                    margin: '0 5px'
-                  },
-                  props: {
-                    type: 'error',
-                    size: 'small',
-                    placement: 'top'
-                  }
-                }, '删除'),
-              ])
-            }
+              }
+            }, [
+              h('Button', {
+                style: {
+                  margin: '0 5px'
+                },
+                props: {
+                  type: 'error',
+                  size: 'small',
+                  placement: 'top'
+                }
+              }, '删除'),
+            ])
             return h('div', [
               h('Button', {
                 props: {
@@ -291,12 +286,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$router.push({
-                      name: 'edit-article',
-                      params: {
-                        article_id: params.row.id
-                      }
-                    });
+                    this.editModal.show = true
+                    this.editModal.id = params.row.id
                   }
                 }
 

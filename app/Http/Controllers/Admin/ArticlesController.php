@@ -56,6 +56,9 @@ class ArticlesController extends AdminController
     public function store(Request $request, Article $article, ArticleValidate $validate)
     {
         $insert_data = $request->all();
+        if(!isset_and_not_empty($insert_data,'access_value')) {
+           unset($insert_data['access_value']);
+        }
         $insert_data = array_merge($insert_data, ['created_year' => date('Y'), 'created_month' => date('m')]);
 
         if (isset($insert_data['cover_image']['attachment_id'])) {
@@ -80,6 +83,9 @@ class ArticlesController extends AdminController
         if (!$article) return $this->failed('找不到数据', 404);
 
         $update_data = $request->all();
+        if(!isset_and_not_empty($update_data,'access_value')) {
+            unset($update_data['access_value']);
+        }
 
         if (isset($update_data['cover_image']['attachment_id'])) {
             $attachement_id = $update_data['cover_image']['attachment_id'];
