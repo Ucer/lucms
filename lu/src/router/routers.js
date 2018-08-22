@@ -132,10 +132,38 @@ export default[
         path: '/attachments',
         name: 'attachments',
         meta: {
-          icon: 'link',
+          icon: 'ios-link-outline',
           title: '附件列表'
         },
         component: () => import ('@/view/resources/attachments/list.vue')
+      }
+    ]
+  }, {
+    path: '/security',
+    name: 'security',
+    meta: {
+      icon: 'ios-build',
+      title: '安全管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: '/system-logs',
+        name: 'system-logs',
+        meta: {
+          icon: 'ios-more',
+          title: '系统日志'
+        },
+        component: () => import ('@/view/security/logs/list.vue')
+      },
+       // {
+       //  path: '/ip-filters',
+       //  name: 'ip-filters',
+       //  meata: {
+       //    icon: 'ios-cloudy-outline',
+       //    title: 'ip 过滤'
+       //  },
+        // component: () => import('@/view/security/ip_filters/list.vue')
       }
     ]
   }, {

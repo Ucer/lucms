@@ -29,9 +29,6 @@
     <Col span="2">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(1)">Search</Button>
     </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
-    </Col>
   </Row>
   <br>
 
