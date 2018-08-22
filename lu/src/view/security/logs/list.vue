@@ -149,8 +149,8 @@ export default {
       let t = this
       getTableStatus(params).then(res => {
         const response_data = res.data
-        t.tableStatus.type = response_data.type;
-        t.tableStatus.table_name = response_data.table_name;
+        t.tableStatus.type = response_data.type
+        t.tableStatus.table_name = response_data.table_name
       })
     },
     getTableDataExcute(to_page) {

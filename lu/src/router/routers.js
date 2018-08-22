@@ -163,7 +163,7 @@ export default[
           icon: 'ios-cloudy-outline',
           title: 'ip 过滤'
         },
-        // component: () => import('@/view/security/ip_filters/list.vue')
+        component: () => import('@/view/security/ip_filters/list.vue')
       }
     ]
   }, {
