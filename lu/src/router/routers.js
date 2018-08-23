@@ -159,8 +159,8 @@ export default[
        {
         path: '/ip-filters',
         name: 'ip-filters',
-        meata: {
-          icon: 'ios-cloudy-outline',
+        meta: {
+          icon: 'ios-warning-outline',
           title: 'ip 过滤'
         },
         component: () => import('@/view/security/ip_filters/list.vue')
