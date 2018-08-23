@@ -36,6 +36,12 @@ class AdvertisementsController extends AdminController
             $advertisement = $advertisement->advertisementPositionSearch($advertisement_positions_id);
         }
 
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $advertisement = $advertisement->orderBy($order_by[0], $order_by[1]);
+        }
+
         return new AdvertisementCollection($advertisement->with('advertisementPosition')->paginate($per_page));
     }
 
@@ -48,7 +54,12 @@ class AdvertisementsController extends AdminController
     public function store(Request $request, Advertisement $advertisement, AdvertisementValidate $validate)
     {
         $insert_data = $request->all();
-        $insert_data['cover_image'] = $insert_data['cover_image']['attachment_id'];
+        if (isset($data['cover_image']['attachment_id'])) {
+            $attachement_id = $insert_data['cover_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $insert_data['cover_image'] = $attachement_id;
 
         if ($insert_data['advertisement_positions_type'] == 'model') {
             $model_column_value = $insert_data['model_column_value'];
@@ -75,7 +86,12 @@ class AdvertisementsController extends AdminController
     public function update(Request $request, Advertisement $advertisement, AdvertisementValidate $validate)
     {
         $insert_data = $request->all();
-        $insert_data['cover_image'] = $insert_data['cover_image']['attachment_id'];
+        if (isset($data['cover_image']['attachment_id'])) {
+            $attachement_id = $insert_data['cover_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $insert_data['cover_image'] = $attachement_id;
 
         if ($insert_data['advertisement_positions_type'] == 'model') {
             $model_column_value = $insert_data['model_column_value'];

@@ -2,6 +2,7 @@
 
 namespace App\Validates;
 
+use App\Models\Article;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use DB;
@@ -51,9 +52,7 @@ class  CategoryValidate extends Validate
 
     public function destroyValidate($category)
     {
-        $is_model_has_this_category = DB::table('role_has_categories')
-            ->where('category_id', $category->id)
-            ->count();
+        $is_model_has_this_category = $category->articles()->count();
         if ($is_model_has_this_category) return $this->baseFailed('有模型在使用该分类,无法删除');
         return $this->baseSucceed($this->data, $this->message);
     }

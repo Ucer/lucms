@@ -62,10 +62,10 @@ class LoginController extends ApiController
 
     public function logout()
     {
-        if (\Auth::guard('api')->check()) {
-//            \Auth::guard('api')->user()->token()->revoke();
-            \Auth::guard('api')->user()->token()->delete();
-        }
+//        if (\Auth::guard('api')->check()) {
+////            \Auth::guard('api')->user()->token()->revoke();
+//            \Auth::guard('api')->user()->token()->delete();
+//        }
 
         return $this->message('退出登录成功');
     }

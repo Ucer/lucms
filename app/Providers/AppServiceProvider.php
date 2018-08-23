@@ -14,6 +14,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \App\Models\Article::observe(\App\Observers\ArticleObserver::class);
+
+        //mysql < 8.0
+    // Schema::defaultStringLength(191);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Resources\TagCollection;
 use App\Models\Tag;
 use App\Validates\TagValidate;
 use Illuminate\Http\Request;
@@ -16,13 +17,25 @@ class TagsController extends AdminController
 
     public function tagList(Request $request, Tag $tag)
     {
+        $per_page = $request->get('per_page', 10);
         $search_data = json_decode($request->get('search_data'), true);
         $name = isset_and_not_empty($search_data, 'name');
         if ($name) {
             $tag = $tag->columnLike('name', $name);
         }
 
-        return $this->success($tag->get());
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $tag = $tag->orderBy($order_by[0], $order_by[1]);
+        }
+
+        return new TagCollection($tag->paginate($per_page));
+    }
+
+    public function show(Tag $tag)
+    {
+        return $this->success($tag);
     }
 
     public function addEditTag(Request $request, Tag $tag, TagValidate $validate)
