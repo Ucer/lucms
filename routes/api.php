@@ -26,6 +26,7 @@ Route::namespace('Api')->group(function () {
 Route::namespace('Admin')->group(function () {
 
     Route::get('admin/users', 'UserController@usersList')->name('users.list');
+    Route::get('admin/users/current_user', 'UserController@currentUser')->name('users.current_user');
     Route::get('admin/users/{user}', 'UserController@show')->name('users.show');
     Route::post('admin/users', 'UserController@store')->name('users.store');
     Route::patch('admin/users/{user}', 'UserController@update')->name('users.update');
@@ -34,25 +35,29 @@ Route::namespace('Admin')->group(function () {
     Route::delete('admin/users/{user}', 'UserController@destroy')->name('users.destroy');
 
     Route::get('admin/permissions', 'PermissionsController@permissionList')->name('permissions.list');
-    Route::post('admin/permissions', 'PermissionsController@addEditPermission')->name('permissions.add_edit');
+    Route::post('admin/permissions', 'PermissionsController@addEdit')->name('permissions.add_edit');
     Route::get('admin/all_permissions', 'PermissionsController@allPermissions')->name('permissions.all');
+    Route::get('admin/permissions/{permission}', 'PermissionsController@show')->name('permissions.show');
     Route::delete('admin/permissions/{permission}', 'PermissionsController@destroy')->name('permissions.destroy');
 
     Route::get('admin/roles', 'RolesController@roleList')->name('roles.list');
-    Route::post('admin/roles', 'RolesController@addEditRole')->name('roles.add_edit');
+    Route::get('admin/all_roles', 'RolesController@allRoles')->name('roles.all');
+    Route::post('admin/roles', 'RolesController@addEdit')->name('roles.add_edit');
+    Route::get('admin/roles/{role}', 'RolesController@show')->name('roles.show');
     Route::get('admin/roles/{role}/permissions', 'RolesController@getRolePermissions')->name('roles.get_role_permissions');
     Route::post('admin/give/{role}/permissions', 'RolesController@giveRolePermissions')->name('roles.give_role_permissions');
-    Route::get('admin/all_roles', 'RolesController@allRoles')->name('roles.all');
     Route::delete('admin/roles/{role}', 'RolesController@destroy')->name('roles.destroy');
 
 
     Route::get('admin/attachments', 'AttachmentsController@attachmentList')->name('attachments.list');
+    Route::delete('admin/attachments/{attachment}/force_destroy', 'AttachmentsController@forceDestroy')->name('attachments.force_destroy');
     Route::delete('admin/attachments/{attachment}', 'AttachmentsController@destroy')->name('attachments.destroy');
 
     Route::get('admin/advertisement_positions', 'AdvertisementPositionsController@advertisementPositionList')->name('advertisement_positions.list');
-    Route::post('admin/advertisement_positions', 'AdvertisementPositionsController@addEditAdvertisementPosition')->name('advertisement_positions.add_edit');
-    Route::delete('admin/advertisement_positions/{advertisement_position}', 'AdvertisementPositionsController@destroy')->name('advertisement_positions.destroy');
     Route::get('admin/advertisement_positions/all', 'AdvertisementPositionsController@allAdvertisementPositions')->name('advertisement_positions.all');
+    Route::get('admin/advertisement_positions/{advertisement_position}', 'AdvertisementPositionsController@show')->name('advertisement_positions.show');
+    Route::post('admin/advertisement_positions', 'AdvertisementPositionsController@addEdit')->name('advertisement_positions.add_edit');
+    Route::delete('admin/advertisement_positions/{advertisement_position}', 'AdvertisementPositionsController@destroy')->name('advertisement_positions.destroy');
 
 
     Route::get('admin/advertisements', 'AdvertisementsController@advertisementList')->name('advertisements.list');
@@ -65,10 +70,14 @@ Route::namespace('Admin')->group(function () {
     Route::get('admin/categories', 'CategoriesController@categoryList')->name('categories.list');
     Route::post('admin/categories', 'CategoriesController@addEditCategory')->name('categories.add_edit');
     Route::get('admin/categories/all', 'CategoriesController@allCategories')->name('categories.all');
+    Route::get('admin/categories/{category}', 'CategoriesController@show')->name('categories.show');
+    Route::delete('admin/categories/{category}', 'CategoriesController@destroy')->name('categories.destroy');
 
 
     Route::get('admin/tags', 'TagsController@tagList')->name('tags.list');
+    Route::get('admin/tags/{tag}', 'TagsController@show')->name('tags.show');
     Route::post('admin/tags', 'TagsController@addEditTag')->name('tags.add_edit');
+    Route::delete('admin/tags/{tag}', 'TagsController@destroy')->name('tags.destroy');
 
 
     Route::get('admin/articles', 'ArticlesController@articleList')->name('articles.list');
@@ -82,6 +91,7 @@ Route::namespace('Admin')->group(function () {
 
 
     Route::get('admin/ip_filters', 'IpFiltersController@ipFilterList')->name('ip_filters.list');
+    Route::get('admin/ip_filters/{ip_filter}', 'IpFiltersController@show')->name('ip_filters.show');
     Route::post('admin/ip_filters', 'IpFiltersController@addEditIpFilter')->name('ip_filters.add_edit');
     Route::delete('admin/ip_filters/{ip_filter}', 'IpFiltersController@destroy')->name('ip_filters.destroy');
 });

@@ -28,8 +28,18 @@ class AdvertisementPositionsController extends AdminController
         if ($type) {
             $advertisementPosition = $advertisementPosition->typeSearch($type);
         }
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $advertisementPosition = $advertisementPosition->orderBy($order_by[0], $order_by[1]);
+        }
 
         return new AdvertisementPositionCollection($advertisementPosition->paginate($per_page));
+    }
+
+    public function show(AdvertisementPosition $advertisementPosition)
+    {
+        return $this->success($advertisementPosition);
     }
 
     public function allAdvertisementPositions(AdvertisementPosition $advertisementPosition)
@@ -38,7 +48,7 @@ class AdvertisementPositionsController extends AdminController
     }
 
 
-    public function addEditAdvertisementPosition(Request $request, AdvertisementPosition $advertisementPosition, AdvertisementPositionValidate $validate)
+    public function addEdit(Request $request, AdvertisementPosition $advertisementPosition, AdvertisementPositionValidate $validate)
     {
         $data = $request->only('id', 'name', 'type', 'description');
         $advertisement_position_id = $request->post('id', 0);

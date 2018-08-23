@@ -22,7 +22,7 @@ class  TagValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->succeed($this->data,$this->message);
+            return $this->baseSucceed($this->data,$this->message);
         } else {
             $this->message = $rest_validate;
             return $this->baseFailed($this->message);
@@ -49,10 +49,10 @@ class  TagValidate extends Validate
 
     }
 
-    public function destroyValidate($category)
+    public function destroyValidate($tag)
     {
-        $is_model_has_this_tag = DB::table('role_has_tags')
-            ->where('tag_id', $category->id)
+        $is_model_has_this_tag = DB::table('model_has_tags')
+            ->where('tag_id', $tag->id)
             ->count();
         if ($is_model_has_this_tag) return $this->baseFailed('有模型在使用该标签,无法删除');
         return $this->baseSucceed($this->data, $this->message);

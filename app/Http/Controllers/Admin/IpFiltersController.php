@@ -31,6 +31,11 @@ class IpFiltersController extends AdminController
         return new IpFilterCollection($ipFilter->paginate($per_page));
     }
 
+    public function show(IpFilter $ipFilter)
+    {
+        return $this->success($ipFilter);
+    }
+
     public function addEditIpFilter(Request $request, IpFilter $ipFilter, IpFilterValidate $validate)
     {
         $data = $request->all();

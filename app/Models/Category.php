@@ -11,6 +11,11 @@ class Category extends Model
         'name', 'cover_image', 'description',
     ];
 
+    public function articles()
+    {
+        return $this->hasMany('App\Models\Article');
+    }
+
     protected function getCoverImageAttribute($value)
     {
         $attachment_info = Attachment::enable()->find($value);
@@ -75,13 +80,11 @@ class Category extends Model
 
         DB::beginTransaction();
         try {
-            /*
             $attachment_id = $this->cover_image['attachment_id'];
             if ($attachment_id) {
                 $this->deleteAttachmentAfterDelete($attachment_id);
             }
             $this->delete();
-            */
             DB::commit();
             return $this->baseSucceed([], '删除成功');
         } catch (\Exception $e) {

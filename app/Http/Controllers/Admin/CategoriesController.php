@@ -21,6 +21,11 @@ class CategoriesController extends AdminController
         if ($name) {
             $category = $category->columnLike('name', $name);
         }
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $category = $category->orderBy($order_by[0], $order_by[1]);
+        }
 
         return $this->success($category->get());
     }
@@ -30,11 +35,21 @@ class CategoriesController extends AdminController
         return $this->success(collect($category->get())->keyBy('id'));
     }
 
+    public function show(Category $category)
+    {
+        return $this->success($category);
+    }
+
     public function addEditCategory(Request $request, Category $category, CategoryValidate $validate)
     {
         $data = $request->all();
         $category_id = $request->post('id', 0);
-        $data['cover_image'] = $data['cover_image']['attachment_id'];
+        if (isset($data['cover_image']['attachment_id'])) {
+            $attachement_id = $data['cover_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $data['cover_image'] = $attachement_id;
         if (is_null($data['description'])) unset($data['description']);
 
         if ($category_id > 0) {

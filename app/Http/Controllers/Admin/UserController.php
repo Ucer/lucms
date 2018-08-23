@@ -22,6 +22,7 @@ class UserController extends AdminController
     {
         $per_page = $request->get('per_page', 10);
         $search_data = json_decode($request->get('search_data'), true);
+
         $email = isset_and_not_empty($search_data, 'email');
         if ($email) {
             $user = $user->columnLike('email', $email);
@@ -37,6 +38,12 @@ class UserController extends AdminController
             $user = $user->isAdminSearch($is_admin);
         }
 
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $user = $user->orderBy($order_by[0], $order_by[1]);
+        }
+
         return new UserCollection($user->paginate($per_page));
     }
 
@@ -46,10 +53,26 @@ class UserController extends AdminController
         return new UserResource($user);
     }
 
+    public function currentUser()
+    {
+        $authUser = Auth::user();
+        $return = $authUser->toArray();
+        foreach ($authUser->roles as $role) {
+            $return['roles'][] = $role['name'];
+        }
+
+        return $this->success($return);
+    }
+
     public function store(Request $request, User $user, UserValidate $validate)
     {
         $insert_data = $request->all();
-        $insert_data['head_image'] = $insert_data['head_image']['attachment_id'];
+        if (isset($data['head_image']['attachment_id'])) {
+            $attachement_id = $insert_data['head_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $insert_data['head_image'] = $attachement_id;
 
         $rest_validate = $validate->storeValidate($insert_data);
 
@@ -70,8 +93,13 @@ class UserController extends AdminController
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
+        if (isset($update_data['head_image']['attachment_id'])) {
+            $attachement_id = $update_data['head_image']['attachment_id'];
+        } else {
+            $attachement_id = 0;
+        }
+        $update_data['head_image'] = $attachement_id;
 
-        $update_data['head_image'] = $update_data['head_image']['attachment_id'];
         $res = $user->updateUser($update_data);
 
         if ($res['status'] === true) {

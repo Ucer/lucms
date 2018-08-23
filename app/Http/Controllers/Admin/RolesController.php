@@ -18,13 +18,26 @@ class RolesController extends AdminController
     public function roleList(Request $request, Role $role)
     {
         $search_data = json_decode($request->get('search_data'), true);
-        if ($search_data['name']) {
-            $role = $role->columnLike('name', $search_data['name']);
+        $name = isset_and_not_empty($search_data, 'name');
+        if ($name) {
+            $role = $role->columnLike('name', $name);
         }
+
+        $order_by = isset_and_not_empty($search_data, 'order_by');
+        if ($order_by) {
+            $order_by = explode(',', $order_by);
+            $role = $role->orderBy($order_by[0], $order_by[1]);
+        }
+
         return new RoleCollection($role->get());
     }
 
-    public function addEditRole(Request $request, Role $role, RoleValidate $validate)
+    public function show(Role $role)
+    {
+        return $this->success($role);
+    }
+
+    public function addEdit(Request $request, Role $role, RoleValidate $validate)
     {
         $update_data = $request->only('id', 'name', 'guard_name', 'description');
         $role_id = $request->post('id', 0);

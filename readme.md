@@ -160,35 +160,25 @@ $ ln -s /srv/wwwroot/homestead-code/lucms/storage/app/public/* ./storage/
 
 1). 全局修改基本域名 http://lucms.test => https://xxxxx
 
-`lucms/lu/src/libs/util.js`
-```js
-const ajaxUrl = env === 'development'
-    ? 'http://lucms.test/api'
-    : env === 'production'
-        ? 'http://lucms.test/api'
-        : 'http://lucms.test/api';
+```html
+cp  lu/example.vue.config.js lu/vue.config.js
+cp  lu/config/example.env.js lu/config/env.js
+cp  lu/config/example.url.js lu/config/url.js
 ```
 
-`lucms/lu/src/main.js`
+`lucms/lu/vue.config.js`
 ```js
-const app_url = '//lucms.test/api';
+const BASE_URL = env === 'development'
+  ? '/iview-admin/'
+  : 'https://lucms.com/lu/dist/'
 ```
 
-`lucms/lu/build/webpack.prod.config.js`
+`lucms/lu/config/url.js`
 ```js
-.
-.
-.
-    output: {
-        //publicPath: 'http://lucms.test/lu/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名
-        publicPath: 'http://lucms.codehaoshi.com/lu/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名
-        filename: '[name].[hash].js',
-        chunkFilename: '[name].[hash].chunk.js'
-    },
-. 
-.
-.
+const DEV_URL = 'http://lucms.test/'
+const PRO_URL = 'https://lucms.com/'
 ```
+
 
 ### vuejs 安装与运行
 
@@ -203,7 +193,6 @@ $ npm run dev
 ```
 $ cd lu 
 $ npm run build
-$ mv ../public/dashboard.blade.php ../resources/views
 ```
 
 ## 扩展包使用情况
@@ -221,6 +210,7 @@ $ mv ../public/dashboard.blade.php ../resources/views
 | [aliyuncs/oss-sdk-php](https://help.aliyun.com/document_detail/32099.html?spm=5176.87240.400427.47.CtLkv4)     | 啊里云 oss     | 对象存储 |
 | [overtrue/easy-sms](https://github.com/overtrue/easy-sms)     | 短信发送     | 找回密码 |
 | [barryvdh/laravel-cors](https://github.com/barryvdh/laravel-cors)     | 跨越解决     | 开发环境方便测试 |
+| [league/html-to-markdown](https://github.com/thephpleague/html-to-markdown)     | markdown 转 html     | 富文本编辑器 markdown 支持 |
 
 
 ## 队列
