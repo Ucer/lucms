@@ -27,7 +27,6 @@ import 'wangeditor/release/wangEditor.min.css'
 import {
   oneOf
 } from '@/libs/tools'
-import xss from 'xss'
 export default {
   name: 'Editor',
   props: {
