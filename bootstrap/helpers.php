@@ -151,7 +151,7 @@ function get_order_sn($pre = 'LU', $table_name = '', $column = 'order_sn')
  * @return bool|string
  * 发起 http 请求
  */
-function http_post_request($url, $data)
+function http_post_no_rest($url, $data)
 {
     $postdata = http_build_query(
         $data
@@ -169,13 +169,33 @@ function http_post_request($url, $data)
     return $result;
 }
 
+function http_post_request($url, array $params)
+{
+    $params = json_encode($params, JSON_FORCE_OBJECT);
+    $headers = [
+        "Content-Type:application/json;charset=utf-8",
+        "Accept:application/json;charset=utf-8"
+    ];
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    $result = curl_exec($ch);
+    curl_close($ch);
+    return $result;
+}
+
 /**
  * @param $url
  * @param $params
  * @return mixed
  * http get请求
  */
-function http_get_request($url, $params)
+function http_get_request($url, string $params)
 {
     $url = $url . '?' . http_build_query($params);
     $ch = curl_init();
@@ -188,3 +208,4 @@ function http_get_request($url, $params)
     curl_close($ch);
     return $result;
 }
+
