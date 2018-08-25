@@ -126,3 +126,65 @@ function get_two_position_distance($lon1, $lat1, $lon2, $lat2)
 
     return round($dist * $radius, 3);
 }
+
+/*
+ * 生成唯一订单号
+ */
+function get_order_sn($pre = 'LU', $table_name = '', $column = 'order_sn')
+{
+    mt_srand((double)microtime() * 1000000);
+
+    $str = $pre . date('Ymd') . str_pad(mt_rand(1, 9999999), 7, '0', STR_PAD_LEFT);;
+    if ($table_name && $column) {
+        $sn = \Illuminate\Support\Facades\DB::table($table_name)->where($column, $str)->count();
+        if ($sn > 0) {
+            get_order_sn($pre, $table_name, $column);
+        }
+    }
+    return $str;
+}
+
+
+/**
+ * @param $url
+ * @param $data
+ * @return bool|string
+ * 发起 http 请求
+ */
+function http_post_request($url, $data)
+{
+    $postdata = http_build_query(
+        $data
+    );
+
+    $opts = array('http' =>
+        array(
+            'method' => 'POST',
+            'header' => 'Content-type: application/x-www-form-urlencoded',
+            'content' => $postdata
+        )
+    );
+    $context = stream_context_create($opts);
+    $result = file_get_contents($url, false, $context);
+    return $result;
+}
+
+/**
+ * @param $url
+ * @param $params
+ * @return mixed
+ * http get请求
+ */
+function http_get_request($url, $params)
+{
+    $url = $url . '?' . http_build_query($params);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+    $result = curl_exec($ch);
+    curl_close($ch);
+    return $result;
+}
