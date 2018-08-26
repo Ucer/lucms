@@ -57,6 +57,7 @@ class UserController extends AdminController
     {
         $authUser = Auth::user();
         $return = $authUser->toArray();
+        $return['roles'] = [];
         foreach ($authUser->roles as $role) {
             $return['roles'][] = $role['name'];
         }
