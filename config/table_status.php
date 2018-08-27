@@ -25,12 +25,18 @@ return [
     'ip_filters' => [
         'type' => ['white' => '白名单', 'black' => '黑名单'],
     ],
+    'alipay_notifies' => [
+        'model_type' => ['undefined' => '未定义表', 'pay_test' => '支付测试']
+    ],
+    'pay_notify_raws' => [
+        'model_type' => ['ali_charge' => '支付宝通知','wx_charge' => '微信支付通知','cmb_charge' => '招商支付通知']
+    ],
     'logs' => [
         'type' => ['C' => '添加', 'U' => '更新', 'R' => '读取', 'D' => '删除', 'L' => '登录', 'O' => '其它'],
         'table_name' => [
             'users' => '用户表', 'attachments' => '附件表', 'roles' => '角色表', 'permissions' => '权限表',
             'advertisement_positions' => '广告位表', 'advertisements' => '广告表', 'categories' => '分类表', 'tags' => '标签表',
-            'articles' => '文章表', 'ip_filters' => 'ip 过滤表'
+            'articles' => '文章表', 'ip_filters' => 'ip 过滤表','alipay_notifies' => '支付宝异步通知表','pay_notify_raws' => '支付异步通知数据源表'
         ],
     ]
 ];
