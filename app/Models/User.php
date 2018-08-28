@@ -7,6 +7,7 @@ use App\Models\Traits\ExcuteTrait;
 use App\Models\Traits\ScopeTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Config;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use DB;
@@ -30,7 +31,7 @@ class User extends Authenticatable
             $url = $attachment_info->domain . '/' . $attachment_info->link_path . '/' . $attachment_info->storage_name;
             $attachment_id = $attachment_info->id;
         } else {
-            $url = '';
+            $url = Config::get('set_file_path.default_head_image');
             $attachment_id = 0;
         }
         return [
