@@ -45,7 +45,7 @@
   <Modal v-model="modalHeadImage.show">
     <p slot="header">图片预览</p>
     <div class="text-center">
-      <img :src="modalHeadImage.url" alt="" v-if="modalHeadImage.show" class="center-align">
+      <img :src="modalHeadImage.url" alt="" v-if="modalHeadImage.show" class="center-align" style="width:100%">
     </div>
     <div slot="footer">
     </div>
