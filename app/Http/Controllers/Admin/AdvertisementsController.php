@@ -85,32 +85,32 @@ class AdvertisementsController extends AdminController
 
     public function update(Request $request, Advertisement $advertisement, AdvertisementValidate $validate)
     {
-        $insert_data = $request->all();
-        if (isset($data['cover_image']['attachment_id'])) {
-            $attachement_id = $insert_data['cover_image']['attachment_id'];
+        $update_data = $request->all();
+        if (isset($update_data['cover_image']['attachment_id'])) {
+            $attachement_id = $update_data['cover_image']['attachment_id'];
         } else {
             $attachement_id = 0;
         }
-        $insert_data['cover_image'] = $attachement_id;
+        $update_data['cover_image'] = $attachement_id;
 
-        if ($insert_data['advertisement_positions_type'] == 'model') {
-            $model_column_value = $insert_data['model_column_value'];
+        if ($update_data['advertisement_positions_type'] == 'model') {
+            $model_column_value = $update_data['model_column_value'];
             if (!$model_column_value['column'] || !$model_column_value['model'] || !$model_column_value['value']) {
                 return $this->failed('跳转模型类广告位，必须填写key');
             }
         } else {
-            $insert_data['model_column_value'] = [
+            $update_data['model_column_value'] = [
                 'model' => '',
                 'column' => '',
                 'value' => ''
             ];
         }
-        $rest_validate = $validate->updateValidate($insert_data, $advertisement->id);
+        $rest_validate = $validate->updateValidate($update_data, $advertisement->id);
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
 
-        $res = $advertisement->updateAdvertisement($insert_data);
+        $res = $advertisement->updateAdvertisement($update_data);
         if ($res['status'] === true) return $this->message($res['message']);
         return $this->failed($res['message']);
     }
