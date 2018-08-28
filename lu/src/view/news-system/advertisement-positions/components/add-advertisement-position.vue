@@ -60,9 +60,9 @@ export default {
   methods: {
     addEditAdvertisementPositionExcute() {
       let t = this
-      t.saveLoading = true
       t.$refs.formData.validate((valid) => {
         if (valid) {
+          t.saveLoading = true
           addEditAdvertisementPosition(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
