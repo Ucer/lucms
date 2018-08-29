@@ -11,6 +11,7 @@ import importDirective from '@/directive'
 import 'iview/dist/styles/iview.css'
 import './index.less'
 import '@/assets/icons/iconfont.css'
+import Highlight from '@/libs/highlight.js'
 
 import apiRequest from './libs/api.request'
 import appUrl from '../config/url'
@@ -25,7 +26,7 @@ import {TOKEN_KEY} from '@/libs/util'
 
 // Object.defineProperty(Vue.prototype, '$apiRequest', {
 //   value: apiRequest
-// })
+// }))
 
 window.access_token = Cookies.get(TOKEN_KEY)
 
@@ -42,6 +43,8 @@ window.exportExcelUrl = {
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
 })
+
+Vue.use(Highlight)
 Vue.config.productionTip = false
 /* @description 全局注册应用配置 */
 Vue.prototype.$config = config

@@ -96,6 +96,10 @@ Route::namespace('Admin')->group(function () {
     Route::get('admin/ip_filters/{ip_filter}', 'IpFiltersController@show')->name('ip_filters.show');
     Route::post('admin/ip_filters', 'IpFiltersController@addEditIpFilter')->name('ip_filters.add_edit');
     Route::delete('admin/ip_filters/{ip_filter}', 'IpFiltersController@destroy')->name('ip_filters.destroy');
+
+
+    Route::get('admin/versions', 'VersionsController@list');
+    Route::post('admin/versions', 'VersionsController@store');
 });
 
 

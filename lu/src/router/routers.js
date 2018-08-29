@@ -125,7 +125,7 @@ export default[
     component: Main,
     meta: {
       title: '资源管理',
-      icon: 'link'
+      icon: 'ios-keypad-outline'
     },
     children: [
       {
@@ -134,6 +134,14 @@ export default[
         meta: {
           icon: 'ios-link-outline',
           title: '附件列表'
+        },
+        component: () => import ('@/view/resources/attachments/list.vue')
+      }, {
+        path: '/config-list',
+        name: 'config-list',
+        meta: {
+          icon: 'ios-link-outline',
+          title: '系统配置'
         },
         component: () => import ('@/view/resources/attachments/list.vue')
       }
@@ -155,15 +163,33 @@ export default[
           title: '系统日志'
         },
         component: () => import ('@/view/security/logs/list.vue')
-      },
-       {
+      }, {
         path: '/ip-filters',
         name: 'ip-filters',
         meta: {
           icon: 'ios-warning-outline',
           title: 'ip 过滤'
         },
-        component: () => import('@/view/security/ip_filters/list.vue')
+        component: () => import ('@/view/security/ip_filters/list.vue')
+      }
+    ]
+  }, {
+    path: '/systems',
+    name: 'systems',
+    component: Main,
+    meta: {
+      icon: 'ios-git-branch',
+      title: '系统信息'
+    },
+    children: [
+      {
+        path: '/system-versions',
+        name: 'system-versions',
+        meta: {
+          icon: 'ios-git-branch',
+          title: '版本更新日志'
+        },
+        component: () => import ('@/view/system-version')
       }
     ]
   }, {
