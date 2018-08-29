@@ -35,11 +35,9 @@ lucms 是一个基于 `laravel5.5*` 与 `iviewjs` 开发的一套后台管理系
 - 附件管理 —— 服务器文件管理
 - 新闻系统 —— 基础新闻管理
 - 系统安全 —— 日志记录、ip 过滤
-
-## 新版本预告
-
-- 整体架构升级 —— 使用 vuecli-3.0、iview_admin-2.0 
-- 整体代码优化、规范化
+- Excel 导入导出
+- Markdown 编辑器支持
+- Wangeditor 编辑器支持
 
 ## 开发环境部署/安装
 
@@ -211,6 +209,7 @@ $ npm run build
 | [overtrue/easy-sms](https://github.com/overtrue/easy-sms)     | 短信发送     | 找回密码 |
 | [barryvdh/laravel-cors](https://github.com/barryvdh/laravel-cors)     | 跨越解决     | 开发环境方便测试 |
 | [league/html-to-markdown](https://github.com/thephpleague/html-to-markdown)     | markdown 转 html     | 富文本编辑器 markdown 支持 |
+| [Maatwebsite/Laravel-Excel](https://github.com/Maatwebsite/Laravel-Excel)     | excel 处理     | 导入导出 excel |
 
 
 ## 队列
