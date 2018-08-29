@@ -35,14 +35,14 @@ export default {
       formdataFinished: false,
       formData: {
         id: 0,
-        name: '',
+        name: ''
       },
       rules: {
         name: [{
           required: true,
           message: '请填写标签名称',
           trigger: 'blur'
-        }],
+        }]
       }
     }
   },
@@ -53,12 +53,12 @@ export default {
   },
   methods: {
     getTagInfoByIdExcute() {
-      let t = this;
+      let t = this
       getTagInfoById(t.modalId).then(res => {
-        let res_data = res.data
+        let resData = res.data
         t.formData = {
-          id: res_data.id,
-          name: res_data.name
+          id: resData.id,
+          name: resData.name
         }
         t.formdataFinished = true
         t.spinLoading = false
@@ -78,7 +78,7 @@ export default {
               title: res.message
             })
           }, function(error) {
-            t.saveLoading = false;
+            t.saveLoading = false
           })
         }
       })
@@ -86,7 +86,7 @@ export default {
     cancel() {
       this.modalShow = false
       this.$emit('on-edit-modal-hide')
-    },
+    }
   }
 }
 </script>

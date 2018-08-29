@@ -16,6 +16,9 @@
     <Col span="2">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
+    <Col span="2">
+    <a :href='exportExcel'><Button icon="md-download">导出文件</Button></a>
+    </Col>
   </Row>
   <br>
 
@@ -167,6 +170,11 @@ export default {
     let t = this
     t.getTableStatusExcute('advertisement_positions/type')
     t.getTableDataExcute(t.feeds.current_page)
+  },
+  computed: {
+    exportExcel() {
+      return window.exportExcelUrl.exportAdvertisementPosition + '?search_data=' + JSON.stringify(this.searchForm)
+    }
   },
   methods: {
     handleOnPageChange: function(to_page) {

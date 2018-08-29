@@ -35,6 +35,9 @@ window.uploadUrl = {
   tinymceUpload: appUrl + 'api/upload/tinymce',
   uploadOther: appUrl + 'api/upload/other'
 }
+window.exportExcelUrl = {
+  exportAdvertisementPosition: appUrl + 'api/excels/export/advertisement_positions'
+}
 
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
@@ -44,7 +47,6 @@ Vue.config.productionTip = false
 Vue.prototype.$config = config
 /* 注册指令 */
 importDirective(Vue)
-
 
 /* eslint-disable no-new */
 new Vue({

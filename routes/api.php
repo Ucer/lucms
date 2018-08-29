@@ -20,6 +20,8 @@ Route::namespace('Api')->group(function () {
     Route::get('common_get_table_status/{table_name}/{column_name?}', 'CommonController@getTableStatus');
     Route::get('common_get_table_status/{table_name}/{column_name?}', 'CommonController@getTableStatus');
 
+    Route::get('excels/export/advertisement_positions', 'ExcelController@exportAdvertisementPosition');
+
 });
 
 /**       ==========================          后台APi           ====================   */
