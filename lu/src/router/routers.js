@@ -140,10 +140,10 @@ export default[
         path: '/config-list',
         name: 'config-list',
         meta: {
-          icon: 'ios-link-outline',
+          icon: 'md-planet',
           title: '系统配置'
         },
-        component: () => import ('@/view/resources/attachments/list.vue')
+        component: () => import ('@/view/resources/systems/system-config.vue')
       }
     ]
   }, {
