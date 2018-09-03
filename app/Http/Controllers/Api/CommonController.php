@@ -27,6 +27,8 @@ class CommonController extends ApiController
                 break;
             case 'advertisements':
                 break;
+            case 'system_configs':
+                break;
             default:
                 return $this->failed('不允许的操作');
                 break;

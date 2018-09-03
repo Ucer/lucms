@@ -137,6 +137,14 @@ export default[
         },
         component: () => import ('@/view/resources/attachments/list.vue')
       }, {
+        path: '/config-item-list',
+        name: 'config-item-list',
+        meta: {
+          icon: 'ios-barcode-outline',
+          title: '系统配置项'
+        },
+        component: () => import ('@/view/resources/systems/config-item-list.vue')
+      }, {
         path: '/config-list',
         name: 'config-list',
         meta: {

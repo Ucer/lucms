@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Validates;
+
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use DB;
+
+class  SystemConfigValidate extends Validate
+{
+    protected $message = '操作成功';
+    protected $data = [];
+
+    public function storeValidate($request_data)
+    {
+        $rules = [
+            'flag' => [
+                'regex:/^[a-z][a-zA-Z0-9_]{2,20}$/',
+                'unique:system_configs'
+            ],
+            'title' => 'between:2,30|unique:system_configs',
+            'system_config_group' => 'required',
+            'system_config_type' => 'required'
+        ];
+        $rest_validate = $this->validate($request_data, $rules);
+        if ($rest_validate === true) {
+            if ($request_data['system_config_type'] === 'enumeration') {
+                if (!$request_data['item']) return $this->baseFailed('枚举类型必须要填写配置项');
+            }
+            return $this->baseSucceed($this->data, $this->message);
+        } else {
+            $this->message = $rest_validate;
+            return $this->baseFailed($this->message);
+        }
+    }
+
+
+    public function updateValidate($request_data, $system_config_id)
+    {
+        $rules = [
+            'flag' => [
+                'regex:/^[a-z][a-zA-Z0-9_]{2,20}$/',
+                Rule::unique('system_configs')->ignore($system_config_id)
+            ],
+            'title' => [
+                'between:2,30',
+                Rule::unique('system_configs')->ignore($system_config_id)
+            ],
+            'system_config_group' => 'required',
+            'system_config_type' => 'required'
+        ];
+        $rest_validate = $this->validate($request_data, $rules);
+        if ($rest_validate === true) {
+            if ($request_data['system_config_type'] === 'enumeration') {
+                if (!$request_data['item']) return $this->baseFailed('枚举类型必须要填写配置项');
+            }
+            return $this->baseSucceed($this->data, $this->message);
+        } else {
+            $this->message = $rest_validate;
+            return $this->baseFailed($this->message);
+        }
+    }
+
+    public function destroyValidate($category)
+    {
+        $is_model_has_this_category = $category->articles()->count();
+        if ($is_model_has_this_category) return $this->baseFailed('有模型在使用该分类,无法删除');
+        return $this->baseSucceed($this->data, $this->message);
+    }
+
+    protected function validate($request_data, $rules)
+    {
+        $message = [
+            'flag.regex' => '标识只能是3-12位的字母、数字、下划线组成',
+            'flag.unique' => '标识已经存在',
+            'title.between' => '配置标题只能在:min-:max个字符范围',
+            'title.unique' => '配置标题已经被占用',
+            'system_config_group.required' => '请选择配置分组',
+            'system_config_type.required' => '请选择配置类型',
+        ];
+        $validator = Validator::make($request_data, $rules, $message);
+        if ($validator->fails()) {
+            return $validator->errors()->first();
+        }
+        return true;
+    }
+}

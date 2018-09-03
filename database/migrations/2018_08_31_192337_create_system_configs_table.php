@@ -15,14 +15,14 @@ class CreateSystemConfigsTable extends Migration
     {
         Schema::create('system_configs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('flag', 15)->default('')->comment('配置英文标识');
+            $table->string('flag', 20)->default('')->comment('配置英文标识');
             $table->string('title', 30)->default('')->comment('配置标题');
             $table->string('system_config_group', 10)->default('basic')->comment('配置分组');
-            $table->string('system_config_type', 10)->default('input')->comment('配置类型');
-            $table->string('item', 15)->default('')->comment('配置项');
+            $table->string('system_config_type', 15)->default('input')->comment('配置类型');
+            $table->string('item')->default('')->comment('配置项');
             $table->string('value')->default('')->comment('配置值');
-            $table->string('desc')->default('')->comment('配置描述');
-            $table->integer('weight', 6)->default(10);
+            $table->string('description')->default('')->comment('配置描述');
+            $table->integer('weight')->default(10);
             $table->enum('enable', ['T', 'F'])->default('T');
             $table->timestamps();
 

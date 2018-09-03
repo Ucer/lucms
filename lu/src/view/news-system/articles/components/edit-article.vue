@@ -190,7 +190,6 @@ export default {
     }
   },
   mounted() {
-    this.spinLoading = false
     this.getTagListExcute()
     this.getArticleInfoByIdExcute()
   },
