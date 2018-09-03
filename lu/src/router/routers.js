@@ -144,14 +144,6 @@ export default[
           title: '系统配置项'
         },
         component: () => import ('@/view/resources/systems/config-item-list.vue')
-      }, {
-        path: '/config-list',
-        name: 'config-list',
-        meta: {
-          icon: 'md-planet',
-          title: '系统配置'
-        },
-        component: () => import ('@/view/resources/systems/system-config.vue')
       }
     ]
   }, {

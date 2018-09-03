@@ -53,7 +53,7 @@ import EditComponent from './components/edit-config-item'
 
 import {
   getTableData,
-  getTypeAndGroup,
+  getGroup,
   deleteSystemConfig,
 } from '@/api/systems'
 
@@ -122,11 +122,6 @@ export default {
           }
         },
         {
-          title: '排序',
-          key: 'weight',
-          editable: true
-        },
-        {
           title: '描述',
           key: 'flag'
         },
@@ -189,20 +184,20 @@ export default {
   },
   created() {
     let t = this
-    t.getTypeAndGroupExcute()
+    t.getGroupExcute()
     t.getTableDataExcute()
   },
   methods: {
-    getTypeAndGroupExcute(to_page) {
+    getGroupExcute(to_page) {
       let t = this
-      getTypeAndGroup(t.searchForm).then(res => {
+      getGroup(t.searchForm).then(res => {
         const response_data = res.data
         t.tableStatus.system_config_type = response_data.type
         t.tableStatus.system_config_group = response_data.group
         t.tableStatus.enable = response_data.enable
       }, function(error) {})
     },
-    getTableDataExcute(to_page) {
+    getTableDataExcute() {
       let t = this
       t.tableLoading = true
       getTableData(t.searchForm).then(res => {
@@ -216,7 +211,7 @@ export default {
     onSortChange: function(data) {
       const order = data.column.key + ',' + data.order
       this.searchForm.order_by = order
-      this.getTableDataExcute(1)
+      this.getTableDataExcute()
     },
     deleteSystemConfigExcute(systemConfig, key) {
       let t = this

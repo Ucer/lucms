@@ -19,14 +19,10 @@ class  SystemConfigValidate extends Validate
                 'unique:system_configs'
             ],
             'title' => 'between:2,30|unique:system_configs',
-            'system_config_group' => 'required',
-            'system_config_type' => 'required'
+            'system_config_group' => 'required'
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            if ($request_data['system_config_type'] === 'enumeration') {
-                if (!$request_data['item']) return $this->baseFailed('枚举类型必须要填写配置项');
-            }
             return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
@@ -46,14 +42,10 @@ class  SystemConfigValidate extends Validate
                 'between:2,30',
                 Rule::unique('system_configs')->ignore($system_config_id)
             ],
-            'system_config_group' => 'required',
-            'system_config_type' => 'required'
+            'system_config_group' => 'required'
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            if ($request_data['system_config_type'] === 'enumeration') {
-                if (!$request_data['item']) return $this->baseFailed('枚举类型必须要填写配置项');
-            }
             return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
@@ -75,8 +67,7 @@ class  SystemConfigValidate extends Validate
             'flag.unique' => '标识已经存在',
             'title.between' => '配置标题只能在:min-:max个字符范围',
             'title.unique' => '配置标题已经被占用',
-            'system_config_group.required' => '请选择配置分组',
-            'system_config_type.required' => '请选择配置类型',
+            'system_config_group.required' => '请选择配置分组'
         ];
         $validator = Validator::make($request_data, $rules, $message);
         if ($validator->fails()) {

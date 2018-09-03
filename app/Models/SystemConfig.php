@@ -13,7 +13,6 @@ class SystemConfig extends Model
     public function storeSystemConfig($input)
     {
         try {
-            $input['item'] = str_replace(['：', '：', '：'], [':', ':', ':'], $input['item']);
             $input['value'] = str_replace([',', '，', '，'], [',', ',', ','], $input['value']);
 
             $this->fill($input);

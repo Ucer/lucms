@@ -11,8 +11,8 @@ export const getTableData = (searchData) => {
   })
 }
 
-export const getTypeAndGroup = () => {
-  return axios.request({url: '/api/admin/system_configs/get_type_and_group', method: 'get'})
+export const getGroup = () => {
+  return axios.request({url: '/api/admin/system_configs/get_group', method: 'get'})
 }
 
 export const deleteSystemConfig = (systemConfig) => {

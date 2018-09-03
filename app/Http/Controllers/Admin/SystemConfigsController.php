@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\SystemConfigTrait;
 use App\Models\SystemConfig;
 use App\Traits\TableStatusTrait;
 use App\Validates\SystemConfigValidate;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Config;
 
 class SystemConfigsController extends AdminController
 {
-    use TableStatusTrait;
+    use TableStatusTrait, SystemConfigTrait;
 
     public function __construct()
     {
@@ -46,10 +47,9 @@ class SystemConfigsController extends AdminController
         return $this->success($systemConfig->get());
     }
 
-    public function getTypeAndGroup()
+    public function getGroup()
     {
         return $this->success([
-            'type' => Config::get('lu.system_config_type_list'),
             'group' => Config::get('lu.system_config_group_list'),
             'enable' => $this->getBaseStatus('system_configs', 'enable')
         ]);
@@ -63,10 +63,6 @@ class SystemConfigsController extends AdminController
     public function store(Request $request, SystemConfig $systemConfig, SystemConfigValidate $validate)
     {
         $insert_data = $request->all();
-        if (!isset_and_not_empty($insert_data, 'item')) {
-            $insert_data['item'] = '';
-        }
-
         $rest_validate = $validate->storeValidate($insert_data);
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
@@ -81,10 +77,6 @@ class SystemConfigsController extends AdminController
     public function update(Request $request, SystemConfig $systemConfig, SystemConfigValidate $validate)
     {
         $update_data = $request->all();
-        if (!isset_and_not_empty($update_data, 'item')) {
-            $update_data['item'] = '';
-        }
-
         $rest_validate = $validate->updateValidate($update_data, $systemConfig->id);
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);

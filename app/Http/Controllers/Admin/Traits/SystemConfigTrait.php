@@ -13,8 +13,8 @@ trait SystemConfigTrait
         if (empty($str)) {
             return [];
         }
-        $str = str_replace(['：', '：', '：'], [':', ':', ':'], $str);
-        $arr = explode("\r\n", $str);
+        $str = str_replace(['：', '：', '：',"\r\n","\n"], [':', ':', ':','',''], $str);
+        $arr = explode(",", $str);
         $value = [];
         foreach ($arr as $k => $v) {
             if (strpos($v, ':')) {

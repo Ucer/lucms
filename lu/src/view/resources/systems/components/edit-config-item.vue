@@ -16,27 +16,14 @@
             <Option v-for="(item,key) in configGroup" :value="key" :key="key">{{ item.title }} </Option>
         </Select>
       </FormItem>
-      <FormItem label="类型：" prop="system_config_type">
-        <Select v-model="formData.system_config_type" filterable placeholder="请选择配置类型">
-            <Option v-for="(item,key) in configType" :value="key" :key="key">{{ item.title }} </Option>
-        </Select>
-      </FormItem>
-      <FormItem label="配置可选项：" v-show="formData.system_config_type === 'enumeration'">
-        <Input type="textarea" v-model="formData.item" placeholder="请输入配置可选项"></Input>
-        <input-helper text="key:value。下拉选择框,一行代表一项"></input-helper>
-      </FormItem>
       <FormItem label="配置值：">
         <Input type="textarea" v-model="formData.value" placeholder="请输入配置值"></Input>
-        <input-helper text="数组类型的以逗号隔开"></input-helper>
       </FormItem>
       <FormItem label="是否启用：">
         <RadioGroup v-model="formData.enable">
           <Radio label="F">禁用</Radio>
           <Radio label="T">启用</Radio>
         </RadioGroup>
-      </FormItem>
-      <FormItem label="排序：">
-        <Input v-model="formData.weight" placeholder="请输入排序"></Input>
       </FormItem>
       <FormItem label="描述：">
         <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>
@@ -91,11 +78,8 @@ export default {
         flag: '',
         title: '',
         system_config_group: '',
-        system_config_type: '',
-        item: '',
         value: '',
         description: '',
-        weight: 10,
         enable: 'T'
       },
       formdataFinished: false,
@@ -114,12 +98,7 @@ export default {
           required: true,
           message: '请选择配置分组',
           trigger: 'blur'
-        }],
-        system_config_type: [{
-          required: true,
-          message: '请选择配置类型',
-          trigger: 'blur'
-        }],
+        }]
       },
     }
   },
@@ -135,12 +114,9 @@ export default {
           flag: res_data.flag,
           title: res_data.title,
           system_config_group: res_data.system_config_group,
-          system_config_type: res_data.system_config_type,
-          item: res_data.item,
           value: res_data.value,
           enable: res_data.enable,
-          description: res_data.description,
-          weight: res_data.weight
+          description: res_data.description
         }
 
         t.formdataFinished = true

@@ -102,7 +102,7 @@ Route::namespace('Admin')->group(function () {
     Route::post('admin/versions', 'VersionsController@store');
 
     Route::get('admin/system_configs', 'SystemConfigsController@list')->name('system_configs.list');
-    Route::get('admin/system_configs/get_type_and_group', 'SystemConfigsController@getTypeAndGroup')->name('system_configs.get_type_and_group');
+    Route::get('admin/system_configs/get_group', 'SystemConfigsController@getGroup')->name('system_configs.get_group');
     Route::get('admin/system_configs/{system_config}', 'SystemConfigsController@show')->name('system_configs.show');
     Route::post('admin/system_configs', 'SystemConfigsController@store')->name('system_configs.store');
     Route::patch('admin/system_configs/{system_config}', 'SystemConfigsController@update')->name('system_configs.update');
