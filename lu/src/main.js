@@ -34,7 +34,8 @@ window.uploadUrl = {
   uploadAvatar: appUrl + 'api/upload/avatar',
   uploadAdvertisement: appUrl + 'api/upload/advertisement',
   tinymceUpload: appUrl + 'api/upload/tinymce',
-  uploadOther: appUrl + 'api/upload/other'
+  uploadOther: appUrl + 'api/upload/other',
+  importExcelAdvertisementPosition: appUrl + 'api/excels/import/advertisement_positions'
 }
 window.exportExcelUrl = {
   exportAdvertisementPosition: appUrl + 'api/excels/export/advertisement_positions'

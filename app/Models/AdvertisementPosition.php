@@ -8,7 +8,7 @@ use DB;
 class AdvertisementPosition extends Model
 {
     protected $fillable = [
-        'name', 'type', 'description'
+        'name', 'type', 'description','created_at'
     ];
 
     public function scopeTypeSearch($query, $value)

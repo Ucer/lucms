@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Handlers\FileuploadHandler;
 use App\Models\AdvertisementPosition;
 use App\Traits\ExcelTrait;
 use Illuminate\Http\Request;
+use Auth;
 
 class ExcelController extends ApiController
 {
@@ -12,7 +14,7 @@ class ExcelController extends ApiController
 
     public function __construct()
     {
-
+        $this->middleware('auth:api')->only(['importExcelAdvertisementPosition']);
     }
 
     public function exportAdvertisementPosition(Request $request, AdvertisementPosition $advertisementPosition)
@@ -32,9 +34,28 @@ class ExcelController extends ApiController
             $order_by = explode(',', $order_by);
             $advertisementPosition = $advertisementPosition->orderBy($order_by[0], $order_by[1]);
         }
-        $list = $advertisementPosition->get();
-        $this->excelAdvertisementPosition($list);
+        $this->excelAdvertisementPosition($advertisementPosition->get());
 
     }
 
+
+    public function importExcelAdvertisementPosition(Request $request, FileuploadHandler $fileuploadHandler)
+    {
+        $file = $request->file('file');
+        $rest_upload_file = $fileuploadHandler->uploadfile($file, Auth::id());
+        $file = $rest_upload_file['data']['storage_path'] . '/' . $rest_upload_file['data']['storage_name'];
+
+//        $file = '/srv/wwwroot/one_plus_one/bdxt/storage/app/public/files/e5ecc5e19bf9c3183ea2bebf4c9d2aea71634.xlsx';
+        if ($rest_upload_file['status'] === true) {
+            $import_rest = $this->importExcelAdvertisementPositionExcute($file);
+            if ($import_rest) {
+                return $this->success($rest_upload_file['data']);
+            }
+            return $this->failed('出错了');
+        } else {
+            return $this->failed($rest_upload_file['message']);
+        }
+
+
+    }
 }

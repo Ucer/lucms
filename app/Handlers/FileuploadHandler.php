@@ -12,6 +12,7 @@ class FileuploadHandler
     protected $message = '图片上传成功';
     protected $data = [];
     protected $base_image_up_dir = 'images';
+    protected $base_file_up_dir = 'files';
     protected $m_attachment;
 
     public function __construct()
@@ -59,6 +60,46 @@ class FileuploadHandler
                 // 此类中封装的函数，用于裁剪图片
                 $this->reduceSize($inser_data['storage_path'] . '/' . $inser_data['storage_name'], $max_width);
             }
+            $this->data = array_merge($inser_data, ['attachment_id' => $rest_insert_attachment_table->id]);
+        } catch (\Exception $e) {
+            $this->message = $e;
+        }
+        return ['status' => $this->status, 'data' => $this->data, 'message' => $this->message];
+    }
+
+    public function uploadfile($file, $user_id)
+    {
+        $originalName = $file->getClientOriginalName();
+        $extension = explode('.', $originalName)[1];
+
+        if ($file) {
+            $file_name = md5($file->getFilename()) . rand(1000, 100000) . '.' . $extension;
+            $file->storeAs($this->base_file_up_dir, $file_name);
+        } else {
+            $this->status = false;
+            $this->message = '请选择要上传的图片';
+            return ['status' => $this->status, 'data' => $this->data, 'message' => $this->message];
+        }
+        $min_type = $file->getClientMimeType();
+        $inser_data = [
+            'user_id' => $user_id,
+            'ip' => '',
+            'original_name' => $originalName,
+            'mime_type' => $min_type,
+            'size' => round($file->getClientSize() / 1000, 2),
+            'type' => 'files',
+            'storage_position' => 'local',
+            'domain' => config('app.url'),
+            'link_path' => 'storage/' . $this->base_file_up_dir,
+            'storage_name' => $file_name
+        ];
+
+
+        $inser_data['storage_path'] = storage_path() . '/app/public/' . $this->base_file_up_dir;
+        $inser_data['url'] = $inser_data['domain'] . '/' . $inser_data['link_path'] . '/' . $inser_data['storage_name'];
+
+        try {
+            $rest_insert_attachment_table = $this->m_attachment->saveData($inser_data);
             $this->data = array_merge($inser_data, ['attachment_id' => $rest_insert_attachment_table->id]);
         } catch (\Exception $e) {
             $this->message = $e;

@@ -19,6 +19,9 @@
     <Col span="2">
     <a :href='exportExcel'><Button icon="md-download">导出文件</Button></a>
     </Col>
+    <Col span="2">
+    <upload-file v-model="uploadFile" :upload-config="fileuploadConfig" @on-upload-change='uploadfileChange'></upload-file>
+    </Col>
   </Row>
   <br>
 
@@ -47,6 +50,7 @@
 <script>
 import AddComponent from './components/add-advertisement-position'
 import EditComponent from './components/edit-advertisement-position'
+import UploadFile from '_c/common/upload-file'
 
 import {
   getTableStatus
@@ -60,7 +64,8 @@ import {
 export default {
   components: {
     AddComponent,
-    EditComponent
+    EditComponent,
+    UploadFile
   },
   data() {
     return {
@@ -83,6 +88,22 @@ export default {
       editModal: {
         show: false,
         id: 0
+      },
+      fileuploadConfig: {
+        headers: {
+          'Authorization': window.access_token
+        },
+        format: ['xlsx', 'xls'],
+        max_size: 1024 * 1024, // KB
+        upload_url: window.uploadUrl.importExcelAdvertisementPosition,
+        file_name: 'file',
+        multiple: false,
+        default_list: [],
+        button_text: '导入数据'
+      },
+      uploadFile: {
+        attachment_id: 0,
+        url: ''
       },
       columns: [{
           title: 'ID',
@@ -193,7 +214,7 @@ export default {
     onSortChange: function(data) {
       const order = data.column.key + ',' + data.order
       this.searchForm.order_by = order
-      this.getTableDataExcute()
+      this.getTableDataExcute(1)
     },
     getTableDataExcute(to_page) {
       let t = this
@@ -224,6 +245,9 @@ export default {
     },
     editModalHide() {
       this.editModal.show = false
+    },
+    uploadfileChange(fileList, formatFileList) {
+      this.getTableDataExcute(1)
     }
   }
 }

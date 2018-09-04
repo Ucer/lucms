@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use App\Models\AdvertisementPosition;
 use Excel;
+use DB;
 
 trait ExcelTrait
 {
@@ -11,7 +13,7 @@ trait ExcelTrait
         $cellData = [];
         $data->each(function ($item) use (&$cellData) {
             $cellData[$item->id] = [
-                $item->id, $item->name, $item->description, $item->type,$item->created_at,$item->updated_at
+                $item->id, $item->name, $item->description, $item->type, $item->created_at, $item->updated_at
             ];
         });
         Excel::create('广告位', function ($excel) use ($cellData) {
@@ -312,5 +314,32 @@ trait ExcelTrait
 
 
         })->export('xls');
+    }
+
+
+    public function importExcelAdvertisementPositionExcute($file)
+    {
+        $m_advertisementPosition = new AdvertisementPosition();
+        $date = date('Y-m-d H:i:s');
+        Excel::load($file, function ($reader) use ($m_advertisementPosition, $date) {
+            $array = $reader->select([
+                'name', 'type', 'description'
+            ])->toArray();
+
+            $new_array = collect($array)->chunk(400);
+
+            DB::beginTransaction();
+            try {
+                foreach ($new_array as $v) {
+                    $m_advertisementPosition->insert($v->toArray());
+                }
+                DB::commit();
+                return true;
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return false;
+            }
+        });
+        return true;
     }
 }
