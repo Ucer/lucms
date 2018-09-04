@@ -25,7 +25,6 @@ class CreateSystemConfigsTable extends Migration
             $table->timestamps();
 
             $table->index('system_config_group');
-            $table->index('system_config_type');
             $table->index('enable');
         });
     }
