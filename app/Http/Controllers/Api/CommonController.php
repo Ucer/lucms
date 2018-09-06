@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Traits\SystemConfigTrait;
 use App\Traits\TableStatusTrait;
 use Illuminate\Http\Request;
 use DB;
@@ -9,7 +10,7 @@ use Auth;
 
 class CommonController extends ApiController
 {
-    use TableStatusTrait;
+    use TableStatusTrait, SystemConfigTrait;
 
     public function __construct()
     {
@@ -44,6 +45,24 @@ class CommonController extends ApiController
 
     public function switchTableStatus(Request $request)
     {
+        switch ($request->table) {
+            case 'users':
+                if (Auth::id() == $request->id) return $this->failed('操作对象不能是你自己');
+                if ($request->column == 'id') {
+                    return $this->failed('不允许的操作');
+                }
+                break;
+            case 'attachments':
+                break;
+            case 'advertisements':
+                break;
+            case 'system_configs':
+                break;
+            default:
+                return $this->failed('不允许的操作');
+                break;
+
+        }
         $rest = DB::table($request->table)
             ->where('id', $request->id)
             ->update([$request->column => $request->value]);
@@ -54,5 +73,11 @@ class CommonController extends ApiController
     public function getTableStatus($table_name, $column_name = '')
     {
         return $this->success($this->getBaseStatus($table_name, $column_name));
+    }
+
+
+    public function getSystemConfig(string $search_data)
+    {
+        return $this->success($this->getSystemConfigFunction(json_decode($search_data, true)));
     }
 }

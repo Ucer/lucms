@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Admin\Traits\SystemConfigTrait;
 use App\Models\SystemConfig;
 use App\Traits\TableStatusTrait;
 use App\Validates\SystemConfigValidate;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\Config;
 
 class SystemConfigsController extends AdminController
 {
-    use TableStatusTrait, SystemConfigTrait;
+    use TableStatusTrait;
 
     public function __construct()
     {

@@ -17,8 +17,9 @@ Route::namespace('Api')->group(function () {
 
 
     Route::post('common_switch_enable', 'CommonController@switchEnable');
+    Route::post('common_switch_talbe_status', 'CommonController@switchTableStatus')->name('common.switch_table_status');
     Route::get('common_get_table_status/{table_name}/{column_name?}', 'CommonController@getTableStatus');
-    Route::get('common_get_table_status/{table_name}/{column_name?}', 'CommonController@getTableStatus');
+    Route::get('common_get_system_config/{search_data}', 'CommonController@getSystemConfig')->name('common.get_system_config');
 
     Route::get('excels/export/advertisement_positions', 'ExcelController@exportAdvertisementPosition')->name('excel.export_advertisement_positions');
     Route::post('excels/import/advertisement_positions', 'ExcelController@importExcelAdvertisementPosition')->name('excel.import_advertisement_positions');
