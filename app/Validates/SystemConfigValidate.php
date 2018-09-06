@@ -15,10 +15,10 @@ class  SystemConfigValidate extends Validate
     {
         $rules = [
             'flag' => [
-                'regex:/^[a-z][a-zA-Z0-9_]{2,20}$/',
+                'regex:/^[a-z][a-zA-Z0-9_]{2,100}$/',
                 'unique:system_configs'
             ],
-            'title' => 'between:2,30|unique:system_configs',
+            'title' => 'between:2,100|unique:system_configs',
             'system_config_group' => 'required'
         ];
         $rest_validate = $this->validate($request_data, $rules);
@@ -35,11 +35,11 @@ class  SystemConfigValidate extends Validate
     {
         $rules = [
             'flag' => [
-                'regex:/^[a-z][a-zA-Z0-9_]{2,20}$/',
+                'regex:/^[a-z][a-zA-Z0-9_]{2,100}$/',
                 Rule::unique('system_configs')->ignore($system_config_id)
             ],
             'title' => [
-                'between:2,30',
+                'between:2,100',
                 Rule::unique('system_configs')->ignore($system_config_id)
             ],
             'system_config_group' => 'required'
@@ -63,7 +63,7 @@ class  SystemConfigValidate extends Validate
     protected function validate($request_data, $rules)
     {
         $message = [
-            'flag.regex' => '标识只能是3-12位的字母、数字、下划线组成',
+            'flag.regex' => '标识只能是2-100位的字母、数字、下划线组成',
             'flag.unique' => '标识已经存在',
             'title.between' => '配置标题只能在:min-:max个字符范围',
             'title.unique' => '配置标题已经被占用',

@@ -7,7 +7,7 @@ class SystemConfig extends Model
 {
 
     protected $fillable = [
-        'flag', 'title', 'system_config_group', 'system_config_type', 'item', 'value', 'desc', 'weight', 'enable'
+        'flag', 'title', 'system_config_group', 'system_config_type', 'item', 'value', 'desc', 'weight', 'enable', 'description'
     ];
 
     public function storeSystemConfig($input)

@@ -101,7 +101,11 @@ export default {
         },
         {
           title: '标识',
-          key: 'flag'
+          key: 'description'
+        },
+        {
+            title: '配置值',
+            key: 'value'
         },
         {
           title: '启用状态',
