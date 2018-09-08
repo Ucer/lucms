@@ -26,7 +26,6 @@ trait ExcuteTrait
     {
         if (is_array($attachment_id)) {
             Attachment::whereIn('id', $attachment_id)
-                ->where('enable', 'F')
                 ->update([
                     'enable' => 'T',
                     'use_status' => 'T',
