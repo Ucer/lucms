@@ -39,7 +39,7 @@ class Article extends Model
 
     protected function getContentAttribute($value)
     {
-        return json_decode($value,true);
+        return json_decode($value, true);
     }
 
     protected function getCoverImageAttribute($value)
@@ -57,6 +57,29 @@ class Article extends Model
             'attachment_id' => $attachment_id
         ];
     }
+
+    /*
+         public function storeAllCar($input)
+    {
+        DB::beginTransaction();
+        try {
+            if ($input['car_images']) {
+                $this->saveAttachmentAfterSave($input['car_images']);
+                $input['car_images'] = implode(',', $input['car_images']);
+            }
+            $this->fill($input);
+            $this->save();
+
+            admin_log_record(Auth::id(), 'C', 'all_cars', '添加了车辆', $input);
+            DB::commit();
+            return $this->baseSucceed([], '操作成功');
+        } catch (\Exception $e) {
+            throw $e;
+            DB::rollBack();
+            return $this->baseFailed('内部错误');
+        }
+    }
+     */
 
     public function storeArticle($input)
     {
@@ -106,6 +129,35 @@ class Article extends Model
             return $this->baseFailed('内部错误');
         }
     }
+
+    /*
+        public function updateAllCar($input)
+    {
+        $old_car_images = $this->car_images;
+        DB::beginTransaction();
+        try {
+            if ($input['car_images']) {
+                if ($old_car_images) {
+                    $this->updateAttachmentAfterNotUseAgain(array_column($old_car_images, 'attachment_id'));
+                    $this->saveAttachmentAfterSave($input['car_images']);
+                    $input['car_images'] = implode(',', $input['car_images']);
+                }
+            }
+
+            $this->fill($input);
+            $this->save();
+
+            admin_log_record(Auth::id(), 'U', 'all_cars', '修改了车辆', $input);
+            DB::commit();
+            return $this->baseSucceed([], '操作成功');
+        } catch
+        (\Exception $e) {
+            throw $e;
+            DB::rollBack();
+            return $this->baseFailed('内部错误');
+        }
+    }
+     */
 
     public function destroyArticle()
     {

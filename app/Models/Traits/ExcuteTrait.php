@@ -24,31 +24,59 @@ trait ExcuteTrait
 
     public function saveAttachmentAfterSave($attachment_id)
     {
-        $attachment_info = Attachment::find($attachment_id);
-        if ($attachment_info) {
-            $attachment_info->enable = 'T';
-            $attachment_info->use_status = 'T';
-            $attachment_info->save();
+        if (is_array($attachment_id)) {
+            Attachment::whereIn('id', $attachment_id)
+                ->where('enable', 'F')
+                ->update([
+                    'enable' => 'T',
+                    'use_status' => 'T',
+                ]);
+        } else {
+            $attachment_info = Attachment::find($attachment_id);
+            if ($attachment_info) {
+                $attachment_info->enable = 'T';
+                $attachment_info->use_status = 'T';
+                $attachment_info->save();
+            }
         }
+
     }
 
     public function updateAttachmentAfterNotUseAgain($attachment_id)
     {
-        $attachment_info = Attachment::find($attachment_id);
-        if ($attachment_info) {
-            $attachment_info->enable = 'F';
-            $attachment_info->use_status = 'F';
-            $attachment_info->save();
+        if (is_array($attachment_id)) {
+            Attachment::whereIn('id', $attachment_id)
+                ->where('enable', 'T')
+                ->update([
+                    'enable' => 'F',
+                    'use_status' => 'F',
+                ]);
+        } else {
+            $attachment_info = Attachment::find($attachment_id);
+            if ($attachment_info) {
+                $attachment_info->enable = 'F';
+                $attachment_info->use_status = 'F';
+                $attachment_info->save();
+            }
         }
     }
 
     public function deleteAttachmentAfterDelete($attachment_id)
     {
-        $attachment_info = Attachment::find($attachment_id);
-        if ($attachment_info) {
-            $attachment_info->enable = 'F';
-            $attachment_info->use_status = 'F';
-            $attachment_info->save();
+        if (is_array($attachment_id)) {
+            Attachment::whereIn('id', $attachment_id)
+                ->where('enable', 'T')
+                ->update([
+                    'enable' => 'F',
+                    'use_status' => 'F',
+                ]);
+        } else {
+            $attachment_info = Attachment::find($attachment_id);
+            if ($attachment_info) {
+                $attachment_info->enable = 'F';
+                $attachment_info->use_status = 'F';
+                $attachment_info->save();
+            }
         }
     }
 }

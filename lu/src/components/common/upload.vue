@@ -21,7 +21,7 @@
     <Panel name="1">
       预览
       <p slot="content">
-        <img :src="item.url" :alt="item.name" v-for="(item,key) in formatFileList" />
+        <img :src="item.url" :alt="item.name" v-for="(item,key) in formatFileList"  style="width:100%"  />
       </p>
     </Panel>
   </Collapse>
