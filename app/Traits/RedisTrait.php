@@ -10,13 +10,13 @@ trait RedisTrait
         'demo' => 'demo_', // 示例_[xxx]
     ];
 
-    protected function setRedis($redisKeyType,$key, $value)
+    protected function setRedis($redisKeyType, $key, $value)
     {
-        Redis::set($this->redisKeyType[$redisKeyType].$key, json_encode($value));
+        Redis::set($this->redisKeyType[$redisKeyType] . $key, json_encode($value));
     }
 
-    protected function getRedis($redisKeyType,$key)
+    protected function getRedis($redisKeyType, $key)
     {
-        return json_decode(Redis::get($this->redisKeyType[$redisKeyType].$key));
+        return json_decode(Redis::get($this->redisKeyType[$redisKeyType] . $key), true);
     }
 }
