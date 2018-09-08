@@ -1,4 +1,5 @@
 @import '~iview/src/styles/index.less';
+
 @menu-dark-title: #001529;
 @menu-dark-active-bg: #000c17;
 @layout-sider-background: #001529;
@@ -117,6 +118,7 @@
   background-color: #187 !important;
   color: #fff !important;
 }
+
 /* privileges>users>list.vue page*/
 img.head_image {
   border-radius: 60%;
@@ -263,19 +265,28 @@ img.head_image {
   padding-left: 5px;
 }
 
-
 .drawer-profile {
   font-size: 14px;
 }
 
 .drawer-title {
   font-size: 16px;
-  color: rgba(0,0,0,0.85);
+  color: rgba(0, 0, 0, 0.85);
   line-height: 24px;
   display: block;
   margin-bottom: 16px;
 }
 
-.drawer-profile .ivu-col {
-  margin-bottom: 12px;
+.drawer-profile {
+  .ivu-col {
+    margin-bottom: 12px;
+  }
+
+  img {
+    display: block;
+    margin: 10px;
+    max-width: 80%;
+    max-height: 300px;
+  }
 }
+
