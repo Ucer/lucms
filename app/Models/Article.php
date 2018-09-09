@@ -139,9 +139,9 @@ class Article extends Model
             if ($input['car_images']) {
                 if ($old_car_images) {
                     $this->updateAttachmentAfterNotUseAgain(array_column($old_car_images, 'attachment_id'));
+                }
                     $this->saveAttachmentAfterSave($input['car_images']);
                     $input['car_images'] = implode(',', $input['car_images']);
-                }
             }
 
             $this->fill($input);
