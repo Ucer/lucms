@@ -21,7 +21,7 @@ class FileuploadHandler
     }
 
 
-    public function uploadImage($file, $user_id, $max_width = 0, $path = 'avatars')
+    public function uploadImage($file, $user_id, $max_width = 0, $path = 'avatars', $storage_position = 'local')
     {
         $up_dir = $this->base_image_up_dir . '/' . $path;
 
@@ -40,7 +40,7 @@ class FileuploadHandler
             'mime_type' => $min_type,
             'size' => round($file->getClientSize() / 1000, 2),
             'type' => $path,
-            'storage_position' => 'local',
+            'storage_position' => $storage_position,
             'domain' => config('app.url'),
             'link_path' => 'storage/' . $up_dir,
             'storage_name' => basename($rest_upload),

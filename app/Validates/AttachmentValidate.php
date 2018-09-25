@@ -18,6 +18,10 @@ class  AttachmentValidate extends Validate
             case 'oss':
 //                return $this->baseFailed('oss 附件的删除方法还未实现');
                 break;
+            case 'api_local':
+                break;
+            case 'api_oss':
+                break;
             default :
                 $this->baseFailed('未知的存储方式');
                 break;

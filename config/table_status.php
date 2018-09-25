@@ -9,7 +9,7 @@ return [
         'enable' => ['F' => '禁用', 'T' => '启用'],
         'use_status' => ['F' => '未使用', 'T' => '使用中'],
         'type' => ['avatars' => '头像', 'advertisements' => '广告', 'editors' => '编辑器', 'tmp' => '临时图片'],
-        'storage_position' => ['local' => '本地', 'oss' => '啊里云 oss'],
+        'storage_position' => ['local' => '本地', 'oss' => '啊里云 oss', 'api_local' => 'api服务器', 'api_oss' => 'api服务器oss'],
     ],
     'advertisement_positions' => [
         'type' => ['default' => '普通广告位', 'model' => '模型跳转广告位', 'spa' => '单页面广告位'],
