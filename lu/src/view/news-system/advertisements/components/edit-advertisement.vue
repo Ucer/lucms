@@ -149,7 +149,7 @@ export default {
         format: ['jpg', 'jpeg', 'png', 'gif'],
         max_size: 800, // 800KB
         upload_url: window.uploadUrl.uploadAdvertisement,
-        file_name: 'advertisement',
+        file_name: 'file',
         multiple: false,
         file_num: 1,
         default_list: []

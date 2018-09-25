@@ -27,7 +27,7 @@
     </Select>
     </Col>
     <Col span="2">
-    <Button type="primary" icon="ios-search" @click="getTableDataExcute(1)">Search</Button>
+    <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
     </Col>
   </Row>
   <br>
@@ -42,18 +42,19 @@
     <Table border :columns="columns" :data="feeds.data" @on-sort-change='onSortChange'></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
-        <Page :total="feeds.total" :current="feeds.current_page" :page-size="feeds.per_page" class="paging" show-elevator show-total show-sizer @on-change="handleOnPageChange"  @on-page-size-change='onPageSizeChange'></Page>
+        <Page :total="feeds.total" :current="feeds.current_page" :page-size="feeds.per_page" class="paging" show-elevator show-total show-sizer @on-change="handleOnPageChange" @on-page-size-change='onPageSizeChange'></Page>
       </div>
     </div>
   </Row>
 
+  <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
 
 </div>
 </template>
 
 
 <script>
-import ExpandRow from './components/list-table-expand'
+import ShowInfo from './components/show-info'
 
 import {
   getTableStatus,
@@ -67,10 +68,14 @@ import {
 
 export default {
   components: {
-    ExpandRow
+    ShowInfo
   },
   data() {
     return {
+      showInfoModal: {
+        show: false,
+        info: ''
+      },
       searchForm: {
         order_by: 'id,desc'
       },
@@ -88,18 +93,6 @@ export default {
         per_page: 10
       },
       columns: [{
-          title: '>>',
-          type: 'expand',
-          width: 50,
-          render: (h, params) => {
-            return h(ExpandRow, {
-              props: {
-                row: params.row
-              }
-            })
-          }
-        },
-        {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
@@ -115,7 +108,7 @@ export default {
           render: (h, params) => {
             return h('div',
               params.row.user.name
-            );
+            )
           }
         },
         {
@@ -123,9 +116,9 @@ export default {
           width: 150,
           render: (h, params) => {
 
-            const row = params.row;
-            const color = row.use_status === 'T' ? 'green' : 'default';
-            const text = row.use_status === 'T' ? '使用中' : '未使用';
+            const row = params.row
+            const color = row.use_status === 'T' ? 'green' : 'default'
+            const text = row.use_status === 'T' ? '使用中' : '未使用'
 
             return h('div', [
               h('Tag', {
@@ -133,13 +126,17 @@ export default {
                   color: color
                 }
               }, text)
-            ]);
+            ])
           }
         },
         {
           title: '附件类型',
-          key: 'type',
-          width: 100
+          width: 100,
+          render: (h, params) => {
+            return h('div',
+              this.tableStatus.type[params.row.type]
+            )
+          }
         },
         {
           title: 'MIME 类型',
@@ -172,7 +169,7 @@ export default {
                   this.switchEnableExcute(params.index)
                 }
               }
-            });
+            })
           }
         },
         {
@@ -184,8 +181,24 @@ export default {
           title: '操作',
 
           render: (h, params) => {
-            let t = this;
+            let t = this
             return h('div', [
+              h('Button', {
+                style: {
+                  margin: '0 5px'
+                },
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.showInfoModal.show = true
+                    this.showInfoModal.info = params.row
+                  }
+                }
+
+              }, '详细'),
               h('Poptip', {
                 props: {
                   confirm: true,
@@ -198,9 +211,9 @@ export default {
                       t.$Notice.warning({
                         title: '出错了',
                         desc: '启用状态的附件无法删除'
-                      });
+                      })
                     } else {
-                      t.deleteAttachmentExcute(params.row.id, params.index);
+                      t.deleteAttachmentExcute(params.row.id, params.index)
                     }
                   }
                 }
@@ -233,16 +246,16 @@ export default {
     },
     onPageSizeChange: function(per_page) {
       this.feeds.per_page = per_page
-      this.getTableDataExcute(1)
+      this.getTableDataExcute(this.feeds.current_page)
     },
     getTableStatusExcute(params) {
       let t = this
       getTableStatus(params).then(res => {
         const response_data = res.data
-        t.tableStatus.enable = response_data.enable;
-        t.tableStatus.use_status = response_data.use_status;
-        t.tableStatus.type = response_data.type;
-        t.tableStatus.storage_position = response_data.storage_position;
+        t.tableStatus.enable = response_data.enable
+        t.tableStatus.use_status = response_data.use_status
+        t.tableStatus.type = response_data.type
+        t.tableStatus.storage_position = response_data.storage_position
       })
     },
     getTableDataExcute(to_page) {
@@ -260,7 +273,7 @@ export default {
     onSortChange: function(data) {
       const order = data.column.key + ',' + data.order
       this.searchForm.order_by = order
-      this.getTableDataExcute(1)
+      this.getTableDataExcute(this.feeds.current_page)
     },
     switchEnableExcute(index) {
       let t = this
@@ -283,6 +296,9 @@ export default {
           title: res.message
         })
       })
+    },
+    showModalClose() {
+      this.showInfoModal.show = false
     }
   }
 }

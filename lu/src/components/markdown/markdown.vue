@@ -109,12 +109,12 @@ export default {
     }))
 
     inlineAttachment.editors.codemirror4.attach(this.editor.codemirror, {
-      uploadUrl: window.uploadUrl.tinymceUpload,
+      uploadUrl: window.uploadUrl.uploadWang,
       progressText: '![uploading file...]()',
       urlText: '![]({filename})',
       errorText: 'Error uploading file',
       jsonFieldName: 'load',
-      uploadFieldName: 'tinymce',
+      uploadFieldName: 'file',
       extraParams: {},
       extraHeaders: {
         'Authorization': window.access_token

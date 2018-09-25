@@ -25,7 +25,7 @@ export default {
         },
         format: ['txt', 'xsls'],
         max_size: 800, // 800KB
-        upload_url: window.uploadUrl.uploadOther,
+        upload_url: window.uploadUrl.uploadTmp,
         file_name: 'file',
         multiple: false,
         file_num: 0,

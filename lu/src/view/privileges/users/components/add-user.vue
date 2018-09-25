@@ -93,7 +93,7 @@ export default {
         format: ['jpg', 'jpeg', 'png', 'gif'],
         max_size: 500,
         upload_url: window.uploadUrl.uploadAvatar,
-        file_name: 'avatar',
+        file_name: 'file',
         multiple: false,
         file_num: 1,
         default_list: []

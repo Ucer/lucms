@@ -113,10 +113,10 @@ Route::namespace('Admin')->group(function () {
 
 
 /**       ==========================          文件上传           ====================   */
-Route::post('upload/avatar', 'Api\UploadController@uploadAvatar')->name('uploads.avatar');
-Route::post('upload/tinymce', 'Api\UploadController@tinymceUpload')->name('uploads.tinymce');
+Route::post('upload/avatar', 'Api\UploadController@avatarUpload')->name('uploads.avatar');
+Route::post('upload/wang', 'Api\UploadController@wangUpload')->name('uploads.wang');
 Route::post('upload/advertisement', 'Api\UploadController@advertisementUpload')->name('uploads.advertisement');
-Route::post('upload/other', 'Api\UploadController@otherUpload')->name('uploads.other');
+Route::post('upload/tmp', 'Api\UploadController@tmpUpload')->name('uploads.tmp');
 
 Route::post('send_sms', 'Api\ThirdController@sendSms')->name('third.send_sms');
 Route::post('check_sms_code', 'Api\ThirdController@checkSmsCode')->name('third.check_sms_code');

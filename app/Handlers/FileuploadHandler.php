@@ -67,6 +67,60 @@ class FileuploadHandler
         return ['status' => $this->status, 'data' => $this->data, 'message' => $this->message];
     }
 
+    public function base64ImageUpload($base_str, $user_id, $max_width = 0, $path = 'avatars', $storage_position = 'oss')
+    {
+        $up_dir = $this->base_image_up_dir . '/' . $path;
+
+
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base_str, $result)) {
+            $type = $result[2];
+            if (in_array($type, array('pjpeg', 'jpeg', 'jpg', 'gif', 'bmp', 'png'))) {
+                if (in_array($type, ['jpeg', 'pjpeg'])) $type = 'jpg';
+                $new_file = $up_dir . '/' . md5(microtime(true)) . '.' . $type;
+                Storage::put($new_file, base64_decode(str_replace($result[1], '', $base_str)));
+                $full_path = storage_path('app') . '/public';
+                $inser_data = [
+                    'user_id' => $user_id,
+                    'ip' => '',
+                    'original_name' => '',
+                    'mime_type' => $type,
+                    'size' => round(filesize($full_path . '/' . $new_file) / 1000, 2),
+                    'type' => $path,
+                    'storage_position' => $storage_position,
+                    'domain' => config('app.url'),
+                    'link_path' => 'storage/' . $up_dir,
+                    'storage_name' => basename($new_file),
+
+                ];
+                $inser_data['storage_path'] = $full_path . '/' . $up_dir;
+                $inser_data['url'] = $inser_data['domain'] . '/' . $inser_data['link_path'] . '/' . $inser_data['storage_name'];
+
+                try {
+                    $rest_insert_attachment_table = $this->m_attachment->saveData($inser_data);
+                    // 如果限制了图片宽度，就进行裁剪
+                    if ($max_width && $type != 'gif') {
+
+                        // 此类中封装的函数，用于裁剪图片
+                        $this->reduceSize($inser_data['storage_path'] . '/' . $inser_data['storage_name'], $max_width);
+                    }
+                    $this->data = array_merge($inser_data, ['attachment_id' => $rest_insert_attachment_table->id]);
+                } catch (\Exception $e) {
+                    $this->message = $e;
+                }
+
+            } else {
+                $this->message = '图片格式错误';
+                $this->status = false;
+            }
+
+        } else {
+            $this->status = false;
+            $this->message = 'base64 编码格式不正确';
+        }
+        return ['status' => $this->status, 'data' => $this->data, 'message' => $this->message];
+
+    }
+
     public function uploadfile($file, $user_id)
     {
         $originalName = $file->getClientOriginalName();

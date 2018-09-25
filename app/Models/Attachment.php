@@ -45,14 +45,14 @@ class Attachment extends Model
 
         DB::beginTransaction();
         try {
+            $this->delete();
             if ($rest_delet_file) {
-                $this->delete();
+                $tip = '';
             } else {
-                DB::rollBack();
-                return $this->baseFailed('附件片删除错误');
+                $tip = '：附件找不到';
             }
             DB::commit();
-            return $this->baseSucceed([], '附件限删除成功');
+            return $this->baseSucceed([], '附件删除成功' . $tip);
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->baseFailed('内部错误');

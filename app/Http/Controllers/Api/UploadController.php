@@ -15,9 +15,9 @@ class UploadController extends ApiController
         $this->middleware('auth:api');
     }
 
-    public function uploadAvatar(Request $request, FileuploadHandler $fileuploadHandler)
+    public function avatarUpload(Request $request, FileuploadHandler $fileuploadHandler)
     {
-        $file = $request->file('avatar');
+        $file = $request->file('file');
 
         $rest_upload_image = $fileuploadHandler->uploadImage($file, Auth::id(), 300, 'avatars');
         if ($rest_upload_image['status'] === true) {
@@ -27,9 +27,9 @@ class UploadController extends ApiController
         }
     }
 
-    public function tinymceUpload(Request $request, FileuploadHandler $fileuploadHandler)
+    public function wangUpload(Request $request, FileuploadHandler $fileuploadHandler)
     {
-        $file = $request->file('tinymce');
+        $file = $request->file('file');
 
         $rest_upload_image = $fileuploadHandler->uploadImage($file, Auth::id(), 800, 'editors');
         if ($rest_upload_image['status'] === true) {
@@ -42,7 +42,7 @@ class UploadController extends ApiController
 
     public function advertisementUpload(Request $request, FileuploadHandler $fileuploadHandler)
     {
-        $file = $request->file('advertisement');
+        $file = $request->file('file');
 
         $rest_upload_image = $fileuploadHandler->uploadImage($file, Auth::id(), 800, 'advertisements');
         if ($rest_upload_image['status'] === true) {
@@ -53,11 +53,11 @@ class UploadController extends ApiController
 
     }
 
-    public function otherUpload(Request $request, FileuploadHandler $fileuploadHandler)
+    public function tmpUpload(Request $request, FileuploadHandler $fileuploadHandler)
     {
-        $file = $request->file('other');
+        $file = $request->file('file');
 
-        $rest_upload_image = $fileuploadHandler->uploadImage($file, Auth::id(), $request->post('max_width'), 'others');
+        $rest_upload_image = $fileuploadHandler->uploadImage($file, Auth::id(), $request->post('max_width'), 'tmp');
         if ($rest_upload_image['status'] === true) {
             return $this->success($rest_upload_image['data']);
         } else {

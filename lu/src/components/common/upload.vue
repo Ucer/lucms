@@ -46,8 +46,8 @@ export default {
         },
         format: ['jpg', 'jpeg', 'png', 'gif'],
         max_size: 800, // 800KB
-        upload_url: window.uploadUrl.uploadOther,
-        file_name: 'tinymce',
+        upload_url: window.uploadUrl.uploadTmp,
+        file_name: 'file',
         multiple: false,
         file_num: 0,
         default_list: [{
