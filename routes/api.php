@@ -109,6 +109,13 @@ Route::namespace('Admin')->group(function () {
     Route::post('admin/system_configs', 'SystemConfigsController@store')->name('system_configs.store');
     Route::patch('admin/system_configs/{system_config}', 'SystemConfigsController@update')->name('system_configs.update');
     Route::delete('admin/system_configs/{system_config}', 'SystemConfigsController@destroy')->name('system_configs.destroy');
+
+
+    Route::get('admin/news/carousels', 'NewsController@carousels')->name('news.carousels');
+    Route::get('admin/news/carousels/{id}', 'NewsController@showCarousels')->name('news.show_carousels');
+    Route::post('admin/news/carousels', 'NewsController@storeCarousel')->name('news.store_carousel');
+    Route::patch('admin/news/carousels/{id}', 'NewsController@updateCarousel')->name('news.update_carousel');
+    Route::delete('admin/news/carousels/{id}', 'NewsController@destroyCarousel')->name('news.destroy_carousel');
 });
 
 
@@ -117,6 +124,7 @@ Route::post('upload/avatar', 'Api\UploadController@avatarUpload')->name('uploads
 Route::post('upload/wang', 'Api\UploadController@wangUpload')->name('uploads.wang');
 Route::post('upload/advertisement', 'Api\UploadController@advertisementUpload')->name('uploads.advertisement');
 Route::post('upload/tmp', 'Api\UploadController@tmpUpload')->name('uploads.tmp');
+Route::post('upload/carousel', 'Api\UploadController@carouselUpload')->name('uploads.carousel');
 
 Route::post('send_sms', 'Api\ThirdController@sendSms')->name('third.send_sms');
 Route::post('check_sms_code', 'Api\ThirdController@checkSmsCode')->name('third.check_sms_code');

@@ -2,12 +2,6 @@
 <template>
 <div>
   <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
-    <Input icon="searchForm" placeholder="请输入名称..." v-model="searchForm.name" />
-    </Col>
-    <Col span="2">
-    <Button type="primary" icon="ios-search" @click="getTableDataExcute()">Search</Button>
-    </Col>
     <Col span="2">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
@@ -35,19 +29,18 @@
     <div slot="footer">
     </div>
   </Modal>
-
 </div>
 </template>
 
 
 <script>
-import AddComponent from './components/add-category'
-import EditComponent from './components/edit-category'
+import AddComponent from './components/add-carousel'
+import EditComponent from './components/edit-carousel'
 
 import {
   getTableData,
-  deleteCategory
-} from '@/api/category'
+  deleteCarousel
+} from '@/api/news'
 
 export default {
   components: {
@@ -56,9 +49,6 @@ export default {
   },
   data() {
     return {
-      searchForm: {
-        order_by: 'id,desc'
-      },
       tableLoading: false,
       dataList: [],
       tableStatus: {
@@ -82,8 +72,12 @@ export default {
           width: 100
         },
         {
-          title: '名称',
-          key: 'name'
+          title: '跳转链接',
+          key: 'url'
+        },
+        {
+          title: '描述',
+          key: 'description'
         },
         {
           title: '封面',
@@ -112,17 +106,13 @@ export default {
           }
         },
         {
-          title: '描述',
-          key: 'description'
+          title: '排序',
+          key: 'weight'
         },
         {
           title: '创建时间',
           key: 'created_at',
           sortable: true,
-        },
-        {
-          title: '更新时间',
-          key: 'created_at'
         },
         {
           title: '操作',

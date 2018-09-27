@@ -117,6 +117,14 @@ export default[
           title: '文章管理'
         },
         component: () => import ('@/view/news-system/articles/list.vue')
+      }, {
+        path: '/carousel-list',
+        name: 'carousel-list',
+        meta: {
+          icon: 'ios-aperture',
+          title: '抡播图'
+        },
+        component: () => import ('@/view/news-system/carousels/list.vue')
       }
     ]
   }, {
