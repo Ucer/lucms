@@ -16,7 +16,7 @@ class CreateSmsesTable extends Migration
         Schema::create('sms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('phone');
-            $table->enum('type', ['R', 'L', 'O'])->default('O')->commit('R注册，L登录,O其它');
+            $table->enum('type', ['R', 'L', 'O', 'I'])->default('O')->commit('R注册，L登录,I邀请通讯录,O其它');
             $table->string('code');
             $table->ipAddress('ip');
             $table->timestamps();

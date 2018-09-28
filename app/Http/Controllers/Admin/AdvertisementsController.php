@@ -31,9 +31,9 @@ class AdvertisementsController extends AdminController
             $advertisement = $advertisement->enable('enable', $enable);
         }
 
-        $advertisement_positions_id = isset_and_not_empty($search_data, 'advertisement_positions_id');
-        if ($advertisement_positions_id) {
-            $advertisement = $advertisement->advertisementPositionSearch($advertisement_positions_id);
+        $advertisement_position_ids = isset_and_not_empty($search_data, 'advertisement_position_ids');
+        if ($advertisement_position_ids) {
+            $advertisement = $advertisement->advertisementPositionSearch($advertisement_position_ids);
         }
 
         $order_by = isset_and_not_empty($search_data, 'order_by');

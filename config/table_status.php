@@ -14,6 +14,9 @@ return [
     'advertisement_positions' => [
         'type' => ['default' => '普通广告位', 'model' => '模型跳转广告位', 'spa' => '单页面广告位'],
     ],
+    'sms' => [
+        'type' => ['R' => '注册短信', 'L' => '登录短信', 'I' => '通讯录邀请短信', 'O' => '其它短信'],
+    ],
     'advertisements' => [
         'enable' => ['F' => '禁用', 'T' => '启用'],
     ],
