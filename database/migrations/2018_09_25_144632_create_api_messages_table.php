@@ -21,10 +21,12 @@ class CreateApiMessagesTable extends Migration
             $table->string('content', 2000)->default('');
             $table->string('url')->default('')->comment('跳转url');
             $table->enum('status', ['U', 'R'])->default('U')->comment('消息状态');
+            $table->enum('type', ['SY'])->default('SY');
             $table->enum('is_alert_at_home', ['F', 'T'])->default('F')->comment('是否在首页弹出提示框，已读后就不再弹出');
             $table->timestamps();
 
             $table->index('status');
+            $table->index('type');
             $table->index('user_id');
             $table->index('is_alert_at_home');
         });

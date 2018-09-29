@@ -9,4 +9,15 @@ class AdminMessage extends Model
         'user_id', 'title', 'content', 'status'
     ];
 
+    public function user()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'user_id')->select('id', 'phone', 'name');
+    }
+
+    public function destroyAdminMessage($authId)
+    {
+        $this->delete();
+    }
+
+
 }

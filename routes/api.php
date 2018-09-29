@@ -116,6 +116,16 @@ Route::namespace('Admin')->group(function () {
     Route::post('admin/news/carousels', 'NewsController@storeCarousel')->name('news.store_carousel');
     Route::patch('admin/news/carousels/{id}', 'NewsController@updateCarousel')->name('news.update_carousel');
     Route::delete('admin/news/carousels/{id}', 'NewsController@destroyCarousel')->name('news.destroy_carousel');
+
+    Route::get('admin/admin_messages', 'AdminMessagesController@list')->name('admin_messages.list');
+    Route::post('admin/admin_messages/read_messages', 'AdminMessagesController@readMessages')->name('admin_messages.reade_messages');
+    Route::delete('admin/admin_messages/{admin_message}', 'AdminMessagesController@destroy')->name('admin_messages.destroy');
+    Route::delete('admin/admin_messages/{admin_message_ids}/many', 'AdminMessagesController@destroyMany')->name('admin_messages.destroy_many');
+
+
+    Route::get('admin/api_messages', 'ApiMessagesController@list')->name('api_messages.list');
+    Route::get('admin/api_messages/user_search/{phone}', 'ApiMessagesController@userSearch')->name('api_messages.user_search');
+    Route::post('admin/api_messages', 'ApiMessagesController@store')->name('api_messages.store');
 });
 
 

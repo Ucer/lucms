@@ -201,6 +201,33 @@ export default[
       }
     ]
   }, {
+        path: '/messages',
+        name: 'messages',
+        component: Main,
+        meta: {
+            title: '消息中心',
+            icon: 'ios-analytics'
+        },
+        children: [
+            {
+                path: '/admin-messages',
+                name: 'admin-messages',
+                meta: {
+                    icon: 'logo-reddit',
+                    title: '后台消息'
+                },
+                component: () => import ('@/view/messages/admin-messages/list.vue')
+            }, {
+                path: '/api-messages',
+                name: 'api-messages',
+                meta: {
+                    icon: 'ios-barcode-outline',
+                    title: 'api 消息'
+                },
+                component: () => import ('@/view/messages/api-messages/list.vue')
+            }
+        ]
+    }, {
     path: '/401',
     name: 'error_401',
     meta: {
