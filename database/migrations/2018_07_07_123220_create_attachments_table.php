@@ -20,7 +20,7 @@ class CreateAttachmentsTable extends Migration
             $table->string('original_name', 255)->default('')->comment('原始名称');
             $table->string('mime_type', 255)->default('')->comment('mime 类型');
             $table->string('size', 10)->default('0')->comment('大小/kb');
-            $table->enum('type', ['avatars', 'advertisements', 'editors', 'tmp', 'carousels'])->default('tmp')->comment('类型');
+            $table->enum('type', ['avatars', 'advertisements', 'editors', 'tmp', 'carousels', 'versions'])->default('tmp')->comment('类型');
             $table->enum('storage_position', ['oss', 'local', 'api_local', 'api_oss'])->default('local')->comment('存储位置');
             $table->string('domain', 255)->default('')->comment('域名地址,https://jiayouhaoshi.com');
             $table->string('storage_path', 255)->default('')->comment('附件相对 storage 目录,app/public/images/avatars');

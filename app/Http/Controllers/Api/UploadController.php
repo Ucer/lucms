@@ -78,4 +78,18 @@ class UploadController extends ApiController
         }
 
     }
+
+
+    public function newVersionUpload(Request $request, FileuploadHandler $fileuploadHandler)
+    {
+        $file = $request->file('file');
+
+        $rest_upload_image = $fileuploadHandler->uploadImage($file, Auth::id(), 0, 'versions');
+        if ($rest_upload_image['status'] === true) {
+            return $this->success($rest_upload_image['data']);
+        } else {
+            return $this->failed($rest_upload_image['message']);
+        }
+
+    }
 }

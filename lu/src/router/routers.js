@@ -179,6 +179,14 @@ export default[
           title: 'ip 过滤'
         },
         component: () => import ('@/view/security/ip_filters/list.vue')
+      }, {
+        path: '/app-versions',
+        name: 'app-versions',
+        meta: {
+          icon: 'logo-twitter',
+          title: 'app 版本控制'
+        },
+        component: () => import ('@/view/security/app-versions/list.vue')
       }
     ]
   }, {
@@ -201,33 +209,33 @@ export default[
       }
     ]
   }, {
-        path: '/messages',
-        name: 'messages',
-        component: Main,
+    path: '/messages',
+    name: 'messages',
+    component: Main,
+    meta: {
+      title: '消息中心',
+      icon: 'ios-analytics'
+    },
+    children: [
+      {
+        path: '/admin-messages',
+        name: 'admin-messages',
         meta: {
-            title: '消息中心',
-            icon: 'ios-analytics'
+          icon: 'logo-reddit',
+          title: '后台消息'
         },
-        children: [
-            {
-                path: '/admin-messages',
-                name: 'admin-messages',
-                meta: {
-                    icon: 'logo-reddit',
-                    title: '后台消息'
-                },
-                component: () => import ('@/view/messages/admin-messages/list.vue')
-            }, {
-                path: '/api-messages',
-                name: 'api-messages',
-                meta: {
-                    icon: 'ios-barcode-outline',
-                    title: 'api 消息'
-                },
-                component: () => import ('@/view/messages/api-messages/list.vue')
-            }
-        ]
-    }, {
+        component: () => import ('@/view/messages/admin-messages/list.vue')
+      }, {
+        path: '/api-messages',
+        name: 'api-messages',
+        meta: {
+          icon: 'ios-barcode-outline',
+          title: 'api 消息'
+        },
+        component: () => import ('@/view/messages/api-messages/list.vue')
+      }
+    ]
+  }, {
     path: '/401',
     name: 'error_401',
     meta: {

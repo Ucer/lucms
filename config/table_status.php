@@ -8,7 +8,7 @@ return [
     'attachments' => [
         'enable' => ['F' => '禁用', 'T' => '启用'],
         'use_status' => ['F' => '未使用', 'T' => '使用中'],
-        'type' => ['avatars' => '头像', 'advertisements' => '广告', 'editors' => '编辑器', 'tmp' => '临时图片', 'carousels' => '轮播图'],
+        'type' => ['avatars' => '头像', 'advertisements' => '广告', 'editors' => '编辑器', 'tmp' => '临时图片', 'carousels' => '轮播图', 'versions' => 'app 版本包'],
         'storage_position' => ['local' => '本地', 'oss' => '啊里云 oss', 'api_local' => 'api服务器', 'api_oss' => 'api服务器oss'],
     ],
     'advertisement_positions' => [
@@ -45,6 +45,10 @@ return [
         'status' => ['U' => '未读', 'R' => "已读"],
         'is_alert_at_home' => ['F' => '不弹出', 'T' => "弹出"],
         'type' => ['SY' => '系统消息'],
+    ],
+    'api_versions' => [
+        'port' => ['A' => 'App'],
+        'system' => ['ANDROID' => 'android', 'IOS' => "ios", 'ALL' => '通用'],
     ],
     'logs' => [
         'type' => ['C' => '添加', 'U' => '更新', 'R' => '读取', 'D' => '删除', 'L' => '登录', 'O' => '其它'],

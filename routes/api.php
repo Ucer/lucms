@@ -126,6 +126,13 @@ Route::namespace('Admin')->group(function () {
     Route::get('admin/api_messages', 'ApiMessagesController@list')->name('api_messages.list');
     Route::get('admin/api_messages/user_search/{phone}', 'ApiMessagesController@userSearch')->name('api_messages.user_search');
     Route::post('admin/api_messages', 'ApiMessagesController@store')->name('api_messages.store');
+
+
+    Route::get('admin/app_versions', 'AppVersionsController@list')->name('app_versions.list');
+    Route::get('admin/app_versions/{app_version}', 'AppVersionsController@show')->name('app_versions.show');
+    Route::post('admin/app_versions', 'AppVersionsController@store')->name('app_versions.store');
+    Route::patch('admin/app_versions/{app_version}', 'AppVersionsController@update')->name('app_versions.update');
+    Route::delete('admin/app_versions/{app_version}', 'AppVersionsController@destroy')->name('app_versions.destroy');
 });
 
 
@@ -135,6 +142,7 @@ Route::post('upload/wang', 'Api\UploadController@wangUpload')->name('uploads.wan
 Route::post('upload/advertisement', 'Api\UploadController@advertisementUpload')->name('uploads.advertisement');
 Route::post('upload/tmp', 'Api\UploadController@tmpUpload')->name('uploads.tmp');
 Route::post('upload/carousel', 'Api\UploadController@carouselUpload')->name('uploads.carousel');
+Route::post('upload/new_version', 'Api\UploadController@newVersionUpload')->name('uploads.new_version');
 
 Route::post('send_sms', 'Api\ThirdController@sendSms')->name('third.send_sms');
 Route::post('check_sms_code', 'Api\ThirdController@checkSmsCode')->name('third.check_sms_code');

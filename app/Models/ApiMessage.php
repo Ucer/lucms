@@ -21,7 +21,7 @@ class ApiMessage extends Model
         return $this->hasOne('App\Models\User', 'id', 'user_id')->select('id', 'phone', 'name');
     }
 
-    public function oneMessage($user_id, $title, $content, $admin_id = 0, $url = '', $is_alert_at_home = 'F', $type)
+    public function oneMessage($user_id, $title, $content, $admin_id = 0, $url = '', $is_alert_at_home = 'F', $type='SY')
     {
         $insert_data = [
             'user_id' => $user_id,
@@ -47,7 +47,7 @@ class ApiMessage extends Model
 
     }
 
-    public function allMessage($title, $content, $admin_id = 0, $url = '', $is_alert_at_home = 'F', $type)
+    public function allMessage($title, $content, $admin_id = 0, $url = '', $is_alert_at_home = 'F', $type='SY')
     {
         $user_ids = User::where('enable', 'T')->pluck('id');
         $now = date('Y-m-d H:i:s');
