@@ -3,6 +3,7 @@
   <Upload ref="upload" :show-upload-list="false" :default-file-list="uploadConfig.default_list" :on-success="handleSuccess" :headers="uploadConfig.headers" :format="uploadConfig.format" :max-size="uploadConfig.max_size" :on-format-error="handleFormatError"
     :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload" :multiple="uploadConfig.multiple" :name="uploadConfig.file_name" type="drag" :action="uploadConfig.upload_url">
     <Button icon="ios-cloud-upload-outline" style="margin-right:10px" :loading="loading">{{ uploadConfig.button_text}}</Button>
+    <span class="green-color">{{ text }}</span>
   </Upload>
 </div>
 </template>
@@ -31,16 +32,10 @@ export default {
         file_num: 0,
         button_text: '上传文件',
         default_list: [{
-            name: '',
-            attachment_id: 0,
-            url: ''
-          },
-          {
-            name: '',
-            attachment_id: 0,
-            url: ''
-          }
-        ]
+          name: '',
+          attachment_id: 0,
+          url: ''
+        }]
 
       }
     }
@@ -51,7 +46,8 @@ export default {
       visible: false,
       uploadList: [],
       formatFileList: [],
-      loading: false
+      loading: false,
+      text: '未上传'
     }
   },
   methods: {
@@ -60,9 +56,15 @@ export default {
       file.name = res.data.original_name
       file.attachment_id = res.data.attachment_id
 
-      let formatFileList = this.fomatFile()
+      let formatFileList = [];
+      formatFileList.push({
+        attachment_id: file.attachment_id,
+        url: file.url
+      })
+      formatFileList = formatFileList[0]
       this.$emit('input', formatFileList)
       this.$emit('on-upload-change', this.uploadList, formatFileList)
+      this.text = '已上传'
 
       this.$Notice.success({
         title: '操作成功',
@@ -100,6 +102,8 @@ export default {
       this.loading = false
     },
     handleBeforeUpload() {
+
+      this.text = '正在上传...'
       return true
     }
   },
@@ -108,6 +112,9 @@ export default {
 
     let formatFileList = this.fomatFile()
     if (formatFileList != 'undefined') {
+      if (formatFileList.attachment_id > 0) {
+        this.text = '已上传'
+      }
       this.$emit('input', formatFileList)
       this.$emit('on-upload-change', this.uploadList, formatFileList)
     }
@@ -117,6 +124,6 @@ export default {
 
 <style>
 .ivu-upload {
-  max-width: 100px !important
+  max-width: 130px !important
 }
 </style>

@@ -120,7 +120,6 @@ export default {
       let t = this;
       getVersionInfoById(t.modalId).then(res => {
         let res_data = res.data
-        console.log(res_data)
         t.formData = {
           id: res_data.id,
           port: res_data.port,
