@@ -26,8 +26,22 @@ Route::namespace('Api')->group(function () {
 
 });
 
+
+/**       ==========================          文件上传           ====================   */
+Route::post('upload/avatar', 'Api\UploadController@avatarUpload')->name('uploads.avatar');
+Route::post('upload/wang', 'Api\UploadController@wangUpload')->name('uploads.wang');
+Route::post('upload/advertisement', 'Api\UploadController@advertisementUpload')->name('uploads.advertisement');
+Route::post('upload/tmp', 'Api\UploadController@tmpUpload')->name('uploads.tmp');
+Route::post('upload/carousel', 'Api\UploadController@carouselUpload')->name('uploads.carousel');
+Route::post('upload/new_version', 'Api\UploadController@newVersionUpload')->name('uploads.new_version');
+
+Route::post('send_sms', 'Api\ThirdController@sendSms')->name('third.send_sms');
+Route::post('check_sms_code', 'Api\ThirdController@checkSmsCode')->name('third.check_sms_code');
+
 /**       ==========================          后台APi           ====================   */
 Route::namespace('Admin')->group(function () {
+
+    /**       ==========================          自带 Api           ====================   */
 
     Route::get('admin/users', 'UserController@usersList')->name('users.list');
     Route::get('admin/users/current_user', 'UserController@currentUser')->name('users.current_user');
@@ -133,17 +147,13 @@ Route::namespace('Admin')->group(function () {
     Route::post('admin/app_versions', 'AppVersionsController@store')->name('app_versions.store');
     Route::patch('admin/app_versions/{app_version}', 'AppVersionsController@update')->name('app_versions.update');
     Route::delete('admin/app_versions/{app_version}', 'AppVersionsController@destroy')->name('app_versions.destroy');
+
+
+    Route::get('admin/statistics', 'StatisticsController@base')->name('statistics.base');
+
+
+    /**       ==========================          自定义 Api           ====================   */
 });
 
 
-/**       ==========================          文件上传           ====================   */
-Route::post('upload/avatar', 'Api\UploadController@avatarUpload')->name('uploads.avatar');
-Route::post('upload/wang', 'Api\UploadController@wangUpload')->name('uploads.wang');
-Route::post('upload/advertisement', 'Api\UploadController@advertisementUpload')->name('uploads.advertisement');
-Route::post('upload/tmp', 'Api\UploadController@tmpUpload')->name('uploads.tmp');
-Route::post('upload/carousel', 'Api\UploadController@carouselUpload')->name('uploads.carousel');
-Route::post('upload/new_version', 'Api\UploadController@newVersionUpload')->name('uploads.new_version');
-
-Route::post('send_sms', 'Api\ThirdController@sendSms')->name('third.send_sms');
-Route::post('check_sms_code', 'Api\ThirdController@checkSmsCode')->name('third.check_sms_code');
 

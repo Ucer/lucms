@@ -120,10 +120,10 @@ export default {
           'Authorization': window.access_token
         },
         wang_size: 1 * 1024 * 1024, // 1M
-        uploadUrl: window.uploadUrl.tinymceUpload,
+        uploadUrl: window.uploadUrl.uploadWang,
         params: {},
         max_length: 3,
-        file_name: 'tinymce',
+        file_name: 'file',
         z_index: 10000,
         heightStyle: 'wang-editor-text-300'
       },
