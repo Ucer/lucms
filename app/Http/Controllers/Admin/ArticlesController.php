@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\ArticleCollection;
+use App\Http\Resources\CommonCollection;
 use App\Models\Article;
 use App\Validates\ArticleValidate;
 use Illuminate\Http\Request;
@@ -41,7 +41,7 @@ class ArticlesController extends AdminController
         }
 
         $list = $article->getArticlesWithFilter($filter, $user_id, $title, $tag_id, $category_id, $recommend, $top, $enable, $year, $month, $order, $order_type, $per_page);
-        return new ArticleCollection($list);
+        return new CommonCollection($list);
     }
 
 

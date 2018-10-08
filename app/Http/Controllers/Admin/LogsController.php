@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\LogCollection;
+use App\Http\Resources\CommonCollection;
 use App\Models\Log;
 use Illuminate\Http\Request;
 
@@ -39,7 +39,7 @@ class LogsController extends AdminController
             $log = $log->orderBy($order_by[0], $order_by[1]);
         }
 
-        return new LogCollection($log->with('user')->recent()->paginate($per_page));
+        return new CommonCollection($log->with('user')->recent()->paginate($per_page));
 
     }
 }

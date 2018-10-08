@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\AdvertisementPositionCollection;
+use App\Http\Resources\CommonCollection;
 use App\Models\AdvertisementPosition;
 use App\Validates\AdvertisementPositionValidate;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class AdvertisementPositionsController extends AdminController
             $advertisementPosition = $advertisementPosition->orderBy($order_by[0], $order_by[1]);
         }
 
-        return new AdvertisementPositionCollection($advertisementPosition->paginate($per_page));
+        return new CommonCollection($advertisementPosition->paginate($per_page));
     }
 
     public function show(AdvertisementPosition $advertisementPosition)

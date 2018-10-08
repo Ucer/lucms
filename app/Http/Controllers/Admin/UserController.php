@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\UserCollection;
+use App\Http\Resources\CommonCollection;
 use App\Http\Resources\UserResource;
 use App\Validates\UserValidate;
 use App\Models\User;
@@ -44,7 +44,7 @@ class UserController extends AdminController
             $user = $user->orderBy($order_by[0], $order_by[1]);
         }
 
-        return new UserCollection($user->paginate($per_page));
+        return new CommonCollection($user->paginate($per_page));
     }
 
 

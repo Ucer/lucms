@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\RoleCollection;
+use App\Http\Resources\CommonCollection;
 use App\Models\Role;
 use App\Validates\RoleValidate;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class RolesController extends AdminController
             $role = $role->orderBy($order_by[0], $order_by[1]);
         }
 
-        return new RoleCollection($role->get());
+        return new CommonCollection($role->get());
     }
 
     public function show(Role $role)

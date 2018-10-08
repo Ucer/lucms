@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\TagCollection;
+use App\Http\Resources\CommonCollection;
 use App\Models\Tag;
 use App\Validates\TagValidate;
 use Illuminate\Http\Request;
@@ -30,7 +30,7 @@ class TagsController extends AdminController
             $tag = $tag->orderBy($order_by[0], $order_by[1]);
         }
 
-        return new TagCollection($tag->paginate($per_page));
+        return new CommonCollection($tag->paginate($per_page));
     }
 
     public function show(Tag $tag)

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\IpFilterCollection;
+use App\Http\Resources\CommonCollection;
 use App\Models\IpFilter;
 use App\Validates\IpFilterValidate;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class IpFiltersController extends AdminController
             $ipFilter = $ipFilter->typeSearch($type);
         }
 
-        return new IpFilterCollection($ipFilter->paginate($per_page));
+        return new CommonCollection($ipFilter->paginate($per_page));
     }
 
     public function show(IpFilter $ipFilter)

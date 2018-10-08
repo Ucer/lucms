@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\PermissionCollection;
+use App\Http\Resources\CommonCollection;
 use App\Http\Resources\PermissionResource;
 use App\Models\Permission;
 use App\Validates\PermissionValidate;
@@ -32,7 +32,7 @@ class PermissionsController extends AdminController
 
         $permissions = $permission->get();
 
-        return new PermissionCollection($permissions);
+        return new CommonCollection($permissions);
     }
 
     public function show(Permission $permission)

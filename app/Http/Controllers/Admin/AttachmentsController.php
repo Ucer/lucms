@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\AttachmentCollection;
+use App\Http\Resources\CommonCollection;
 use App\Models\Attachment;
 use App\Validates\AttachmentValidate;
 use Illuminate\Http\Request;
@@ -46,7 +46,7 @@ class AttachmentsController extends AdminController
         }
 
         $attachment = $attachment->with('user')->paginate($per_page);
-        return new AttachmentCollection($attachment);
+        return new CommonCollection($attachment);
     }
 
     public function destroy(Attachment $attachment, AttachmentValidate $attachmentValidate)
