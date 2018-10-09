@@ -84,7 +84,7 @@ class UploadController extends ApiController
     {
         $file = $request->file('file');
 
-        $rest_upload_image = $fileuploadHandler->uploadImage($file, Auth::id(), 0, 'versions');
+        $rest_upload_image = $fileuploadHandler->uploadImage($file, Auth::id(), 0, 'versions', 'local', 'wgt');
         if ($rest_upload_image['status'] === true) {
             return $this->success($rest_upload_image['data']);
         } else {

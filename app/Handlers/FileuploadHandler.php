@@ -21,12 +21,20 @@ class FileuploadHandler
     }
 
 
-    public function uploadImage($file, $user_id, $max_width = 0, $path = 'avatars', $storage_position = 'local')
+    public function uploadImage($file, $user_id, $max_width = 0, $path = 'avatars', $storage_position = 'local', $extend = '')
     {
         $up_dir = $this->base_image_up_dir . '/' . $path;
 
         if ($file) {
             $rest_upload = $this->data = $file->store($up_dir);
+            if ($extend) {
+                $old_file = storage_path() . '/app/public/' . $rest_upload;
+                $new_file = explode('.', $old_file)[0] . '.' . $extend;
+                rename($old_file, $new_file);
+                $storage_name = basename($new_file);
+            } else {
+                $storage_name = basename($rest_upload);
+            }
         } else {
             $this->status = false;
             $this->message = '请选择要上传的图片';
@@ -43,7 +51,7 @@ class FileuploadHandler
             'storage_position' => $storage_position,
             'domain' => config('app.url'),
             'link_path' => 'storage/' . $up_dir,
-            'storage_name' => basename($rest_upload),
+            'storage_name' => $storage_name,
 
         ];
 
