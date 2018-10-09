@@ -15,6 +15,12 @@
           <Option v-for="(item,key) in messageType" :value="key" :key="key">{{ item }}</Option>
         </Select>
       </FormItem>
+      <FormItem label="是否在首页提示：">
+        <Select v-model="formData.is_alert_at_home" placeholder="是否在首页提示">
+          <Option value="T" >是</Option>
+          <Option value="F" >否</Option>
+        </Select>
+      </FormItem>
       <FormItem label="消息接收人：">
         <Select v-model="formData.users" multiple filterable remote :remote-method="getUserListExcute" :loading="searchLoading" placeholder="请输入手机号搜索">
             <Option v-for="(item, key) in userList" :value="item.id" :key="">{{item.name}}({{item.phone}})</Option>
@@ -58,7 +64,8 @@ export default {
         type: '',
         url: '',
         users: '',
-        content: ''
+        content: '',
+        is_alert_at_home:'F'
       },
       rules: {
         title: [{

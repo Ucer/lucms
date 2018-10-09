@@ -68,7 +68,7 @@ class ApiMessagesController extends AdminController
         if ($rest_validate['status'] === true) {
             $admin_id = Auth::id();
             if ($is_send_to_all) {
-                $apiMessage->allMessage($data['title'], $data['content'], $admin_id, $data['url'], 'F', $data['type']);
+                $apiMessage->allMessage($data['title'], $data['content'], $admin_id, $data['url'], $data['is_alert_at_home'], $data['type']);
             } else {
                 $date = date('Y-m-d H:i:s');
 
@@ -80,7 +80,7 @@ class ApiMessagesController extends AdminController
                         'title' => $data['title'],
                         'content' => $data['content'],
                         'url' => $data['url'],
-                        'is_alert_at_home' => 'F',
+                        'is_alert_at_home' => $data['is_alert_at_home'],
                         'created_at' => $date
                     ];
 
