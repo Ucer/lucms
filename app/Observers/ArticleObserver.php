@@ -11,6 +11,7 @@ class ArticleObserver
     public function saved(Article $article)
     {
         if ( ! $article->slug) {
+
             dispatch(new TranslateSlug($article));
         }
     }

@@ -12,7 +12,7 @@ class Article extends Model
     use ArticleFilterTrait;
 
     protected $fillable = [
-        'title', 'keywords', 'description', 'cover_image', 'content', 'view_count', 'vote_count', 'comment_count', 'collection_count',
+        'title', 'keywords', 'slug', 'descriptions', 'cover_image', 'content', 'view_count', 'vote_count', 'comment_count', 'collection_count',
         'enable', 'recommend', 'top', 'weight', 'access_type', 'access_value', 'created_year', 'created_month', 'category_id',
     ];
 

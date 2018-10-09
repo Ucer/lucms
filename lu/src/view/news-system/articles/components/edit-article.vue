@@ -133,7 +133,6 @@ export default {
   },
   props: {
     articleCategories: {
-      type: Object,
       default: {}
     },
     modalId: {
@@ -286,7 +285,7 @@ export default {
       addEditTag({
         name: t.newTagName
       }).then(res => {
-        t.getArticleTagsExcute()
+        t.getTagListExcute()
         t.$Notice.success({
           title: res.message
         })

@@ -30,7 +30,7 @@
     </Select>
     </Col>
     <Col span="2">
-    <Button type="primary" icon="ios-search" @click="getTableDataExcute(1)">Search</Button>
+    <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
     </Col>
     <Col span="2">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
@@ -53,8 +53,9 @@
     </div>
   </Row>
 
-  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(1)' @on-add-modal-hide="addModalHide" :article-categories='articleCategories' :article-tags='articleTagList'></add-component>
-  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(1)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'> </edit-component>
+  <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
+  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :article-categories='articleCategories' :article-tags='articleTagList'></add-component>
+  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'> </edit-component>
 
 </div>
 </template>
@@ -63,7 +64,7 @@
 <script>
 import AddComponent from './components/add-article'
 import EditComponent from './components/edit-article'
-import ExpandRow from './components/list-table-expand'
+import ShowInfo from './components/show-info'
 
 import {
   getTableStatus,
@@ -80,7 +81,7 @@ export default {
   components: {
     AddComponent,
     EditComponent,
-    ExpandRow
+    ShowInfo
   },
   data() {
     return {
@@ -108,19 +109,11 @@ export default {
         show: false,
         id: 0
       },
+      showInfoModal: {
+        show: false,
+        info: ''
+      },
       columns: [{
-          title: '>>',
-          type: 'expand',
-          width: 50,
-          render: (h, params) => {
-            return h(ExpandRow, {
-              props: {
-                row: params.row
-              }
-            })
-          }
-        },
-        {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
@@ -280,6 +273,22 @@ export default {
             ])
             return h('div', [
               h('Button', {
+                style: {
+                  margin: '0 5px'
+                },
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.showInfoModal.show = true
+                    this.showInfoModal.info = params.row
+                  }
+                }
+
+              }, '详细'),
+              h('Button', {
                 props: {
                   type: 'success',
                   size: 'small'
@@ -311,7 +320,7 @@ export default {
     },
     onPageSizeChange: function(per_page) {
       this.feeds.per_page = per_page
-      this.getTableDataExcute(1)
+      this.getTableDataExcute(this.feeds.current_page)
     },
     getTableStatusExcute(params) {
       let t = this
@@ -343,7 +352,7 @@ export default {
     onSortChange: function(data) {
       const order = data.column.key + ',' + data.order
       this.searchForm.order_by = order
-      this.getTableDataExcute(1)
+      this.getTableDataExcute(this.feeds.current_page)
     },
     switchEnableExcute(index) {
       let t = this
@@ -375,6 +384,9 @@ export default {
     },
     editModalHide() {
       this.editModal.show = false
+    },
+    showModalClose() {
+      this.showInfoModal.show = false
     }
   }
 }

@@ -19,7 +19,7 @@
     <Input icon="search" placeholder="请输入邮箱搜索..." v-model="searchForm.email" />
     </Col>
     <Col span="2">
-    <Button type="primary" icon="ios-search" @click="getTableDataExcute(1)">Search</Button>
+    <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
     </Col>
     <Col span="2">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
@@ -61,8 +61,8 @@
     </div>
   </Modal>
 
-  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(1)' @on-add-modal-hide="addModalHide"></add-component>
-  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(1)' @on-edit-modal-hide="editModalHide"> </edit-component>
+  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide"></add-component>
+  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide"> </edit-component>
 
 </div>
 </template>
@@ -302,7 +302,7 @@ export default {
     },
     onPageSizeChange: function(per_page) {
       this.feeds.per_page = per_page
-      this.getTableDataExcute(1)
+      this.getTableDataExcute(this.feeds.current_page)
     },
     getTableStatusExcute(params) {
       let t = this
@@ -327,7 +327,7 @@ export default {
     onSortChange: function(data) {
       const order = data.column.key + ',' + data.order
       this.searchForm.order_by = order
-      this.getTableDataExcute(1)
+      this.getTableDataExcute(this.feeds.current_page)
     },
     switchEnableExcute(index) {
       let t = this

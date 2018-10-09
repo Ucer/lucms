@@ -115,6 +115,13 @@ export default {
     this.getVersionListExcute()
   },
   methods: {
+    handleOnPageChange: function(to_page) {
+      this.getTableDataExcute(to_page)
+    },
+    onPageSizeChange: function(per_page) {
+      this.feeds.per_page = per_page
+      this.getTableDataExcute(this.feeds.current_page)
+    },
     pushNewVersion() {
       this.modalShow = true
     },

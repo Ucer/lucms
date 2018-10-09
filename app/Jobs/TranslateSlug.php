@@ -21,6 +21,7 @@ class TranslateSlug implements ShouldQueue
     public function __construct(Article $article)
     {
         $this->article = $article;
+//        $this->handle(); 「开启队列分发后，无需使用该操作」
     }
 
     public function handle()

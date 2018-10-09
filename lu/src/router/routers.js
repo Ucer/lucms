@@ -187,23 +187,12 @@ export default[
           title: 'app 版本控制'
         },
         component: () => import ('@/view/security/app-versions/list.vue')
-      }
-    ]
-  }, {
-    path: '/systems',
-    name: 'systems',
-    component: Main,
-    meta: {
-      icon: 'ios-git-branch',
-      title: '系统信息'
-    },
-    children: [
-      {
+      }, {
         path: '/system-versions',
         name: 'system-versions',
         meta: {
           icon: 'ios-git-branch',
-          title: '版本更新日志'
+          title: 'lucms 版本更新日志'
         },
         component: () => import ('@/view/system-version')
       }

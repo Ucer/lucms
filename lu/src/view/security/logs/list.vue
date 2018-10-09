@@ -18,7 +18,7 @@
     </Select>
     </Col>
     <Col span="2">
-    <Button type="primary" icon="ios-search" @click="getTableDataExcute(1)">Search</Button>
+    <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
     </Col>
   </Row>
   <br>
@@ -37,6 +37,7 @@
       </div>
     </div>
   </Row>
+  <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
 
 
 </div>
@@ -44,7 +45,7 @@
 
 
 <script>
-import ExpandRow from './components/list-table-expand'
+import ShowInfo from './components/show-info'
 
 import {
   getTableStatus
@@ -56,7 +57,7 @@ import {
 
 export default {
   components: {
-    ExpandRow
+    ShowInfo
   },
   data() {
     return {
@@ -74,19 +75,11 @@ export default {
         current_page: 1,
         per_page: 10
       },
+      showInfoModal: {
+        show: false,
+        info: ''
+      },
       columns: [{
-          title: '>>',
-          type: 'expand',
-          width: 50,
-          render: (h, params) => {
-            return h(ExpandRow, {
-              props: {
-                row: params.row
-              }
-            })
-          }
-        },
-        {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
@@ -129,6 +122,32 @@ export default {
           sortable: true,
           key: 'created_at'
         },
+        {
+          title: '操作',
+          key: '',
+          width: 250,
+          render: (h, params) => {
+            let t = this
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    t.showInfoModal.show = true
+                    t.showInfoModal.info = params.row
+                  }
+                }
+
+              }, '详细'),
+            ])
+          }
+        }
       ]
     }
   },
@@ -143,7 +162,7 @@ export default {
     },
     onPageSizeChange: function(per_page) {
       this.feeds.per_page = per_page
-      this.getTableDataExcute(1)
+      this.getTableDataExcute(this.feeds.current_page)
     },
     getTableStatusExcute(params) {
       let t = this
@@ -168,7 +187,10 @@ export default {
     onSortChange: function(data) {
       const order = data.column.key + ',' + data.order
       this.searchForm.order_by = order
-      this.getTableDataExcute(1)
+      this.getTableDataExcute(this.feeds.current_page)
+    },
+    showModalClose() {
+      this.showInfoModal.show = false
     }
   }
 }

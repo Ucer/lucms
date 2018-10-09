@@ -40,7 +40,7 @@
       </div>
     </div>
   </Row>
-
+  <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
   <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(1)' @on-add-modal-hide="addModalHide" :advertisement-positions-ids='advertisementPositionsIds'></add-component>
   <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(1)' @on-edit-modal-hide="editModalHide" :advertisement-positions-ids='advertisementPositionsIds'> </edit-component>
 
@@ -51,7 +51,7 @@
 <script>
 import AddComponent from './components/add-advertisement'
 import EditComponent from './components/edit-advertisement'
-import ExpandRow from './components/list-table-expand'
+import ShowInfo from './components/show-info'
 
 import {
   getTableStatus,
@@ -68,7 +68,7 @@ export default {
   components: {
     AddComponent,
     EditComponent,
-    ExpandRow
+    ShowInfo
   },
   data() {
     return {
@@ -93,18 +93,11 @@ export default {
         show: false,
         id: 0
       },
+      showInfoModal: {
+        show: false,
+        info: ''
+      },
       columns: [{
-          title: '>>',
-          type: 'expand',
-          width: 50,
-          render: (h, params) => {
-            return h(ExpandRow, {
-              props: {
-                row: params.row
-              }
-            })
-          }
-        }, {
           title: 'ID',
           key: 'id',
           sortable: true,
@@ -195,6 +188,22 @@ export default {
           render: (h, params) => {
             let t = this;
             return h('div', [
+              h('Button', {
+                style: {
+                  margin: '0 5px'
+                },
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.showInfoModal.show = true
+                    this.showInfoModal.info = params.row
+                  }
+                }
+
+              }, '详细'),
               h('Button', {
                 props: {
                   type: 'success',
@@ -311,6 +320,9 @@ export default {
     },
     editModalHide() {
       this.editModal.show = false
+    },
+    showModalClose() {
+      this.showInfoModal.show = false
     }
   }
 }
