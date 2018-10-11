@@ -140,7 +140,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteCategoryExcute(params.row.id, params.index);
+                    t.deleteCarouselExcute(params.row.id, params.index);
                   }
                 }
               }, [
@@ -183,9 +183,9 @@ export default {
       this.searchForm.order_by = order
       this.getTableDataExcute(1)
     },
-    deleteCategoryExcute(category, key) {
+    deleteCarouselExcute(id, key) {
       let t = this
-      deleteCategory(category).then(res => {
+      deleteCarousel(id).then(res => {
         t.dataList.splice(key, 1)
         t.$Notice.success({
           title: res.message

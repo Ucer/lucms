@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 
 class Carousel extends Model
 {
