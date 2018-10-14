@@ -1,14 +1,14 @@
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
+  <Row :gutter="24">
+    <Col :xs="8" :lg="16">
+    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    </Col>
+    <Col :xs="12" :lg="4" class="hidden-mobile">
     <Input icon="search" placeholder="请输入角色名称..." v-model="searchForm.name" />
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="3" class="hidden-mobile">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute()">Search</Button>
-    </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
   </Row>
   <br>
@@ -20,10 +20,10 @@
         <div>加载中...</div>
       </Spin>
     </div>
-    <Table border :columns="columns" :data="dataList"  @on-sort-change='onSortChange'></Table>
+    <Table border :columns="columns" :data="dataList" @on-sort-change='onSortChange'></Table>
   </Row>
 
-  <Modal v-model="permissionModal.show" :closable='false' :mask-closable=false width="1000">
+  <Modal v-model="permissionModal.show" :closable='false' :mask-closable=false width="800">
     <h3 slot="header" style="color:#2D8CF0">分配权限</h3>
     <Transfer v-if="permissionModal.show" :data="permissionModal.allPermissions" :target-keys="permissionModal.hasPermissions" :render-format="renderFormat" :operations="['移除权限','添加权限']" :list-style="permissionModal.listStyle" filterable @on-change="handleTransferChange">
     </Transfer>
@@ -75,8 +75,8 @@ export default {
         show: false,
         saveLoading: false,
         listStyle: {
-          width: '400px',
-          height: '400px'
+          width: '250px',
+          height: '300px'
         }
       },
       addModal: {
@@ -90,30 +90,36 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
-          width: 100
+          minWidth: 100,
         },
         {
           title: '角色限名称',
-          key: 'name'
+          key: 'name',
+          minWidth: 150,
         },
         {
           title: '角色看守器',
-          key: 'guard_name'
+          key: 'guard_name',
+          minWidth: 150,
         },
         {
           title: '角色描述',
-          key: 'description'
+          key: 'description',
+          minWidth: 150,
         },
         {
           title: '创建时间',
           key: 'created_at',
+          minWidth: 150,
         },
         {
           title: '更新时间',
-          key: 'created_at'
+          key: 'created_at',
+          minWidth: 150,
         },
         {
           title: '操作',
+          minWidth: 200,
           render: (h, params) => {
             let t = this
             return h('div', [

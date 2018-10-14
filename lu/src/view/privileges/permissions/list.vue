@@ -6,7 +6,7 @@
     <Col :xs="8" :lg="16">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
-    <Col class="hidden-mobile" :xs="12" :lg="4">
+    <Col :xs="12" :lg="4" class="hidden-mobile" >
     <Input icon="search" placeholder="请输入权限名称..." v-model="searchForm.name" />
     </Col>
     <Col :xs="3" :lg="2" class="hidden-mobile">
