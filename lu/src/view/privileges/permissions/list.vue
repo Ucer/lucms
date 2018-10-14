@@ -2,15 +2,15 @@
 
 <template>
 <div id="privileges-users-list">
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
+  <Row :gutter="24">
+    <Col :xs="8" :lg="16">
+    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    </Col>
+    <Col class="hidden-mobile" :xs="12" :lg="4">
     <Input icon="search" placeholder="请输入权限名称..." v-model="searchForm.name" />
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="2" class="hidden-mobile">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute()">Search</Button>
-    </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
   </Row>
   <br>
@@ -22,7 +22,7 @@
         <div>加载中...</div>
       </Spin>
     </div>
-    <Table border :columns="columns" :data="dataList"  @on-sort-change='onSortChange'></Table>
+    <Table border :columns="columns" :data="dataList" @on-sort-change='onSortChange'></Table>
   </Row>
 
   <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute' @on-add-modal-hide="addModalHide"></add-component>
@@ -67,24 +67,30 @@ export default {
         title: 'ID',
         key: 'id',
         sortable: 'customer',
-        width: 100
+        minWidth: 100,
       }, {
         title: '权限名称',
-        key: 'name'
+        key: 'name',
+        minWidth: 150,
       }, {
         title: '看守器',
-        key: 'guard_name'
+        key: 'guard_name',
+        minWidth: 150,
       }, {
         title: '权限描述',
-        key: 'description'
+        key: 'description',
+        minWidth: 150,
       }, {
         title: '创建时间',
         key: 'created_at',
+        minWidth: 150,
       }, {
         title: '更新时间',
-        key: 'created_at'
+        key: 'created_at',
+        minWidth: 150,
       }, {
         title: '操作',
+        minWidth: 200,
         render: (h, params) => {
           let t = this
           return h('div', [

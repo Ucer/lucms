@@ -17,16 +17,6 @@ import apiRequest from './libs/api.request'
 import appUrl from '../config/url'
 import Cookies from 'js-cookie'
 import {TOKEN_KEY} from '@/libs/util'
-/*
-    // import '@/mock'
-    // 实际打包时应该不引入mock
-    import env from '../config/env'
-     env === 'development' ? require('@/mock') : ''
-     */
-
-// Object.defineProperty(Vue.prototype, '$apiRequest', {
-//   value: apiRequest
-// }))
 
 window.access_token = Cookies.get(TOKEN_KEY)
 

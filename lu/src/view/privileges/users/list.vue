@@ -2,7 +2,7 @@
 <template>
 <div>
   <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="2">
+    <Col span="2" >
     <Select v-model="searchForm.enable" placeholder="请选择状态">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.enable" :value="key" :key="key">{{ item }}</Option>

@@ -2,6 +2,7 @@
   <div class="user-avator-dropdown">
     <Dropdown @on-click="handleClick">
       <Avatar :src="userAvator"/>
+      <span>dev@163.com</span>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
         <DropdownItem name="logout">退出登录</DropdownItem>
