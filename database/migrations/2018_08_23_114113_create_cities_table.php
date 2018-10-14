@@ -15,9 +15,9 @@ class CreateCitiesTable extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cityid', 20)->default('');
-            $table->string('city', 50)->default('');
-            $table->string('provinceid', 20)->default('');
+            $table->string('cityid')->default('');
+            $table->string('city')->default('');
+            $table->string('provinceid')->default('');
 
             $table->index('provinceid');
             $table->index('city');

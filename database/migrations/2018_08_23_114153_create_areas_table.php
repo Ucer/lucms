@@ -15,9 +15,9 @@ class CreateAreasTable extends Migration
     {
         Schema::create('areas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('areaid', 20)->default('');
-            $table->string('area', 50)->default('');
-            $table->string('cityid', 20)->default('');
+            $table->string('areaid')->default('');
+            $table->string('area')->default('');
+            $table->string('cityid')->default('');
 
             $table->index('cityid');
             $table->index('area');

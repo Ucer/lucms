@@ -14,7 +14,7 @@ class AddDescriptionToPermissionsTable extends Migration
     public function up()
     {
         Schema::table('permissions', function (Blueprint $table) {
-            $table->string('description', 50)->default('')->comment('说明');
+            $table->string('description')->default('')->comment('说明');
         });
     }
 

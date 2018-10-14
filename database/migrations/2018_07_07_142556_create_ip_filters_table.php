@@ -16,7 +16,7 @@ class CreateIpFiltersTable extends Migration
         Schema::create('ip_filters', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->enum('type', ['white', 'black'])->default('white')->comment('类型');
-            $table->string('ip', 18)->default('')->comment('IP');
+            $table->string('ip')->default('')->comment('IP');
             $table->timestamps();
             $table->index('type');
             $table->unique('ip');

@@ -16,7 +16,7 @@ class CreateSystemVersionsTable extends Migration
         Schema::create('system_versions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title')->default('');
-            $table->string('version',10)->default('1.0.0');
+            $table->string('version')->default('1.0.0');
             $table->text('content');
             $table->string('download_url')->default('');
             $table->timestamps();

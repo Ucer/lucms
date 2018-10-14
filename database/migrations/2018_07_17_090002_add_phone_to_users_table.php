@@ -14,15 +14,15 @@ class AddPhoneToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('phone',11)->default('')->comment('手机号');
-            $table->string('weixin_openid', 100)->default('');
-            $table->string('mini_openid', 100)->default('')->comment('小程序 openid');
-            $table->string('weixin_unionid', 100)->default('');
-            $table->string('weixin_session_key', 100)->default('');
-            $table->string('weixin_head_image_path', 255)->default('')->comment('微信头像路径');
-            $table->string('country',15)->default('');
-            $table->string('province',15)->default('');
-            $table->string('city',15)->default('');
+            $table->string('phone')->default('')->comment('手机号');
+            $table->string('weixin_openid')->default('');
+            $table->string('mini_openid')->default('')->comment('小程序 openid');
+            $table->string('weixin_unionid')->default('');
+            $table->string('weixin_session_key')->default('');
+            $table->string('weixin_head_image_path')->default('')->comment('微信头像路径');
+            $table->string('country')->default('');
+            $table->string('province')->default('');
+            $table->string('city')->default('');
 
             $table->index('phone');
         });

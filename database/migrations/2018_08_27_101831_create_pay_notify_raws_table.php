@@ -15,7 +15,7 @@ class CreatePayNotifyRawsTable extends Migration
     {
         Schema::create('pay_notify_raws', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('model_type', 20)->default('undefined')->comment('订单类型:一般写表名称:users');
+            $table->string('model_type')->default('undefined')->comment('订单类型:一般写表名称:users');
             $table->text('raw');
             $table->timestamps();
         });

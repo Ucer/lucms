@@ -20,7 +20,7 @@ class CreateMobileConnectUserListsTable extends Migration
             $table->string('name')->default('');
             $table->string('phone')->default('');
             $table->integer('last_invited_at')->default(0)->comment('最近一次邀请时间,时间戳');
-            $table->string('first_alpha', 2)->default('')->comment('用户姓名的拼音的第一个字母，用于筛选');
+            $table->string('first_alpha')->default('')->comment('用户姓名的拼音的第一个字母，用于筛选');
             $table->timestamps();
 
             $table->index('user_id');

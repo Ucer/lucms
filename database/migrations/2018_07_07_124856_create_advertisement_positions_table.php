@@ -15,8 +15,8 @@ class CreateAdvertisementPositionsTable extends Migration
     {
         Schema::create('advertisement_positions', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('name', 20)->default('')->comment('广告位名称');
-            $table->string('description', 100)->default('')->comment('广告位描述');
+            $table->string('name')->default('')->comment('广告位名称');
+            $table->string('description')->default('')->comment('广告位描述');
             $table->enum('type', ['default', 'model', 'spa'])->default('default')->comment('广告位类型:默认、跳转到模型、单页面');
             $table->timestamps();
         });
