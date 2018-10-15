@@ -2,10 +2,10 @@
 <template>
 <div>
   <Row :gutter="24">
-    <Col  :xs="4" :lg="10">
+    <Col  :xs="6" :lg="10">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
-    <Col  :xs="4" :lg="3">
+    <Col  :xs="3" :lg="3">
     <Select v-model="searchForm.enable" placeholder="是否启用">
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in tableStatus.enable" :value="key" :key="key">{{ item }}</Option>
@@ -17,7 +17,7 @@
         <Option v-for="(item,key) in advertisementPositionsIds" :value="item.id" :key="item.id">{{ item.name }} </Option>
     </Select>
     </Col>
-    <Col  :xs="8" :lg="4" class="hidden-mobile">
+    <Col  :xs="6" :lg="4" class="hidden-mobile">
     <Input icon="search" placeholder="请输入广告标题..." v-model="searchForm.name" />
     </Col>
     <Col  :xs="2" :lg="2">
@@ -101,15 +101,16 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: true,
-          width: 100
+          minWidth: 100,
         },
         {
           title: '广告标题',
-          key: 'name'
+          key: 'name',
+          minWidth: 150,
         },
         {
           title: '封面',
-          width: 200,
+          minWidth: 200,
           render: (h, params) => {
             let t = this
             return h('div', [
@@ -130,7 +131,7 @@ export default {
         },
         {
           title: '广告位',
-          width: 150,
+          minWidth: 150,
           render: (h, params) => {
             return h('div',
               params.row.advertisement_position.name
@@ -140,6 +141,7 @@ export default {
         {
           title: '启用状态',
           key: 'enable',
+          minWidth: 150,
           render: (h, params) => {
             return h('i-switch', {
               props: {
@@ -157,7 +159,7 @@ export default {
         },
         {
           title: '有效期',
-          width: 350,
+          minWidth: 150,
           render: (h, params) => {
 
             const row = params.row
@@ -181,10 +183,12 @@ export default {
         },
         {
           title: '创建时间',
-          key: 'created_at'
+          key: 'created_at',
+          minWidth: 150,
         },
         {
           title: '操作',
+          minWidth: 200,
           render: (h, params) => {
             let t = this;
             return h('div', [

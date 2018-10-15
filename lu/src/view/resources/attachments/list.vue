@@ -151,7 +151,7 @@ export default {
         {
           title: '大小/kb',
           key: 'size',
-          sortable: true,
+          sortable: 'customer',
           width: 100
         },
         {
@@ -175,7 +175,7 @@ export default {
         {
           title: '创建时间',
           key: 'created_at',
-          sortable: true,
+          sortable: 'customer',
         },
         {
           title: '操作',

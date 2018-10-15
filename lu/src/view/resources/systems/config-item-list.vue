@@ -132,7 +132,7 @@ export default {
         {
           title: '创建时间',
           key: 'created_at',
-          sortable: true,
+          sortable: 'customer',
         },
         {
           title: '更新时间',
