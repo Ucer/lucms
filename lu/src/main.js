@@ -26,6 +26,8 @@ window.uploadUrl = {
   uploadWang: appUrl + 'api/upload/wang',
   uploadTmp: appUrl + 'api/upload/tmp',
   uploadNewVersion: appUrl + 'api/upload/new_version',
+  uploadCarousel: appUrl + 'api/upload/carousel',
+  uploadNewVersion: appUrl + 'api/upload/new_version',
   importExcelAdvertisementPosition: appUrl + 'api/excels/import/advertisement_positions'
 }
 window.exportExcelUrl = {
