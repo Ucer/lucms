@@ -26,8 +26,8 @@
         </FormItem>
         <FormItem label="分类：">
           <Select v-model="formData.category_id" filterable placeholder="请选择文章分类">
-                <Option v-for="(item,key) in articleCategories" :value="item.id" :key="key">{{ item.name }} </Option>
-            </Select>
+              <Option v-for="(item,key) in articleCategories" :value="item.id" :key="key">{{ item.name }} </Option>
+          </Select>
         </FormItem>
         <FormItem label="排序：">
           <Input v-model="formData.weight" placeholder="请输入序号"></Input>

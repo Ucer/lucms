@@ -1,32 +1,32 @@
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="2">
+  <Row :gutter="24">
+    <Col :xs="4" :lg="3">
     <Select v-model="searchForm.type" placeholder="消息类型">
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in tableStatus.type" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="4" :lg="3">
     <Select v-model="searchForm.status" placeholder="状态">
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in tableStatus.status" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="4" :lg="4">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
     </Col>
-    <Col span="2">
+    <Col :xs="4" :lg="2" class="hidden-mobile">
     <Poptip confirm placement="bottom" title="确认要操作?" @on-ok="readMessagesExcute(selectIds,false)" ok-text="确认" cancel-text="点错了">
       <Button>读取选中消息</Button>
     </Poptip>
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="2" class="hidden-mobile">
     <Poptip confirm placement="bottom" title="确认要操作?" @on-ok="readMessagesExcute('',true)" ok-text="确认" cancel-text="点错了">
       <Button type="warning">一键已读</Button>
     </Poptip>
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="2" class="hidden-mobile">
     <Poptip confirm placement="bottom" title="确认要操作?" @on-ok="deleteManyAdminMessageExcute(selectIds)" ok-text="确认" cancel-text="点错了">
       <Button type="error">删除选中消息</Button>
     </Poptip>
@@ -101,21 +101,23 @@ export default {
       },
       columns: [{
           type: 'selection',
-          width: 60,
+          minWidth: 60,
           align: 'center',
         },
         {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
-          width: 100
+          minWidth: 50,
         },
         {
           title: '标题',
           key: 'title',
+          minWidth: 100,
         },
         {
           title: '类型',
+          minWidth: 100,
           render: (h, params) => {
             return h('div',
               this.tableStatus.type[params.row.type]
@@ -124,7 +126,7 @@ export default {
         },
         {
           title: '状态',
-          width: 150,
+          minWidth: 150,
           render: (h, params) => {
             const row = params.row
             const color = row.status === 'R' ? 'green' : 'red'
@@ -143,9 +145,11 @@ export default {
           title: '创建时间',
           key: 'created_at',
           sortable: 'customer',
+          minWidth: 150,
         },
         {
           title: '操作',
+          minWidth: 150,
           render: (h, params) => {
             let t = this;
             let readButton =

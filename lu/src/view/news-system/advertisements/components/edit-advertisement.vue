@@ -4,7 +4,7 @@
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="1200">
     <p slot="header">修改广告</p>
     <Row>
-      <Col span="16">
+      <Col span="24">
       <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
         <FormItem label="广告标题" prop="name">
           <Input v-model="formData.name" />
@@ -23,45 +23,39 @@
         </FormItem>
       </Form>
 
-
-      <Card>
-        <p slot="title">
-          <Icon type="paper-airplane"></Icon>
-          其它信息
-        </p>
-        <Form label-position="right" :label-width="80">
-          <FormItem label="广告位：">
-            <Select v-model="formData.advertisement_positions_id" filterable @on-change="positionHasChanged" placeholder="请选择广告位">
+      <Form label-position="right" :label-width="100">
+        <FormItem label="广告位：">
+          <Select v-model="formData.advertisement_positions_id" filterable @on-change="positionHasChanged" placeholder="请选择广告位">
               <Option v-for="(item,key) in advertisementPositionsIds" :value="item.id" :key="key">{{ item.name }} </Option>
             </Select>
-          </FormItem>
-          <FormItem label="链接地址：">
-            <Input v-model="formData.link_url" placeholder="请输入链接地址如： http://lucms.com" />
-          </FormItem>
-          <FormItem label="排序：">
-            <Input v-model="formData.weight" placeholder="请输入序号" />
-          </FormItem>
-          <FormItem label="有效期：">
-            <DatePicker :value="effectiveDate" type="datetimerange" placement="bottom-end" placeholder="请选择有效期，不选永久有效" confirm @on-clear="timeClear" @on-change="timeChanged" style="width: 60%"></DatePicker>
-          </FormItem>
-          <p class="margin-top-10" v-if="typeIsModel">
-            <Icon type="ios-fastforward"></Icon>
-            <b>键值对选择：</b>
-            <transition name="publish-time">
-              <div class="publish-time-picker-con">
-                <div class="margin-top-10"> 模型 &nbsp;&nbsp;
-                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.model" placeholder="如：App\Models\Article" />
-                </div>
-                <div class="margin-top-10"> 字段 &nbsp;&nbsp;
-                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.column" placeholder="如：slug" />
-                </div>
-                <div class="margin-top-10"> 字段值
-                  <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.value" placeholder="mark-down-preview" />
-                </div>
+        </FormItem>
+        <FormItem label="链接地址：">
+          <Input v-model="formData.link_url" placeholder="请输入链接地址如： http://lucms.com" />
+        </FormItem>
+        <FormItem label="排序：">
+          <Input v-model="formData.weight" placeholder="请输入序号" />
+        </FormItem>
+        <FormItem label="有效期：">
+          <DatePicker :value="effectiveDate" type="datetimerange" placement="bottom-end" placeholder="请选择有效期，不选永久有效" confirm @on-clear="timeClear" @on-change="timeChanged" style="width: 50%"></DatePicker>
+        </FormItem>
+        <p class="margin-top-10" v-if="typeIsModel">
+          <Icon type="ios-fastforward"></Icon>
+          <b>键值对选择：</b>
+          <transition name="publish-time">
+            <div class="publish-time-picker-con">
+              <div class="margin-top-10"> 模型 &nbsp;&nbsp;
+                <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.model" placeholder="如：App\Models\Article" />
               </div>
-            </transition>
-          </p>
-        </Form>
+              <div class="margin-top-10"> 字段 &nbsp;&nbsp;
+                <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.column" placeholder="如：slug" />
+              </div>
+              <div class="margin-top-10"> 字段值
+                <Input type="text" size="small" style="width:80%" v-model="formData.model_column_value.value" placeholder="mark-down-preview" />
+              </div>
+            </div>
+          </transition>
+        </p>
+      </Form>
       </Card>
       </Col>
     </Row>

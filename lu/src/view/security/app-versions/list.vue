@@ -1,25 +1,25 @@
 
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="2">
+  <Row  :gutter="24">
+    <Col :xs="6" :lg="10">
+    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    </Col>
+    <Col :xs="5" :lg="4">
       <Select v-model="searchForm.port" placeholder="请选择 app">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.port" :value="key" :key="key">{{ item }}</Option>
       </Select>
     </Col>
 
-    <Col span="2">
+    <Col :xs="5" :lg="4">
     <Select v-model="searchForm.system" placeholder="请选择系统">
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in tableStatus.system" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="1" :lg="2">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
-    </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
   </Row>
   <br>
@@ -97,10 +97,11 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
-          width: 100
+          minWidth: 50,
         },
         {
           title: '端口',
+          minWidth: 100,
           render:(h,params) => {
             return h('div',[
               this.tableStatus.port[params.row.port]
@@ -109,6 +110,7 @@ export default {
         },
         {
           title: '系统',
+          minWidth: 100,
           render:(h,params) => {
             return h('div',[
               this.tableStatus.system[params.row.system]
@@ -119,20 +121,22 @@ export default {
           title: '版本号',
           key: 'version_sn',
           sortable: 'customer',
-          width: 100
+          minWidth: 100,
         },
         {
           title: '描述',
-          key: 'version_intro'
+          key: 'version_intro',
+          minWidth: 100,
         },
         {
           title: '创建时间',
-          key: 'created_at'
+          key: 'created_at',
+          minWidth: 100,
         },
         {
           title: '操作',
           key: '',
-          width: 250,
+          minWidth: 250,
           render: (h, params) => {
             let t = this
             return h('div', [

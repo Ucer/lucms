@@ -1,20 +1,20 @@
 <template>
 <div id="privileges-users-list">
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
+  <Row :gutter="24">
+    <Col :xs="8" :lg="10">
+    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    </Col>
+    <Col :xs="6" :lg="5" class="hidden-mobile">
     <Input icon="searchForm" placeholder="请输入ip..." v-model="searchForm.ip" />
     </Col>
-    <Col span="2">
+    <Col :xs="4" :lg="5">
     <Select v-model="searchForm.type" placeholder="类型">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.type" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="1" :lg="2">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute()">Search</Button>
-    </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
   </Row>
   <br>
@@ -74,10 +74,11 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
-          width: 100
+          minWidth: 50,
         },
         {
           title: '类型',
+          minWidth: 100,
           render: (h, params) => {
             var row = params.row;
             var color = 'green';
@@ -98,19 +99,23 @@ export default {
         },
         {
           title: 'ip',
-          key: 'ip'
+          key: 'ip',
+          minWidth: 100,
         },
         {
           title: '创建时间',
           key: 'created_at',
           sortable: 'customer',
+          minWidth: 150,
         },
         {
           title: '更新时间',
-          key: 'created_at'
+          key: 'created_at',
+          minWidth: 150,
         },
         {
           title: '操作',
+          minWidth: 200,
           render: (h, params) => {
             let t = this;
             return h('div', [

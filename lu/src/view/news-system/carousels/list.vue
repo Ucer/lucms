@@ -1,8 +1,8 @@
 
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="2">
+  <Row  :gutter="24">
+    <Col :xs="15">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
   </Row>
@@ -69,19 +69,22 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: true,
-          width: 100
+          minWidth: 50,
         },
         {
           title: '跳转链接',
-          key: 'url'
+          key: 'url',
+          minWidth: 150,
         },
         {
           title: '描述',
-          key: 'description'
+          key: 'description',
+          minWidth: 150,
         },
         {
           title: '封面',
           key: '',
+          minWidth: 150,
           render: (h, params) => {
             let t = this;
             if (params.row.cover_image.url) {
@@ -107,15 +110,18 @@ export default {
         },
         {
           title: '排序',
-          key: 'weight'
+          key: 'weight',
+          minWidth: 150,
         },
         {
           title: '创建时间',
           key: 'created_at',
           sortable: true,
+          minWidth: 150,
         },
         {
           title: '操作',
+          minWidth: 200,
           render: (h, params) => {
             let t = this;
             return h('div', [

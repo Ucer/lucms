@@ -2,30 +2,30 @@
 
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
+  <Row :gutter="24">
+    <Col :xs="8" :lg="3">
+    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    </Col>
+    <Col :xs="6" :lg="4" class="hidden-mobile">
     <Input icon="searchForm" placeholder="请输入配置标识..." v-model="searchForm.flag" />
     </Col>
-    <Col span="3">
+    <Col :xs="0" :lg="4" class="hidden-mobile">
     <Input icon="searchForm" placeholder="请输入配置标题..." v-model="searchForm.title" />
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="4">
     <Select v-model="searchForm.enable" placeholder="请选择状态">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.enable" :value="key" :key="key">{{ item }}</Option>
       </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="4">
     <Select v-model="searchForm.group" placeholder="请选择配置分组">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.system_config_group" :value="key" :key="key">{{ item.title }}</Option>
       </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="1" :lg="2" >
     <Button type="primary" icon="ios-search" @click="getTableDataExcute()">Search</Button>
-    </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
   </Row>
   <br>
@@ -93,23 +93,27 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
-          width: 100
+          minWidth: 50,
         },
         {
           title: '标题',
-          key: 'title'
+          key: 'title',
+          minWidth: 100,
         },
         {
           title: '标识',
-          key: 'description'
+          key: 'description',
+          minWidth: 100,
         },
         {
             title: '配置值',
-            key: 'value'
+            key: 'value',
+          minWidth: 100,
         },
         {
           title: '启用状态',
           key: 'enable',
+          minWidth: 100,
           render: (h, params) => {
             return h('i-switch', {
               props: {
@@ -127,19 +131,23 @@ export default {
         },
         {
           title: '描述',
-          key: 'flag'
+          key: 'flag',
+          minWidth: 100,
         },
         {
           title: '创建时间',
           key: 'created_at',
           sortable: 'customer',
+          minWidth: 100,
         },
         {
           title: '更新时间',
-          key: 'created_at'
+          key: 'created_at',
+          minWidth: 100,
         },
         {
           title: '操作',
+          minWidth: 150,
           render: (h, params) => {
             let t = this;
             return h('div', [
