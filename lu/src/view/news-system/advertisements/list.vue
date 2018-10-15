@@ -1,27 +1,27 @@
 
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
-    <Input icon="search" placeholder="请输入广告标题..." v-model="searchForm.name" />
+  <Row :gutter="24">
+    <Col  :xs="4" :lg="10">
+    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
-    <Col span="2">
+    <Col  :xs="4" :lg="3">
     <Select v-model="searchForm.enable" placeholder="是否启用">
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in tableStatus.enable" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="3">
+    <Col  :xs="4" :lg="4">
     <Select v-model="searchForm.advertisement_position_ids" filterable placeholder="请选择广告位类型">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in advertisementPositionsIds" :value="item.id" :key="item.id">{{ item.name }} </Option>
     </Select>
     </Col>
-    <Col span="2">
-    <Button type="primary" icon="ios-search" @click="getTableDataExcute(1)">Search</Button>
+    <Col  :xs="8" :lg="4" class="hidden-mobile">
+    <Input icon="search" placeholder="请输入广告标题..." v-model="searchForm.name" />
     </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Col  :xs="2" :lg="2">
+    <Button type="primary" icon="ios-search" @click="getTableDataExcute(1)">Search</Button>
     </Col>
   </Row>
   <br>
