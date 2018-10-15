@@ -1,26 +1,26 @@
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
+  <Row :gutter="24">
+    <Col :xs="3" :lg="1">
+    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    </Col>
+    <Col :xs="4" :lg="2" class="hidden-mobile">
+    <a :href='exportExcel'><Button icon="md-download">导出文件</Button></a>
+    </Col>
+    <Col :xs="0" :lg="12" class="hidden-mobile">
+    <upload-file v-model="uploadFile" :upload-config="fileuploadConfig" @on-upload-change='uploadfileChange'></upload-file>
+    </Col>
+    <Col :xs="6" :lg="4" class="hidden-mobile">
     <Input icon="searchForm" placeholder="请输入广告位名称..." v-model="searchForm.name" />
     </Col>
-    <Col span="3">
+    <Col :xs="4" :lg="3">
     <Select v-model="searchForm.type" placeholder="请选择广告位类型">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.type" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="1" :lg="2">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
-    </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
-    </Col>
-    <Col span="2">
-    <a :href='exportExcel'><Button icon="md-download">导出文件</Button></a>
-    </Col>
-    <Col span="2">
-    <upload-file v-model="uploadFile" :upload-config="fileuploadConfig" @on-upload-change='uploadfileChange'></upload-file>
     </Col>
   </Row>
   <br>
@@ -109,18 +109,21 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
-          width: 100
+          minWidth: 100,
         },
         {
           title: '广告位名称',
-          key: 'name'
+          key: 'name',
+          minWidth: 150,
         },
         {
           title: '广告位描述',
-          key: 'description'
+          key: 'description',
+          minWidth: 150,
         },
         {
           title: '类型',
+          minWidth: 150,
           render: (h, params) => {
             return h('div', [
               h('Tag', {
@@ -134,13 +137,16 @@ export default {
         {
           title: '创建时间',
           key: 'created_at',
+          minWidth: 150,
         },
         {
           title: '更新时间',
-          key: 'created_at'
+          key: 'created_at',
+          minWidth: 150,
         },
         {
           title: '操作',
+          minWidth: 200,
           render: (h, params) => {
             let t = this
             return h('div', [

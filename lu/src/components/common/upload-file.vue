@@ -2,8 +2,10 @@
 <div class="">
   <Upload ref="upload" :show-upload-list="false" :default-file-list="uploadConfig.default_list" :on-success="handleSuccess" :headers="uploadConfig.headers" :format="uploadConfig.format" :max-size="uploadConfig.max_size" :on-format-error="handleFormatError"
     :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload" :multiple="uploadConfig.multiple" :name="uploadConfig.file_name" type="drag" :action="uploadConfig.upload_url">
-    <Button icon="ios-cloud-upload-outline" style="margin-right:10px" :loading="loading">{{ uploadConfig.button_text}}</Button>
-    <span class="green-color">{{ text }}</span>
+    <Button icon="ios-cloud-upload-outline" style="margin-right:10px;float:left" :loading="loading">{{ uploadConfig.button_text}}</Button>
+    <div>
+      <span class="green-color" style="line-height:32px">{{ text }}</span>
+    </div>
   </Upload>
 </div>
 </template>
@@ -124,6 +126,6 @@ export default {
 
 <style>
 .ivu-upload {
-  max-width: 130px !important
+  max-width: 200px !important;
 }
 </style>
