@@ -1,32 +1,32 @@
 
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="2">
+  <Row :gutter="24">
+    <Col :xs="3" :lg="4">
     <Select v-model="searchForm.use_status" placeholder="请选择使用状态">
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in tableStatus.use_status" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="4">
     <Select v-model="searchForm.enable" placeholder="请选择状态">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.enable" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="4">
     <Select v-model="searchForm.type" placeholder="请选择附件类型">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.type" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="4">
     <Select v-model="searchForm.storage_position" placeholder="请选择存储位置">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.storage_position" :value="key" :key="key">{{ item }} </Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="1" :lg="2">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
     </Col>
   </Row>
@@ -96,15 +96,16 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
-          width: 100
+          minWidth: 50,
         },
         {
           title: '附件名称',
-          key: 'original_name'
+          key: 'original_name',
+          minWidth: 100,
         },
         {
           title: '上传者',
-          width: 200,
+          minWidth: 200,
           render: (h, params) => {
             return h('div',
               params.row.user.name
@@ -113,7 +114,7 @@ export default {
         },
         {
           title: '使用状态',
-          width: 150,
+          minWidth: 150,
           render: (h, params) => {
 
             const row = params.row
@@ -131,7 +132,7 @@ export default {
         },
         {
           title: '附件类型',
-          width: 100,
+          minWidth: 100,
           render: (h, params) => {
             return h('div',
               this.tableStatus.type[params.row.type]
@@ -141,22 +142,23 @@ export default {
         {
           title: 'MIME 类型',
           key: 'mime_type',
-          width: 100
+          minWidth: 100,
         },
         {
           title: '存储位置',
           key: 'storage_position',
-          width: 100
+          minWidth: 100,
         },
         {
           title: '大小/kb',
           key: 'size',
           sortable: 'customer',
-          width: 100
+          minWidth: 100,
         },
         {
           title: '启用状态',
           key: 'enable',
+          minWidth: 100,
           render: (h, params) => {
             return h('i-switch', {
               props: {
@@ -176,9 +178,11 @@ export default {
           title: '创建时间',
           key: 'created_at',
           sortable: 'customer',
+          minWidth: 150,
         },
         {
           title: '操作',
+          minWidth: 150,
 
           render: (h, params) => {
             let t = this

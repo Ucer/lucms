@@ -1,27 +1,27 @@
 
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
+  <Row :gutter="24">
+    <Col :xs="9" :lg="6">
+    <Button type="success" icon="plus" @click="addBtn()">发消息</Button>
+    </Col>
+    <Col :xs="6" :lg="6" class="hidden-mobile">
     <Input icon="search" placeholder="请输入用户电话..." v-model="searchForm.phone" />
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="5">
     <Select v-model="searchForm.status" placeholder="状态">
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in tableStatus.status" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="4">
     <Select v-model="searchForm.type" placeholder="消息类型">
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in tableStatus.type" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="1" :lg="2">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
-    </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">发消息</Button>
     </Col>
   </Row>
   <br>
@@ -96,14 +96,16 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
-          width: 100
+          minWidth: 50,
         },
         {
           title: '标题',
-          key: 'title'
+          key: 'title',
+          minWidth: 100,
         },
         {
           title: '类型',
+          minWidth: 100,
           render: (h, params) => {
             return h('div',
               this.tableStatus.type[params.row.type]
@@ -112,6 +114,7 @@ export default {
         },
         {
           title: '用户',
+          minWidth: 100,
           render: (h, params) => {
             return h('div',
               params.row.user.name + ' (' + params.row.user.phone + ')'
@@ -120,7 +123,7 @@ export default {
         },
         {
           title: '状态',
-          width: 150,
+          minWidth: 150,
           render: (h, params) => {
             const row = params.row
             const color = row.status === 'R' ? 'green' : 'red'
@@ -139,9 +142,11 @@ export default {
           title: '创建时间',
           key: 'created_at',
           sortable: 'customer',
+          minWidth: 150,
         },
         {
           title: '操作',
+          minWidth: 150,
           render: (h, params) => {
             let t = this;
             return h('div', [

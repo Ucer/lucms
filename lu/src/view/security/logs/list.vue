@@ -1,23 +1,23 @@
 
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
+  <Row  :gutter="24">
+    <Col :xs="8" :lg="5" class="hidden-mobile">
     <Input icon="search" placeholder="请输入昵称..." v-model="searchForm.user_name" />
     </Col>
-    <Col span="2">
+    <Col :xs="5" :lg="4">
     <Select v-model="searchForm.type" placeholder="日志类型">
         <Option value="" key="">全部类型</Option>
         <Option v-for="(item,key) in tableStatus.type" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="3">
+    <Col :xs="5" :lg="4">
     <Select v-model="searchForm.table_name" placeholder="表" filterable>
         <Option value="" key="">全部表</Option>
         <Option v-for="(item,key) in tableStatus.table_name" :value="key" :key="key">{{ item }} </Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="1" :lg="2">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
     </Col>
   </Row>
@@ -83,11 +83,12 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
-          width: 100
+          minWidth: 50,
         },
         {
           title: '操作人',
           key: 'id',
+          minWidth: 100,
           render: (h, params) => {
             return h('div', {
                 class: 'green-color',
@@ -98,6 +99,7 @@ export default {
         },
         {
           title: '类型',
+          minWidth: 100,
           render: (h, params) => {
             return h('div',
               this.tableStatus.type[params.row.type]
@@ -106,6 +108,7 @@ export default {
         },
         {
           title: '表',
+          minWidth: 100,
           render: (h, params) => {
             return h('div',
               this.tableStatus.table_name[params.row.table_name]
@@ -115,17 +118,18 @@ export default {
         {
           title: 'IP',
           key: 'ip',
-          width: 150
+          minWidth: 150,
         },
         {
           title: '创建时间',
           sortable: 'customer',
-          key: 'created_at'
+          key: 'created_at',
+          minWidth: 150,
         },
         {
           title: '操作',
           key: '',
-          width: 250,
+          minWidth: 250,
           render: (h, params) => {
             let t = this
             return h('div', [
