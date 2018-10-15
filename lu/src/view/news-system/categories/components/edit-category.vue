@@ -47,6 +47,7 @@ export default {
     return {
       modalShow: true,
       saveLoading: false,
+      spinLoading: true,
       formdataFinished: false,
       formData: {
         id: 0,
