@@ -1,15 +1,15 @@
 
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
+  <Row :gutter="24">
+    <Col :xs="6" :lg="15">
+    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    </Col>
+    <Col :xs="10" :lg="5">
     <Input icon="searchForm" placeholder="请输入名称..." v-model="searchForm.name" />
     </Col>
-    <Col span="2">
+    <Col :xs="2" :lg="3">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute()">Search</Button>
-    </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
   </Row>
   <br>
@@ -79,15 +79,17 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: true,
-          width: 100
+          minWidth: 50,
         },
         {
           title: '名称',
-          key: 'name'
+          key: 'name',
+          minWidth: 100,
         },
         {
           title: '封面',
           key: '',
+          minWidth: 150,
           render: (h, params) => {
             let t = this;
             if (params.row.cover_image.url) {
@@ -113,19 +115,23 @@ export default {
         },
         {
           title: '描述',
-          key: 'description'
+          key: 'description',
+          minWidth: 150,
         },
         {
           title: '创建时间',
           key: 'created_at',
           sortable: true,
+          minWidth: 150,
         },
         {
           title: '更新时间',
-          key: 'created_at'
+          key: 'created_at',
+          minWidth: 150,
         },
         {
           title: '操作',
+          minWidth: 150,
           render: (h, params) => {
             let t = this;
             return h('div', [

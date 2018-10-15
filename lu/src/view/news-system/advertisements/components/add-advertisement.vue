@@ -87,7 +87,6 @@ export default {
   },
   props: {
     advertisementPositionsIds: {
-      type: Object,
       default: {}
     }
   },

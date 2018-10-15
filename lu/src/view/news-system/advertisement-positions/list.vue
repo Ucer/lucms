@@ -1,7 +1,7 @@
 <template>
 <div>
   <Row :gutter="24">
-    <Col :xs="3" :lg="1">
+    <Col :xs="6" :lg="1">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
     <Col :xs="4" :lg="2" class="hidden-mobile">
@@ -10,7 +10,7 @@
     <Col :xs="0" :lg="12" class="hidden-mobile">
     <upload-file v-model="uploadFile" :upload-config="fileuploadConfig" @on-upload-change='uploadfileChange'></upload-file>
     </Col>
-    <Col :xs="6" :lg="4" class="hidden-mobile">
+    <Col :xs="5" :lg="4" class="hidden-mobile">
     <Input icon="searchForm" placeholder="请输入广告位名称..." v-model="searchForm.name" />
     </Col>
     <Col :xs="4" :lg="3">
@@ -19,7 +19,7 @@
         <Option v-for="(item,key) in tableStatus.type" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col :xs="1" :lg="2">
+    <Col :xs="2" :lg="2">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
     </Col>
   </Row>

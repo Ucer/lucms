@@ -215,7 +215,7 @@ export default {
         {
           title: '最近登录时间',
           key: 'last_login_at',
-          sortable: true,
+          sortable: 'customer',
           minWidth: 150,
         },
         {

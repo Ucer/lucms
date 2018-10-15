@@ -99,7 +99,6 @@ export default {
       default: 0
     },
     advertisementPositionsIds: {
-      type: Object,
       default: {}
     }
   },

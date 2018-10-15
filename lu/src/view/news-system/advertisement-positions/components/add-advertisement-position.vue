@@ -30,7 +30,6 @@ import {
 export default {
   props: {
     tableStatus: {
-      type: Object,
       default: {}
     }
   },

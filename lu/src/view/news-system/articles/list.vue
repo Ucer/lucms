@@ -1,39 +1,39 @@
 
 <template>
 <div>
-  <Row type="flex" justify="end" class="code-row-bg" :gutter="16">
-    <Col span="3">
+  <Row :gutter="24">
+    <Col :xs="6" :lg="3">
+    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    </Col>
+    <Col :xs="3" :lg="4" class="hidden-mobile">
     <Input icon="search" placeholder="请输入标题..." v-model="searchForm.title" />
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="3">
     <Select v-model="searchForm.enable" placeholder="是否启用">
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in tableStatus.enable" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="3" class="hidden-mobile">
     <Select v-model="searchForm.category_id" placeholder="分类" filterable>
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in articleCategories" :value="item.id" :key="item.id">{{ item.name }} </Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="3">
     <Select v-model="searchForm.recommend" placeholder="推荐" filterable>
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.recommend" :value="key" :key="key">{{ item }} </Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="3" :lg="3">
     <Select v-model="searchForm.top" placeholder="置顶" filterable>
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in tableStatus.top" :value="key" :key="key">{{ item }} </Option>
     </Select>
     </Col>
-    <Col span="2">
+    <Col :xs="1" :lg="3">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
-    </Col>
-    <Col span="2">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
   </Row>
   <br>
@@ -117,16 +117,16 @@ export default {
           title: 'ID',
           key: 'id',
           sortable: 'customer',
-          width: 100
+          minWidth: 50,
         },
         {
           title: '标题',
           key: 'title',
-          width: 150,
+          minWidth: 150,
         },
         {
           title: '封面',
-          width: 150,
+          minWidth: 150,
           render: (h, params) => {
             let t = this;
             if (params.row.cover_image.url) {
@@ -152,7 +152,7 @@ export default {
         },
         {
           title: '分类',
-          width: 100,
+          minWidth: 100,
           render: (h, params) => {
             return h('div',
               params.row.category.name
@@ -161,7 +161,7 @@ export default {
         },
         {
           title: '标签',
-          width: 200,
+          minWidth: 100,
           render: (h, params) => {
             var tags = params.row.tags;
             var text = '';
@@ -179,7 +179,7 @@ export default {
         },
         {
           title: '置顶',
-          width: 150,
+          minWidth: 100,
           render: (h, params) => {
             var row = params.row;
             var color = 'green';
@@ -200,7 +200,7 @@ export default {
         },
         {
           title: '推荐',
-          width: 150,
+          minWidth: 100,
           render: (h, params) => {
             var row = params.row;
             var color = 'green';
@@ -222,6 +222,7 @@ export default {
         {
           title: '启用状态',
           key: 'enable',
+          minWidth: 100,
           render: (h, params) => {
             return h('i-switch', {
               props: {
@@ -239,11 +240,13 @@ export default {
         },
         {
           title: '创建时间',
-          sortable: true,
-          key: 'created_at'
+          sortable: 'customer',
+          key: 'created_at',
+          minWidth: 150,
         },
         {
           title: '操作',
+          minWidth: 200,
           render: (h, params) => {
             let t = this;
             var delete_btn = '';
