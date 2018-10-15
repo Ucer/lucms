@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Modal v-model="modalShow" :closable='false' :mask-closable=false fullscreen>
+  <Modal v-model="modalShow" :closable='false' :mask-closable=false width="1200">
     <p slot="header">添加广告</p>
     <Row>
       <Col span="16">
@@ -21,9 +21,6 @@
           <editor v-model="formData.content" @on-change="editContentChange" :upload-config='uploadConfig'></editor>
         </FormItem>
       </Form>
-      </Col>
-
-      <Col span="8" class="padding-left-20">
       <Card>
         <p slot="title">
           <Icon type="paper-airplane"></Icon>

@@ -232,7 +232,7 @@ export default {
               },
               on: {
                 'on-change': (value) => {
-                  this.switchEnable(params.index)
+                  this.switchEnableExcute(params.index)
                 }
               }
             });

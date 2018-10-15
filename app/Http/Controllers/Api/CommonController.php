@@ -30,6 +30,8 @@ class CommonController extends ApiController
                 break;
             case 'system_configs':
                 break;
+            case 'articles':
+                break;
             default:
                 return $this->failed('不允许的操作');
                 break;
