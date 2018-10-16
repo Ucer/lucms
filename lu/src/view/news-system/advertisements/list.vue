@@ -2,7 +2,7 @@
 <template>
 <div>
   <Row :gutter="24">
-    <Col  :xs="6" :lg="10">
+    <Col  :xs="5" :lg="10">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
     <Col  :xs="3" :lg="3">
@@ -11,16 +11,16 @@
       <Option v-for="(item,key) in tableStatus.enable" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col  :xs="4" :lg="4">
+    <Col  :xs="3" :lg="4">
     <Select v-model="searchForm.advertisement_position_ids" filterable placeholder="请选择广告位类型">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in advertisementPositionsIds" :value="item.id" :key="item.id">{{ item.name }} </Option>
     </Select>
     </Col>
-    <Col  :xs="6" :lg="4" class="hidden-mobile">
+    <Col  :xs="8" :lg="4" class="hidden-mobile">
     <Input icon="search" placeholder="请输入广告标题..." v-model="searchForm.name" />
     </Col>
-    <Col  :xs="2" :lg="2">
+    <Col  :xs="1" :lg="2">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(1)">Search</Button>
     </Col>
   </Row>

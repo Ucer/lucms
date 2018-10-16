@@ -1,13 +1,13 @@
 <template>
 <div>
   <Row :gutter="24">
-    <Col :xs="6" :lg="1">
+    <Col :xs="8" :lg="1">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
     <Col :xs="4" :lg="2" class="hidden-mobile">
     <a :href='exportExcel'><Button icon="md-download">导出文件</Button></a>
     </Col>
-    <Col :xs="0" :lg="12" class="hidden-mobile">
+    <Col :xs="0" :lg="8" class="hidden-mobile">
     <upload-file v-model="uploadFile" :upload-config="fileuploadConfig" @on-upload-change='uploadfileChange'></upload-file>
     </Col>
     <Col :xs="5" :lg="4" class="hidden-mobile">
