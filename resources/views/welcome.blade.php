@@ -57,6 +57,58 @@
                 </div>
             </div>
         </div>
+        <div class="am-g am-container">
+            <div class="am-u-lg-18">
+                <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
+  am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: true }">
+                    <li>
+                        <div class="am-gallery-item">
+                            <a href="https://images.gitee.com/uploads/images/2018/1020/105231_0eaf6774_923445.png"
+                               class="">
+                                <img src="https://images.gitee.com/uploads/images/2018/1020/105231_0eaf6774_923445.png"
+                                     alt="用户列表"/>
+                                <h3 class="am-gallery-title">用户列表</h3>
+                                <div class="am-gallery-desc">{{ date('Y-m-d') }}</div>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="am-gallery-item">
+                            <a href="https://images.gitee.com/uploads/images/2018/1020/105351_4431299a_923445.png"
+                               class="">
+                                <img src="https://images.gitee.com/uploads/images/2018/1020/105351_4431299a_923445.png"
+                                     alt="添加用户"/>
+                                <h3 class="am-gallery-title">添加用户</h3>
+                                <div class="am-gallery-desc">{{ date('Y-m-d') }}</div>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="am-gallery-item">
+                            <a href="https://images.gitee.com/uploads/images/2018/1020/105416_418a8c8e_923445.png"
+                               class="">
+                                <img src="https://images.gitee.com/uploads/images/2018/1020/105416_418a8c8e_923445.png"
+                                     alt="Wang"/>
+                                <h3 class="am-gallery-title">Wang</h3>
+                                <div class="am-gallery-desc">{{ date('Y-m-d') }}</div>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="am-gallery-item">
+                            <a href="https://images.gitee.com/uploads/images/2018/1020/105432_2c3de407_923445.png"
+                               class="">
+                                <img src="https://images.gitee.com/uploads/images/2018/1020/105432_2c3de407_923445.png"
+                                     alt="Markdown"/>
+                                <h3 class="am-gallery-title">Markdown</h3>
+                                <div class="am-gallery-desc">{{ date('Y-m-d') }}</div>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
     </div>
 
 

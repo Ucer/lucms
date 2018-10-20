@@ -24,4 +24,9 @@ class Controller extends BaseController
     {
         return view('dashboard');
     }
+
+    public function docs()
+    {
+        return view('docs');
+    }
 }

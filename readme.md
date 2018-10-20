@@ -1,5 +1,56 @@
 ## lucms
 
+## lucms
+
+`lucms` 意为「撸一个cms」
+
+### 版本与协议
+
+版权遵循 [MIT](https://baike.baidu.com/item/MIT/10772952#viewPageContent) 开源协议，以下为基于 lucms 的解释协议。
+
+1、您可以在完全遵循本协议的情况下，将 lucms 用于商业用途，而不必支付使用费用，但我们也不承诺会对非赞助用户提供任何形式的技术支持；
+
+2、使用 lucms 您可以不用在明显页面保留程序版权信息，但程序最终版权仍归原作者所有，为了程序能持续发展建议您在网站底部注明：powered by lucms，另外我们可能不会对未保留版权信息的用户提供任何无偿的技术支持；
+
+3、非授权用户后台版权与程序内版权信息不可以去除，这是我们唯一可以保护自己权益的地方；
+
+4、您可以免费使用 lucms ，修改源代码或界面风格以适应您的实际要求，但是禁止对软件进行改名发布，禁止以任何形式对 lucms 形成竞争；
+
+5、您可以对 lucms 进行二次开发，但禁止重新分发任何在 lucms 的整体或任何部分基础上发展的派生版本、修改版本或第三方版本，可以自己分配使用版权请参考第四条；
+
+6、如果您在您的程序如引用 lucms 的功能或者设计，请在明显的地方如官网等地方加入本设计或功能采用 lucms ；
+
+7、自您开始使用 lucms 时本协议已自动生效；
+
+8、如果您未能遵守本协议的条款3、条款4、条款5、条款6，您的免费使用授权将被终止，并将依法承担相应法律责任。
+
+### 愿景
+
+能快速搭建出一个后台管理系统、接口系统
+
+希望能达到如下预期
+
+- 代码简浩、优雅、规范化
+- 自己用着顺手
+- 包括大部分后台管理系统需要的基本功能
+- 用户体验好
+- 安全
+- 高效
+- 加入一些前沿技术
+
+### 加入
+
+一个人的力量终究是有限的。欢迎大家加入贡献 ！
+
+
+### 感谢~
+
+感谢 laravel 框架开发团队。
+
+感谢 iview 开发团队，`lucms` 前端采用了 iview 来开发。
+
+在开发过程中，采用了大量的第三方库，感谢这些开发团队。
+
 ## 项目概述
 
 - 产品名称：lucms
@@ -7,24 +58,6 @@
 
 lucms 是一个基于 `laravel5.5*` 与 `iviewjs` 开发的一套后台管理系统。
 
-<p align="center">
-  <br>
-  <b>Ucer-admin</b>
-  <br>
-  <a href="https://www.codehaoshi.com">
-    <img src="https://gitee.com/uploads/images/2018/0628/193946_711f853f_923445.png "lucms-1.png" width=800>
-  </a>
-  <br>
-  <a href="https://www.codehaoshi.com">
-    <img src="https://gitee.com/uploads/images/2018/0628/194014_117a03f4_923445.png "lucms-2.png" width=800>
-  </a>
-  <a href="https://www.codehaoshi.com">
-    <img src="https://gitee.com/uploads/images/2018/0628/194036_ec75ea27_923445.png "lucms3.png" width=800>
-  </a>
-  <a href="https://www.codehaoshi.com">
-    <img src="https://gitee.com/uploads/images/2018/0628/194105_bb523b94_923445.png "lucms4.png" width=800>
-  </a>
-</p>
 
 ## 功能如下
 

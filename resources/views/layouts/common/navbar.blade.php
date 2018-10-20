@@ -10,8 +10,8 @@
 
         <div class="am-collapse am-topbar-collapse" id="collapse-head">
             <ul class="am-nav am-nav-pills am-topbar-nav">
-                <li class="am-active"><a href="#">首页</a></li>
-                <li><a href="#">文档</a></li>
+                <li class="am-active"><a href="/">首页</a></li>
+                <li><a href="/docs">文档</a></li>
             </ul>
         </div>
     </div>
