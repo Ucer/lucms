@@ -4,7 +4,7 @@
 
     <div class="detail">
         <div class="am-g am-container">
-            
+
         </div>
     </div>
 @endsection
