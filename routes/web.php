@@ -1,5 +1,5 @@
 <?php
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-Route::get('/', 'Controller@index');
-Route::get('/dashboard', 'Controller@dashboard');
-Route::get('/docs', 'Controller@docs');
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('web.logs');
+Route::get('/', 'Controller@index')->name('web.home');
+Route::get('/dashboard', 'Controller@dashboard')->name('web.dashboard');
+Route::get('/docs', 'Controller@docs')->name('web.docs');
