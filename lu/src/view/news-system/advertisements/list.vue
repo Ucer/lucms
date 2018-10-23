@@ -21,7 +21,7 @@
     <Input icon="search" placeholder="请输入广告标题..." v-model="searchForm.name" />
     </Col>
     <Col  :xs="1" :lg="2">
-    <Button type="primary" icon="ios-search" @click="getTableDataExcute(1)">Search</Button>
+    <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
     </Col>
   </Row>
   <br>
@@ -41,8 +41,8 @@
     </div>
   </Row>
   <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
-  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(1)' @on-add-modal-hide="addModalHide" :advertisement-positions-ids='advertisementPositionsIds'></add-component>
-  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(1)' @on-edit-modal-hide="editModalHide" :advertisement-positions-ids='advertisementPositionsIds'> </edit-component>
+  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :advertisement-positions-ids='advertisementPositionsIds'></add-component>
+  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :advertisement-positions-ids='advertisementPositionsIds'> </edit-component>
 
 </div>
 </template>
@@ -263,7 +263,7 @@ export default {
     },
     onPageSizeChange: function(per_page) {
       this.feeds.per_page = per_page
-      this.getTableDataExcute(1)
+      this.getTableDataExcute(per_page)
     },
     getTableStatusExcute(params) {
       let t = this
@@ -292,7 +292,7 @@ export default {
     onSortChange: function(data) {
       const order = data.column.key + ',' + data.order
       this.searchForm.order_by = order
-      this.getTableDataExcute(1)
+      this.getTableDataExcute(this.feeds.current_page)
     },
     switchEnableExcute(index) {
       let t = this
