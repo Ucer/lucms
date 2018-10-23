@@ -100,7 +100,7 @@ export default {
       columns: [{
           title: 'ID',
           key: 'id',
-          sortable: true,
+          sortable: 'customer',
           minWidth: 100,
         },
         {
