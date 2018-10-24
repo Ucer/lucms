@@ -58,7 +58,7 @@
   <edit-component v-if="platformIsPc && editModal.show" :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'>
   </edit-component>
   <!-- <edit-component2 v-else v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'> -->
-  <edit-component2 v-else-if='!platformIsPc & editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'>
+  <edit-component2 v-if='!platformIsPc && editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'>
   </edit-component2>
 
 </div>
