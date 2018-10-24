@@ -1,6 +1,8 @@
 <template>
 <div>
-  <Modal v-model="modalShow" :closable='false' :mask-closable=false width="1200">
+  <Modal v-model="modalShow" :closable='true' fullscreen v-if="platformIsPc">
+  </Modal>
+  <Modal v-model="modalShow" :closable='true' width="1200" v-else>
     <p slot="header">修改文章</p>
     <Row>
       <Col span="16">
@@ -169,6 +171,12 @@ export default {
   mounted() {
     this.getTagListExcute()
     this.getArticleInfoByIdExcute()
+  },
+  computed: {
+    platformIsPc: function() {
+        return this.platformType() == 'pc' ? true : false
+    }
+
   },
   methods: {
     getTagListExcute() {

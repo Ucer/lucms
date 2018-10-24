@@ -45,6 +45,29 @@ Vue.prototype.$config = config
 /* 注册指令 */
 importDirective(Vue)
 
+Vue.prototype.platformType = function() {
+  var system = {
+    win: false,
+    mac: false,
+    xll: false,
+    ipad: false
+  }
+  //检测平台
+  var p = navigator.platform
+  system.win = p.indexOf("Win") == 0;
+  system.mac = p.indexOf("Mac") == 0;
+  system.x11 = (p == "X11") || (p.indexOf("Linux") == 0)
+  system.ipad = (navigator.userAgent.match(/iPad/i) != null)
+    ? true
+    : false
+
+  if (system.win || system.mac || system.x11 || system.ipad) {
+    return 'pc'
+  } else {
+    return 'mobil'
+  }
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

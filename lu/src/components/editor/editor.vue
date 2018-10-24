@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="w-e-text">
   <div id="toolbar" class="wang-editor-toolbar"> </div>
   <div :id="editorId" :class="uploadConfig.heightStyle"></div>
   <Collapse>

@@ -2,7 +2,7 @@
 <div>
   <Drawer :closable="true" width="640" v-model="show" @on-close='closed' title="用户信息：">
     <p class="drawer-title">基本资料：</p>
-    <div class="drawer-profile">
+    <div class="drawer-profile w-e-text">
       <Row>
         <Col span="12"> 跳转链接： {{info.link_url}} </Col>
       </Row>
@@ -27,6 +27,8 @@
           </transition>
         </p>
       </Row>
+      <p class="drawer-title">内容：</p>
+      <p v-html="info.content.html"></p>
     </div>
   </Drawer>
 </div>
@@ -46,8 +48,7 @@ export default {
       spinLoading: true
     }
   },
-  created() {
-  },
+  created() {},
   methods: {
     closed() {
       this.show = false
