@@ -327,7 +327,6 @@ export default {
     platformIsPc: function() {
       return this.globalPlatformType() == 'pc' ? true : false
     }
-
   },
   methods: {
     handleOnPageChange: function(to_page) {

@@ -2,25 +2,25 @@
 <template>
 <div>
   <Row :gutter="24">
-    <Col  :xs="5" :lg="10">
+    <Col :xs="5" :lg="10">
     <Button type="success" icon="plus" @click="addBtn()">Add</Button>
     </Col>
-    <Col  :xs="3" :lg="3">
+    <Col :xs="3" :lg="3">
     <Select v-model="searchForm.enable" placeholder="是否启用">
       <Option value="" key="">全部</Option>
       <Option v-for="(item,key) in tableStatus.enable" :value="key" :key="key">{{ item }}</Option>
     </Select>
     </Col>
-    <Col  :xs="3" :lg="4">
+    <Col :xs="3" :lg="4">
     <Select v-model="searchForm.advertisement_position_ids" filterable placeholder="请选择广告位类型">
         <Option value="" key="">全部</Option>
         <Option v-for="(item,key) in advertisementPositionsIds" :value="item.id" :key="item.id">{{ item.name }} </Option>
     </Select>
     </Col>
-    <Col  :xs="8" :lg="4" class="hidden-mobile">
+    <Col :xs="8" :lg="4" class="hidden-mobile">
     <Input icon="search" placeholder="请输入广告标题..." v-model="searchForm.name" />
     </Col>
-    <Col  :xs="1" :lg="2">
+    <Col :xs="1" :lg="2">
     <Button type="primary" icon="ios-search" @click="getTableDataExcute(feeds.current_page)">Search</Button>
     </Col>
   </Row>
@@ -41,8 +41,10 @@
     </div>
   </Row>
   <show-info v-if='showInfoModal.show' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
-  <add-component v-if='addModal.show' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :advertisement-positions-ids='advertisementPositionsIds'></add-component>
-  <edit-component v-if='editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :advertisement-positions-ids='advertisementPositionsIds'> </edit-component>
+  <add-component v-if='platformIsPc && addModal.show' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :advertisement-positions-ids='advertisementPositionsIds'></add-component>
+  <add-mobile-component v-if='!platformIsPc && addModal.show' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :advertisement-positions-ids='advertisementPositionsIds'></add-mobile-component>
+  <edit-component v-if='platformIsPc && editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :advertisement-positions-ids='advertisementPositionsIds'> </edit-component>
+  <edit-mobile-component v-if='!platformIsPc && editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :advertisement-positions-ids='advertisementPositionsIds'> </edit-mobile-component>
 
 </div>
 </template>
@@ -51,6 +53,8 @@
 <script>
 import AddComponent from './components/add-advertisement'
 import EditComponent from './components/edit-advertisement'
+import AddMobileComponent from './components/add-advertisement-mobile'
+import EditMobileComponent from './components/edit-advertisement-mobile'
 import ShowInfo from './components/show-info'
 
 import {
@@ -68,6 +72,8 @@ export default {
   components: {
     AddComponent,
     EditComponent,
+    AddMobileComponent,
+    EditMobileComponent,
     ShowInfo
   },
   data() {
@@ -256,6 +262,11 @@ export default {
     t.getTableStatusExcute('advertisements/enable')
     t.getAdvertisementPositionsExcute()
     t.getTableDataExcute(t.feeds.current_page)
+  },
+  computed: {
+    platformIsPc: function() {
+      return this.globalPlatformType() == 'pc' ? true : false
+    }
   },
   methods: {
     handleOnPageChange: function(to_page) {
