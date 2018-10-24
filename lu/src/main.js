@@ -64,7 +64,7 @@ Vue.prototype.platformType = function() {
   if (system.win || system.mac || system.x11 || system.ipad) {
     return 'pc'
   } else {
-    return 'mobil'
+    return 'mobile'
   }
 }
 

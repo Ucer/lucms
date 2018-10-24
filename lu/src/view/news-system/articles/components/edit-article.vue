@@ -1,8 +1,8 @@
 <template>
 <div>
-  <Modal v-model="modalShow" :closable='true' fullscreen v-if="platformIsPc">
+  <Modal v-model="modalShow" :closable='false' :mask-closable=false fullscreen v-if="platformIsPc">
   </Modal>
-  <Modal v-model="modalShow" :closable='true' width="1200" v-else>
+  <Modal v-model="modalShow" :closable='false' :mask-closable=false width="1200" v-else>
     <p slot="header">修改文章</p>
     <Row>
       <Col span="16">
@@ -174,7 +174,7 @@ export default {
   },
   computed: {
     platformIsPc: function() {
-        return this.platformType() == 'pc' ? true : false
+      return this.platformType() == 'pc' ? true : false
     }
 
   },
