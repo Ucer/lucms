@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Drawer :closable="true" v-model="show" @on-close='closed' title="用户信息：" class-name="show-info-drawer" :width="platformIsPc?30:80">
+  <Drawer :closable="true" v-model="show" @on-close='closed' title="详情" :width="platformIsPc?30:80">
     <p class="drawer-title">基本资料:</p>
     <div class="drawer-profile">
       <Row>
@@ -34,24 +34,21 @@ export default {
       spinLoading: true
     }
   },
-  created() {},
   computed: {
     platformIsPc: function() {
       return this.globalPlatformType() == 'pc' ? true : false
+    },
+    getAttachmentUrl() {
+      return this.info.domain + '/' + this.info.link_path + '/' + this.info.storage_name
+    },
+    attachmentIsImage() {
+      return (this.info.mime_type.indexOf('image') === -1) ? false : true
     }
   },
   methods: {
     closed() {
       this.show = false
       this.$emit('show-modal-close')
-    }
-  },
-  computed: {
-    getAttachmentUrl() {
-      return this.info.domain + '/' + this.info.link_path + '/' + this.info.storage_name
-    },
-    attachmentIsImage() {
-      return (this.info.mime_type.indexOf('image') === -1) ? false : true
     }
   }
 }

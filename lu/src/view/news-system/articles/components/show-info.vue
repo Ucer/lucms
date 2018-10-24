@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Drawer :closable="true" v-model="show" @on-close='closed' title="用户信息：" :width="platformIsPc?30:80">
+  <Drawer :closable="true" v-model="show" @on-close='closed' title="详情" :width="platformIsPc?30:80">
     <p class="drawer-title">基本资料：</p>
     <div class="drawer-profile">
       <Row>
