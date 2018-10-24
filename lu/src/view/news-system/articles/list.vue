@@ -53,13 +53,11 @@
     </div>
   </Row>
 
-  <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
-  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :article-categories='articleCategories' :article-tags='articleTagList'></add-component>
-  <edit-component v-if="platformIsPc && editModal.show" :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'>
-  </edit-component>
-  <!-- <edit-component2 v-else v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'> -->
-  <edit-component2 v-if='!platformIsPc && editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'>
-  </edit-component2>
+  <show-info v-if='showInfoModal.show' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
+  <add-component v-if='platformIsPc && addModal.show' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :article-categories='articleCategories' :article-tags='articleTagList'></add-component>
+  <add-mobile-component v-if='!platformIsPc && addModal.show' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :article-categories='articleCategories' :article-tags='articleTagList'></add-mobile-component>
+  <edit-component v-if="platformIsPc && editModal.show" :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'></edit-component>
+  <edit-mobile-component v-if='!platformIsPc && editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'></edit-mobile-component>
 
 </div>
 </template>
@@ -67,8 +65,9 @@
 
 <script>
 import AddComponent from './components/add-article'
+import AddMobileComponent from './components/add-article-mobile'
 import EditComponent from './components/edit-article'
-import EditComponent2 from './components/edit-article2'
+import EditMobileComponent from './components/edit-article-mobile'
 import ShowInfo from './components/show-info'
 
 import {
@@ -85,8 +84,9 @@ import {
 export default {
   components: {
     AddComponent,
+    AddMobileComponent,
     EditComponent,
-    EditComponent2,
+    EditMobileComponent,
     ShowInfo
   },
   data() {

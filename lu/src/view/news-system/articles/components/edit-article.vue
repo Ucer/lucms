@@ -24,57 +24,69 @@
         <FormItem label="描述：" prop="description">
           <Input type="textarea" v-model="formData.descriptions" placeholder="请输入描述"></Input>
         </FormItem>
-        <FormItem label="分类：">
-          <Select v-model="formData.category_id" filterable placeholder="请选择文章分类">
-                <Option v-for="(item,key) in articleCategories" :value="item.id" :key="key">{{ item.name }} </Option>
-            </Select>
-        </FormItem>
-        <FormItem label="排序：">
-          <Input v-model="formData.weight" placeholder="请输入序号"></Input>
-        </FormItem>
-        <FormItem label="置顶：">
-          <Select size="small" style="width:20%" v-model="formData.top">
-              <Option value="F">否</Option>
-              <Option value="T">是</Option>
-            </Select>
-        </FormItem>
-        <FormItem label="推荐：">
-          <Select size="small" style="width:20%" v-model="formData.recommend">
-              <Option value="F">否</Option>
-              <Option value="T">是</Option>
-            </Select>
-        </FormItem>
-        <p class="margin-top-10">
-          <Icon type="eye"></Icon>&nbsp;&nbsp;公开度：&nbsp;<b>{{ Openness }}</b>
-          <Button v-show="!editOpenness" size="small" type="text" @click="handleEditOpenness">修改</Button>
-          <transition name="openness-con">
-            <div v-show="editOpenness" class="publish-time-picker-con">
-              <RadioGroup v-model="formData.access_type" vertical>
-                <Radio label="PUB"> 公开</Radio>
-                <Radio label="PWD"> 密码
-                  <Input v-show="formData.access_type === 'PWD'" v-model="formData.access_value" style="width:50%" size="small" placeholder="请输入密码" />
-                </Radio>
-                <Radio label="PRI">私密</Radio>
-              </RadioGroup>
-              <div>
-                <Button type="primary" @click="handleSaveOpenness">确认</Button>
-              </div>
-            </div>
-          </transition>
-        </p>
-        <FormItem label="新建标签">
-          <Input v-model="newTagName" search enter-button="新建" placeholder="标签名字" @on-search="addEditTagExcute" />
-        </FormItem>
-        <FormItem label="标签：">
-          <Select v-model="formData.tags" multiple filterable placeholder="请选择文章标签">
-                <Option v-for="item in articleTags" :value="item.id" :key="item.id">{{ item.name }} </Option>
-            </Select>
-        </FormItem>
         <FormItem label="文章内容：">
           <markdown-editor v-model="formData.content" :cache='true' />
         </FormItem>
       </Form>
       </Col>
+
+      <Col span="8" class="padding-left-20">
+      <Card>
+        <p slot="title">
+          <Icon type="paper-airplane"></Icon>
+          其它信息
+        </p>
+        <Form label-position="right" :label-width="80">
+          <FormItem label="分类：">
+            <Select v-model="formData.category_id" filterable placeholder="请选择文章分类">
+                <Option v-for="(item,key) in articleCategories" :value="item.id" :key="key">{{ item.name }} </Option>
+            </Select>
+          </FormItem>
+          <FormItem label="排序：">
+            <Input v-model="formData.weight" placeholder="请输入序号"></Input>
+          </FormItem>
+          <FormItem label="置顶：">
+            <Select size="small" style="width:20%" v-model="formData.top">
+              <Option value="F">否</Option>
+              <Option value="T">是</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="推荐：">
+            <Select size="small" style="width:20%" v-model="formData.recommend">
+              <Option value="F">否</Option>
+              <Option value="T">是</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="公开度：">
+            <Icon type="eye"></Icon><b>{{ Openness }}</b>
+            <Button v-show="!editOpenness" size="small" type="text" @click="handleEditOpenness"><a>修改</a></Button>
+            <transition name="openness-con">
+              <div v-show="editOpenness" class="publish-time-picker-con">
+                <RadioGroup v-model="formData.access_type" vertical>
+                  <Radio label="PUB"> 公开</Radio>
+                  <Radio label="PWD"> 密码
+                    <Input v-show="formData.access_type === 'PWD'" v-model="formData.access_value" style="width:50%" size="small" placeholder="请输入密码" />
+                  </Radio>
+                  <Radio label="PRI">私密</Radio>
+                </RadioGroup>
+                <div>
+                  <Button type="primary" @click="handleSaveOpenness">确认</Button>
+                </div>
+              </div>
+            </transition>
+          </FormItem>
+          <FormItem label="标签：">
+            <Select v-model="formData.tags" multiple filterable placeholder="请选择文章标签">
+                <Option v-for="item in articleTags" :value="item.id" :key="item.id">{{ item.name }} </Option>
+            </Select>
+          </FormItem>
+          <FormItem label="新建标签">
+            <Input v-model="newTagName" search enter-button="新建" placeholder="标签名字" @on-search="addEditTagExcute" />
+          </FormItem>
+        </Form>
+      </Card>
+      </Col>
+
     </Row>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>

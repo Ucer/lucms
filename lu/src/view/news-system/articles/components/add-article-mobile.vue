@@ -1,15 +1,15 @@
 <template>
 <div>
-  <Modal v-model="modalShow" :closable='false' :mask-closable=false width="300">
-    <p slot="header">修改文章</p>
+  <Modal v-model="modalShow" :closable='false' :mask-closable=false width="1200">
+    <p slot="header">添加文章</p>
     <Row>
-      <Col span="16">
+      <Col span="24">
       <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
         <FormItem label="标题：" prop="title">
           <Input v-model="formData.title"></Input>
         </FormItem>
         <FormItem label="封面：">
-          <upload v-if='formdataFinished' v-model="formData.cover_image" :is-delete='false' :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
+          <upload v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
         </FormItem>
         <FormItem label="是否启用：">
           <RadioGroup v-model="formData.enable">
@@ -26,8 +26,8 @@
         </FormItem>
         <FormItem label="分类：">
           <Select v-model="formData.category_id" filterable placeholder="请选择文章分类">
-                <Option v-for="(item,key) in articleCategories" :value="item.id" :key="key">{{ item.name }} </Option>
-            </Select>
+              <Option v-for="(item,key) in articleCategories" :value="item.id" :key="key">{{ item.name }} </Option>
+          </Select>
         </FormItem>
         <FormItem label="排序：">
           <Input v-model="formData.weight" placeholder="请输入序号"></Input>
@@ -62,6 +62,7 @@
             </div>
           </transition>
         </p>
+
         <FormItem label="新建标签">
           <Input v-model="newTagName" search enter-button="新建" placeholder="标签名字" @on-search="addEditTagExcute" />
         </FormItem>
@@ -78,7 +79,7 @@
     </Row>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="editArticleExcute" :loading='saveLoading'>保存 </Button>
+      <Button type="primary" @click="addArticleExcute" :loading='saveLoading'>保存 </Button>
     </div>
     <div class="demo-spin-container" v-if='spinLoading === true'>
       <Spin fix>
@@ -91,8 +92,7 @@
 </template>
 <script>
 import {
-  editArticle,
-  getArticleInfoById
+  addArticle
 } from '@/api/article'
 
 import {
@@ -113,10 +113,6 @@ export default {
     articleCategories: {
       default: {}
     },
-    modalId: {
-      type: Number,
-      default: 0
-    }
   },
   data() {
     return {
@@ -131,16 +127,16 @@ export default {
         },
         enable: 'F',
         keywords: '',
-        description: '',
+        descriptions: '',
         content: '',
         category_id: 0,
         weight: 20,
         top: 'F',
         recommend: 'F',
         access_type: 'PUB',
-        access_value: ''
+        access_value: '',
+        tags: 0,
       },
-      formdataFinished: false,
       editOpenness: false,
       Openness: '公开',
       newTagName: '',
@@ -167,8 +163,8 @@ export default {
     }
   },
   mounted() {
+    this.spinLoading = false
     this.getTagListExcute()
-    this.getArticleInfoByIdExcute()
   },
   methods: {
     getTagListExcute() {
@@ -177,47 +173,16 @@ export default {
         t.articleTags = res.data;
       })
     },
-    getArticleInfoByIdExcute() {
-      let t = this;
-      getArticleInfoById(t.modalId).then(res => {
-        let res_data = res.data
-        t.formData = {
-          id: res_data.id,
-          title: res_data.title,
-          cover_image: {
-            attachment_id: res_data.cover_image.attachment_id,
-            url: res_data.cover_image.url,
-          },
-          enable: res_data.enable,
-          keywords: res_data.keywords,
-          descriptions: res_data.descriptions,
-          category_id: res_data.category_id,
-          weight: res_data.weight,
-          top: res_data.top,
-          recommend: res_data.recommend,
-          access_type: res_data.access_type,
-          access_value: res_data.access_value
-        }
-
-        t.handleSaveOpenness();
-        t.imguploadConfig.default_list = [t.formData.cover_image]
-        t.formData.tags = res_data.tagids;
-        t.formData.content = res_data.content.raw
-        t.formdataFinished = true
-        t.spinLoading = false
-      })
-
-    },
-    editArticleExcute() {
+    addArticleExcute() {
       let t = this
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
-          editArticle(t.modalId, t.formData).then(res => {
+          addArticle(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
-            t.$emit('on-edit-modal-success')
-            t.$emit('on-edit-modal-hide')
+            t.$emit('on-add-modal-success')
+            t.$emit('on-add-modal-hide')
             t.$Notice.success({
               title: res.message
             })
@@ -229,7 +194,7 @@ export default {
     },
     cancel() {
       this.modalShow = false
-      this.$emit('on-edit-modal-hide')
+      this.$emit('on-add-modal-hide')
     },
     uploadChange(fileList, formatFileList) {},
     handleEditOpenness() {

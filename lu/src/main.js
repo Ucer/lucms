@@ -46,27 +46,26 @@ Vue.prototype.$config = config
 importDirective(Vue)
 
 Vue.prototype.platformType = function() {
-  var system = {
-    win: false,
-    mac: false,
-    xll: false,
-    ipad: false
+  function IsPC() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+      if (userAgentInfo.indexOf(Agents[v]) > 0) {
+        flag = false;
+        break;
+      }
+    }
+    return flag;
   }
-  //检测平台
-  var p = navigator.platform
-  system.win = p.indexOf("Win") == 0;
-  system.mac = p.indexOf("Mac") == 0;
-  // system.x11 = (p == "X11") || (p.indexOf("Linux") == 0)
-  system.x11 = p.indexOf("Linux") == 0
-  system.ipad = (navigator.userAgent.match(/iPad/i) != null)
-    ? true
-    : false
 
-  if (system.win || system.mac || system.x11 || system.ipad) {
-    return 'pc'
+  if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+    return 'mobile' // iphone
+  } else if (/(Android)/i.test(navigator.userAgent)) {
+    return 'mobile' // Android
   } else {
-    return 'mobile'
-  }
+    return 'pc'
+  };
 }
 
 /* eslint-disable no-new */
