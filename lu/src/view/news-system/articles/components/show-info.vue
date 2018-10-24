@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Drawer :closable="true" width="640" v-model="show" @on-close='closed' title="用户信息：">
+  <Drawer :closable="true" v-model="show" @on-close='closed' title="用户信息：">
     <p class="drawer-title">基本资料：</p>
     <div class="drawer-profile">
       <Row>
@@ -12,17 +12,27 @@
         <span class="green-color" v-else>  私密  </span>
         </Col>
       </Row>
+      <hr class="hr-line-0">
+      <p class="drawer-title">内容：</p>
+
+      <p class="content">
+        <parse :content="info.content.raw"></parse>
+      </p>
     </div>
   </Drawer>
 </div>
 </template>
 <script>
+import Parse from '_c/common/parse'
 export default {
   props: {
     info: {
       type: Object,
       default: ''
     }
+  },
+  components: {
+    Parse
   },
   data() {
     return {
