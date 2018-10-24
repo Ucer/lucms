@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Modal v-model="modalShow" :closable='false' :mask-closable=false fullscreen>
+  <Modal v-model="modalShow" :closable='false' :mask-closable=false width="300">
     <p slot="header">修改文章</p>
     <Row>
       <Col span="16">

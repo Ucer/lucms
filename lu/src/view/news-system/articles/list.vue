@@ -55,7 +55,11 @@
 
   <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
   <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :article-categories='articleCategories' :article-tags='articleTagList'></add-component>
-  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'> </edit-component>
+  <edit-component v-if="platformIsPc && editModal.show" :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'>
+  </edit-component>
+  <!-- <edit-component2 v-else v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'> -->
+  <edit-component2 v-else-if='!platformIsPc & editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :article-categories='articleCategories' :article-tags='articleTagList'>
+  </edit-component2>
 
 </div>
 </template>
@@ -64,6 +68,7 @@
 <script>
 import AddComponent from './components/add-article'
 import EditComponent from './components/edit-article'
+import EditComponent2 from './components/edit-article2'
 import ShowInfo from './components/show-info'
 
 import {
@@ -81,6 +86,7 @@ export default {
   components: {
     AddComponent,
     EditComponent,
+    EditComponent2,
     ShowInfo
   },
   data() {
@@ -316,6 +322,12 @@ export default {
     t.getTableStatusExcute('articles')
     t.getArticleCategoriesExcute()
     t.getTableDataExcute(t.feeds.current_page)
+  },
+  computed: {
+    platformIsPc: function() {
+      return this.platformType() == 'pc' ? true : false
+    }
+
   },
   methods: {
     handleOnPageChange: function(to_page) {
