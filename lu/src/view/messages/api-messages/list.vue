@@ -41,9 +41,9 @@
     </div>
   </Row>
 
-  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :message-type='tableStatus.type'></add-component>
+  <add-component v-if='addModal.show' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :message-type='tableStatus.type'></add-component>
 
-  <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
+  <show-info v-if='showInfoModal.show' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
 </div>
 </template>
 

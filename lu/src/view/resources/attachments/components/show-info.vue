@@ -1,13 +1,13 @@
 <template>
 <div>
-  <Drawer :closable="true"  v-model="show" @on-close='closed' title="用户信息：" class-name="show-info-drawer">
+  <Drawer :closable="true" v-model="show" @on-close='closed' title="用户信息：" class-name="show-info-drawer" :width="platformIsPc?30:80">
     <p class="drawer-title">基本资料:</p>
     <div class="drawer-profile">
       <Row>
         <Col span="12"> 绝对路径： {{ info.storage_path }}/{{ info.storage_name}} </Col>
       </Row>
     </div>
-    <Divider />
+    <hr class="hr-line-0">
     <p class="drawer-title">附件信息：</p>
     <div class="drawer-profile">
       <img :src="getAttachmentUrl" alt="tp" v-if='attachmentIsImage' />
@@ -35,6 +35,11 @@ export default {
     }
   },
   created() {},
+  computed: {
+    platformIsPc: function() {
+      return this.globalPlatformType() == 'pc' ? true : false
+    }
+  },
   methods: {
     closed() {
       this.show = false

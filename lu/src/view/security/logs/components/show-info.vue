@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Drawer :closable="true" width="640" v-model="show" @on-close='closed' title="用户信息：">
+  <Drawer :closable="true" v-model="show" @on-close='closed' title="用户信息：" :width="platformIsPc?30:80">
     <p class="drawer-title">日志内容：</p>
     <transition name="publish-time">
       <div class="publish-time-picker-con">
@@ -23,6 +23,11 @@ export default {
   data() {
     return {
       show: true
+    }
+  },
+  computed: {
+    platformIsPc: function() {
+      return this.globalPlatformType() == 'pc' ? true : false
     }
   },
   methods: {

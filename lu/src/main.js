@@ -45,7 +45,7 @@ Vue.prototype.$config = config
 /* 注册指令 */
 importDirective(Vue)
 
-Vue.prototype.platformType = function() {
+Vue.prototype.globalPlatformType = function() {
   function IsPC() {
     var userAgentInfo = navigator.userAgent;
     var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");

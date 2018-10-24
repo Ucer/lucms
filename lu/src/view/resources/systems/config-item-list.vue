@@ -40,8 +40,8 @@
     <Table border :columns="columns" :data="dataList" @on-sort-change='onSortChange'></Table>
   </Row>
 
-  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute()' @on-add-modal-hide="addModalHide" :config-type="tableStatus.system_config_type" :config-group="tableStatus.system_config_group"></add-component>
-  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute()' @on-edit-modal-hide="editModalHide" :config-type="tableStatus.system_config_type" :config-group="tableStatus.system_config_group"> </edit-component>
+  <add-component v-if='addModal.show' @on-add-modal-success='getTableDataExcute()' @on-add-modal-hide="addModalHide" :config-type="tableStatus.system_config_type" :config-group="tableStatus.system_config_group"></add-component>
+  <edit-component v-if='editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute()' @on-edit-modal-hide="editModalHide" :config-type="tableStatus.system_config_type" :config-group="tableStatus.system_config_group"> </edit-component>
 
 </div>
 </template>

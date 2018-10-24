@@ -47,7 +47,7 @@
     </div>
   </Row>
 
-  <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose" :scrollable="true"></show-info>
+  <show-info v-if='showInfoModal.show' :info='showInfoModal.info' @show-modal-close="showModalClose" :scrollable="true"></show-info>
 
 </div>
 </template>

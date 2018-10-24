@@ -37,7 +37,7 @@
       </div>
     </div>
   </Row>
-  <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
+  <show-info v-if='showInfoModal.show' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
 
 
 </div>

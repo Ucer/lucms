@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Drawer :closable="true" width="640" v-model="show" @on-close='closed' title="消息详情">
+  <Drawer :closable="true" v-model="show" @on-close='closed' title="消息详情" :width="platformIsPc?30:80">
     <p class="drawer-title">基本资料：</p>
     <div class="drawer-profile">
       <Row>
@@ -27,6 +27,11 @@ export default {
       show: true,
       agreement: '',
 
+    }
+  },
+  computed: {
+    platformIsPc: function() {
+      return this.globalPlatformType() == 'pc' ? true : false
     }
   },
   methods: {

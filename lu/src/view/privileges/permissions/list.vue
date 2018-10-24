@@ -25,8 +25,8 @@
     <Table border :columns="columns" :data="dataList" @on-sort-change='onSortChange'></Table>
   </Row>
 
-  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute' @on-add-modal-hide="addModalHide"></add-component>
-  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute' @on-edit-modal-hide="editModalHide"> </edit-component>
+  <add-component v-if='addModal.show' @on-add-modal-success='getTableDataExcute' @on-add-modal-hide="addModalHide"></add-component>
+  <edit-component v-if='editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute' @on-edit-modal-hide="editModalHide"> </edit-component>
 
 </div>
 </template>

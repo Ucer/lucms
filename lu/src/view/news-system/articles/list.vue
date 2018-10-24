@@ -325,7 +325,7 @@ export default {
   },
   computed: {
     platformIsPc: function() {
-      return this.platformType() == 'pc' ? true : false
+      return this.globalPlatformType() == 'pc' ? true : false
     }
 
   },

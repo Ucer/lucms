@@ -39,9 +39,9 @@
     </div>
   </Row>
 
-  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :port ="tableStatus.port" :system="tableStatus.system"></add-component>
-  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :port ="tableStatus.port" :system="tableStatus.system"> </edit-component>
-  <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
+  <add-component v-if='addModal.show' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :port ="tableStatus.port" :system="tableStatus.system"></add-component>
+  <edit-component v-if='editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :port ="tableStatus.port" :system="tableStatus.system"> </edit-component>
+  <show-info v-if='showInfoModal.show' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
 </div>
 </template>
 

@@ -40,9 +40,9 @@
       </div>
     </div>
   </Row>
-  <show-info v-if='showInfoModal.show === true' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
-  <add-component v-if='addModal.show === true' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :advertisement-positions-ids='advertisementPositionsIds'></add-component>
-  <edit-component v-if='editModal.show === true' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :advertisement-positions-ids='advertisementPositionsIds'> </edit-component>
+  <show-info v-if='showInfoModal.show' :info='showInfoModal.info' @show-modal-close="showModalClose"></show-info>
+  <add-component v-if='addModal.show' @on-add-modal-success='getTableDataExcute(feeds.current_page)' @on-add-modal-hide="addModalHide" :advertisement-positions-ids='advertisementPositionsIds'></add-component>
+  <edit-component v-if='editModal.show' :modal-id='editModal.id' @on-edit-modal-success='getTableDataExcute(feeds.current_page)' @on-edit-modal-hide="editModalHide" :advertisement-positions-ids='advertisementPositionsIds'> </edit-component>
 
 </div>
 </template>
