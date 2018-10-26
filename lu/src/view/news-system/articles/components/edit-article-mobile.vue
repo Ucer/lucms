@@ -71,7 +71,7 @@
             </Select>
         </FormItem>
         <FormItem label="文章内容：">
-          <markdown-editor v-model="formData.content" :cache='true' />
+          <markdown-editor  v-if="formdataFinished" :cache="false" v-model="formData.content" :value="formData.content" />
         </FormItem>
       </Form>
       </Col>

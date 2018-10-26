@@ -54,7 +54,6 @@
           </transition>
         </FormItem>
       </Form>
-      </Card>
       </Col>
     </Row>
 

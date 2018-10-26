@@ -22,7 +22,6 @@
           <editor v-if="formdataFinished" :cache="false" v-model="formData.content" :value="formData.content" @on-change="editContentChange" :upload-config='uploadConfig'></editor>
         </FormItem>
       </Form>
-      </Card>
       </Col>
 
       <Col span="8" class="padding-left-20">
