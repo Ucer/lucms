@@ -24,6 +24,7 @@ return [
         'enable' => ['F' => '禁用', 'T' => '启用'],
         'recommend' => ['F' => '不推荐', 'T' => '推荐'],
         'top' => ['F' => '不置顶', 'T' => '置顶'],
+        'access_type' => ['PUB' => '公共访问', 'PRI' => '私密', 'PWD' => '密码访问'],
     ],
     'ip_filters' => [
         'type' => ['white' => '白名单', 'black' => '黑名单'],
