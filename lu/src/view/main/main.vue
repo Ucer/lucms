@@ -12,7 +12,7 @@
     <Layout>
       <Header class="header-con">
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
-          <user :user-avator="userAvator"/>
+          <user :user-avator="userAvator" :user-email="userEmail"/>
           <!-- <language @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/> -->
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
@@ -71,6 +71,9 @@ export default {
     },
     userAvator () {
       return this.$store.state.user.avatorImgPath
+    },
+    userEmail () {
+        return this.$store.state.user.email
     },
     cacheList () {
       return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []
