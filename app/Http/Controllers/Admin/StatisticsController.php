@@ -14,12 +14,11 @@ class StatisticsController extends AdminController
 
     }
 
-    public function base()
+    public function base(AdminMessage $adminMessage)
     {
-        $m_admin_message = new AdminMessage();
 
         $return = [
-            'unread_message' => $m_admin_message->where('status', 'U')->count(),
+            'unread_message' => $adminMessage->where('status', 'U')->count(),
         ];
         return $this->success($return);
     }
