@@ -11,7 +11,7 @@ class Advertisement extends Model
     ];
 
     protected $fillable = [
-        'name', 'cover_image', 'content', 'weight', 'advertisement_positions_id', 'link_url',
+        'name', 'cover_image', 'descriptions', 'content', 'weight', 'advertisement_positions_id', 'link_url',
         'model_column_value', 'start_at', 'end_at', 'enable'
     ];
 
@@ -38,7 +38,7 @@ class Advertisement extends Model
 
     protected function getContentAttribute($value)
     {
-        return json_decode($value,true);
+        return json_decode($value, true);
     }
 
     protected function getCoverImageAttribute($value)

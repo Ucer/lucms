@@ -17,6 +17,9 @@
         <FormItem label="封面：">
           <upload v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
         </FormItem>
+        <FormItem label="描述：">
+          <Input type="textarea" v-model="formData.descriptions" :rows="4" />
+        </FormItem>
         <FormItem label="广告内容：">
           <editor v-model="formData.content" @on-change="editContentChange" :upload-config='uploadConfig'></editor>
         </FormItem>
@@ -97,6 +100,7 @@ export default {
         start_at: '',
         end_at: '',
         weight: 20,
+        descriptions: '',
         content: '',
         cover_image: {
           attachment_id: 0,

@@ -18,6 +18,7 @@ class CreateAdvertisementsTable extends Migration
             $table->string('name')->default('')->comment('广告标题');
             $table->integer('cover_image')->default(0)->comment('广告封面图片');
             $table->text('content')->comment('广告内容:json_encode([raw:xxx,html:xxx])');
+            $table->text('descriptions')->nullable()->comment('描述');
             $table->integer('weight')->default(20)->comment('权重');
             $table->integer('advertisement_positions_id')->default(0)->comment('所属广告位');
             $table->string('link_url')->default('')->comment('跳转 url:为空则不跳转');

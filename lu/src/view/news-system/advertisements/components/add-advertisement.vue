@@ -17,6 +17,9 @@
         <FormItem label="封面：">
           <upload v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
         </FormItem>
+        <FormItem label="描述：">
+          <Input type="textarea" v-model="formData.descriptions" :rows="4" />
+        </FormItem>
         <FormItem label="广告内容：">
           <editor v-model="formData.content" @on-change="editContentChange" :upload-config='uploadConfig'></editor>
         </FormItem>
@@ -44,7 +47,7 @@
           <FormItem label="有效期：">
             <DatePicker type="datetimerange" placement="bottom-end" placeholder="请选择有效期，不选永久有效" confirm @on-clear="timeClear" @on-change="timeChanged" style="width:50%"></DatePicker>
           </FormItem>
-          <FormItem label="键值对选择："  v-if="typeIsModel">
+          <FormItem label="键值对选择：" v-if="typeIsModel">
             <transition name="publish-time">
               <div class="publish-time-picker-con">
                 <div class="margin-top-10"> 模型 &nbsp;&nbsp;
@@ -107,6 +110,7 @@ export default {
         start_at: '',
         end_at: '',
         weight: 20,
+        descriptions: '',
         content: '',
         cover_image: {
           attachment_id: 0,

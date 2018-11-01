@@ -15,6 +15,9 @@
             <Radio label="T">启用</Radio>
           </RadioGroup>
         </FormItem>
+        <FormItem label="描述：">
+          <Input type="textarea" v-model="formData.descriptions" :rows="4" />
+        </FormItem>
         <FormItem label="封面：">
           <upload v-if="formdataFinished" :is-delete='false' v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
         </FormItem>
@@ -122,6 +125,7 @@ export default {
         start_at: '',
         end_at: '',
         weight: 20,
+        descriptions: '',
         content: '',
         cover_image: {
           attachment_id: 0,
@@ -191,6 +195,7 @@ export default {
           start_at: res_data.start_at,
           end_at: res_data.end_at,
           weight: 20,
+          descriptions: res_data.descriptions,
           content: res_data.content.html,
           cover_image: {
             attachment_id: res_data.cover_image.attachment_id,
