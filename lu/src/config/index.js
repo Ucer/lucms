@@ -8,5 +8,6 @@ export default {
    *              如果不使用，则需要在路由中给需要在菜单中展示的路由设置meta: {title: 'xxx'}
    *              用来在菜单中显示文字
    */
-  useI18n: false
+  useI18n: false,
+  gaode_map_token: 'b11426bad1aec87657ef1f3e06b90819'
 }
