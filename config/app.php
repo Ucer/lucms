@@ -181,6 +181,7 @@ return [
         App\Providers\EasySmsServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
+//        App\Providers\CommonDataServiceProvider::class,
 
     ],
 
