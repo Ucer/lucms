@@ -30,6 +30,6 @@ class IndexController extends WebController
         if (in_array($locale, ['en', 'zh-cn'])) {
             session()->put('locale', $locale);
         }
-        return redirect()->back()->withInput();
+        return redirect()->route('web.home');
     }
 }
