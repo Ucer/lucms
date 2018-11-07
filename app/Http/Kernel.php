@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'passport-administrators' => \App\Http\Middleware\PassportCustomProvider::class,
         'ip-filter' =>  \App\Http\Middleware\IpFilter::class,
+        'setLocale' => \App\Http\Middleware\SetLocale::class,
     ];
 }

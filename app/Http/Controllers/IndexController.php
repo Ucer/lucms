@@ -24,4 +24,12 @@ class IndexController extends WebController
     {
         return view('docs');
     }
+
+    public function changeLocale($locale)
+    {
+        if (in_array($locale, ['en', 'zh-cn'])) {
+            session()->put('locale', $locale);
+        }
+        return redirect()->back()->withInput();
+    }
 }
