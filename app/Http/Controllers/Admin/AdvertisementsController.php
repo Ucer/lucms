@@ -116,11 +116,16 @@ class AdvertisementsController extends AdminController
     }
 
 
-    public function destroy(Advertisement $advertisement)
+    public function destroy(Advertisement $advertisement, AdvertisementValidate $validate)
     {
         if (!$advertisement) return $this->failed('找不到数据', 404);
-        $rest_destroy = $advertisement->destroyAdvertisement();
-        if ($rest_destroy['status'] === true) return $this->message($rest_destroy['message']);
-        return $this->failed($rest_destroy['message'], 500);
+        $rest_destroy_validate = $validate->destroyValidate($advertisement);
+        if ($rest_destroy_validate['status'] === true) {
+            $rest_destroy = $advertisement->destroyAdvertisement();
+            if ($rest_destroy['status'] === true) return $this->message($rest_destroy['message']);
+            return $this->failed($rest_destroy['message'], 500);
+        } else {
+            return $this->failed($rest_destroy_validate['message']);
+        }
     }
 }

@@ -26,7 +26,7 @@ class  AdvertisementValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->baseSucceed($this->data,$this->message);
+            return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
             return $this->baseFailed($this->message);
@@ -50,12 +50,17 @@ class  AdvertisementValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->baseSucceed($this->data,$this->message);
+            return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
             return $this->baseFailed($this->message);
         }
 
+    }
+
+    public function destroyValidate($advertisement)
+    {
+        return $this->baseSucceed($this->data, $this->message);
     }
 
     protected function validate($request_data, $rules)
