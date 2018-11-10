@@ -12,6 +12,9 @@
       <FormItem label="描述" prop="description">
         <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>
       </FormItem>
+      <FormItem label="排序：">
+        <Input v-model="formData.weight" placeholder="请输入序号" />
+      </FormItem>
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
@@ -39,8 +42,9 @@ export default {
         description: '',
         cover_image: {
           attachment_id: 0,
-          url:''
-        }
+          url: ''
+        },
+        weight: 10
       },
       rules: {
         name: [{

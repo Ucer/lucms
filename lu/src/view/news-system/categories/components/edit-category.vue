@@ -12,6 +12,9 @@
       <FormItem label="描述" prop="description">
         <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>
       </FormItem>
+      <FormItem label="排序：">
+        <Input v-model="formData.weight" placeholder="请输入序号" />
+      </FormItem>
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
@@ -56,7 +59,8 @@ export default {
         cover_image: {
           attachment_id: 0,
           url: ''
-        }
+        },
+        weight: 10
       },
       rules: {
         name: [{
@@ -75,7 +79,7 @@ export default {
         file_name: 'file',
         multiple: false,
         file_num: 1,
-        default_list: []
+        default_list: [],
       },
     }
   },
@@ -97,6 +101,7 @@ export default {
             attachment_id: res_data.cover_image.attachment_id,
             url: res_data.cover_image.url
           },
+          weight: res_data.weight
         }
         t.imguploadConfig.default_list = [t.formData.cover_image]
         t.formdataFinished = true

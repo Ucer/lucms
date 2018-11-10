@@ -6,9 +6,8 @@ use DB;
 
 class Category extends Model
 {
-
     protected $fillable = [
-        'name', 'cover_image', 'description',
+        'name', 'cover_image', 'description','weight'
     ];
 
     public function articles()
@@ -77,7 +76,6 @@ class Category extends Model
 
     public function destroyCategory()
     {
-
         DB::beginTransaction();
         try {
             $attachment_id = $this->cover_image['attachment_id'];
@@ -93,5 +91,4 @@ class Category extends Model
             return $this->baseFailed('内部错误');
         }
     }
-
 }
