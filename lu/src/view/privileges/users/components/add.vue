@@ -1,18 +1,21 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="header">修改用户信息</p>
+    <p slot="header">添加</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
+      <FormItem label="头像：">
+        <upload v-model="formData.head_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
+      </FormItem>
       <FormItem label="昵称：" prop="name">
         <Input v-model="formData.name"></Input>
       </FormItem>
       <FormItem label="邮箱：">
         <Input v-model="formData.email"></Input>
       </FormItem>
-      <FormItem label="登录密码：">
+      <FormItem label="登录密码：" prop="password">
         <Input type="password" v-model="formData.password"></Input>
       </FormItem>
-      <FormItem label="登录密码确认：">
+      <FormItem label="登录密码确认：" prop="password_confirmation">
         <Input type="password" v-model="formData.password_confirmation"></Input>
       </FormItem>
       <FormItem label="可登录后台：">
@@ -21,47 +24,49 @@
           <Radio label="T">是</Radio>
         </RadioGroup>
       </FormItem>
-      <FormItem label="头像：">
-        <upload v-if='formdataFinished' v-model="formData.head_image" :is-delete='false' :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
-      </FormItem>
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="editUserExcute" :loading='saveLoading'>保存
-                </Button>
-    </div>
-    <div class="demo-spin-container" v-if='spinLoading === true'>
-      <Spin fix>
-        <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
-        <div>加载中...</div>
-      </Spin>
+      <Button type="primary" @click="addExcute" :loading='saveLoading'>保存 </Button>
     </div>
   </Modal>
-
 </div>
 </template>
 <script>
-import Upload from '_c/common/upload'
 import {
-  editUser,
-  getUserInfoById
+  add
 } from '@/api/user'
+
+import Upload from '_c/common/upload'
 
 export default {
   components: {
     Upload
   },
-  props: {
-    modalId: {
-      type: Number,
-      default: 0
-    }
-  },
   data() {
+    const validatePassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入登录密码'))
+      } else {
+        if (this.formData.password !== '') {
+          // 对第二个密码框单独验证
+          this.$refs.formData.validateField('password_confirmation')
+        }
+        callback()
+      }
+    }
+    const validatePasswordConfirm = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入确认密码'))
+      } else if (value !== this.formData.password) {
+        callback(new Error('两次密码不一致 '))
+      } else {
+        callback()
+      }
+    }
     return {
       modalShow: true,
       saveLoading: false,
-      spinLoading: true,
       formData: {
         name: '',
         email: '',
@@ -73,7 +78,6 @@ export default {
           url: ''
         },
       },
-      formdataFinished: false,
       imguploadConfig: {
         headers: {
           'Authorization': window.access_token
@@ -108,49 +112,30 @@ export default {
             type: 'email',
             message: '邮箱格式不正确',
             trigger: 'blur'
-          }
+          },
         ],
+        password: [{
+          validator: validatePassword,
+          trigger: 'blur'
+        }],
+        password_confirmation: [{
+          validator: validatePasswordConfirm,
+          trigger: 'blur'
+        }],
       },
     }
   },
-  mounted() {
-    if (this.modalId > 0) {
-      this.getUserInfoByIdExcute()
-    }
-  },
   methods: {
-    getUserInfoByIdExcute() {
-      let t = this;
-      getUserInfoById(t.modalId).then(res => {
-        let res_data = res.data
-        t.formData = {
-          id: res_data.id,
-          name: res_data.name,
-          email: res_data.email,
-          is_admin: res_data.is_admin,
-          password: '',
-          password_confirmation: '',
-          head_image: {
-            attachment_id: res_data.head_image.attachment_id,
-            url: res_data.head_image.url
-          },
-        }
-        t.imguploadConfig.default_list = [t.formData.head_image]
-        t.formdataFinished = true
-        t.spinLoading = false
-      })
-
-    },
-    editUserExcute() {
+    addExcute() {
       let t = this;
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
-          editUser(t.modalId, t.formData).then(res => {
+          add(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
-            t.$emit('on-edit-modal-success')
-            this.$emit('on-edit-modal-hide')
+            t.$emit('on-add-modal-success')
+            t.$emit('on-add-modal-hide')
             t.$Notice.success({
               title: res.message
             })
@@ -164,7 +149,7 @@ export default {
     },
     cancel() {
       this.modalShow = false
-      this.$emit('on-edit-modal-hide')
+      this.$emit('on-add-modal-hide')
     },
     editContentChange(html, text) {
       // console.log(this.formData.content)

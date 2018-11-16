@@ -3,7 +3,7 @@
 <div>
   <Row :gutter="24">
     <Col :xs="7" :lg="11">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
     <Col :xs="3" :lg="3" >
     <Select v-model="searchForm.enable" placeholder="请选择状态">
@@ -68,15 +68,15 @@
 
 
 <script>
-import AddComponent from './components/add-user'
-import EditComponent from './components/edit-user'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
 
 import {
   getTableData,
   getAllRole,
   getUserRoles,
   giveUserRole,
-  deleteUser
+  destroy
 } from '@/api/user'
 
 import {
@@ -247,7 +247,7 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               h('Button', {
                 props: {
                   type: 'info',
@@ -274,7 +274,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteUserExcute(params.row.id, params.index)
+                    t.destroyExcute(params.row.id, params.index)
                   }
                 }
               }, [
@@ -380,9 +380,9 @@ export default {
       t.roleModal.show = false
       t.roleModal.saveLoading = false
     },
-    deleteUserExcute(user, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteUser(user).then(res => {
+      destroy(id).then(res => {
         t.feeds.data.splice(key, 1)
         t.$Notice.success({
           title: res.message

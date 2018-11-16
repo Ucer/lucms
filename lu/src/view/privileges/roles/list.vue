@@ -2,7 +2,7 @@
 <div>
   <Row :gutter="24">
     <Col :xs="8" :lg="16">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
     <Col :xs="12" :lg="4" class="hidden-mobile">
     <Input icon="search" placeholder="请输入角色名称..." v-model="searchForm.name" />
@@ -41,15 +41,15 @@
 
 
 <script>
-import AddComponent from './components/add-role'
-import EditComponent from './components/edit-role'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
 
 import {
   getAllPermission,
   getTableData,
   getRolePermissions,
   giveRolePermission,
-  deleteRole
+  destroy
 } from '@/api/roles'
 
 export default {
@@ -138,7 +138,7 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               h('Button', {
                 props: {
                   type: 'info',
@@ -165,7 +165,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteRoleExcute(params.row.id, params.index)
+                    t.destroyExcute(params.row.id, params.index)
                   }
                 }
               }, [
@@ -240,9 +240,9 @@ export default {
         t.permissionModal.show = false
       })
     },
-    deleteRoleExcute(role, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteRole(role).then(res => {
+      destroy(id).then(res => {
         t.dataList.splice(key, 1)
         t.$Notice.success({
           title: res.message

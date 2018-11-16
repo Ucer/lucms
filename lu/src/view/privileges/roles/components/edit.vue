@@ -1,21 +1,21 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="header">添加角色</p>
+    <p slot="header">修改</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="角色名称" prop="name">
-        <Input v-model="formData.name" placeholder="请输角色名称"></Input>
+        <Input v-model="formData.name" placeholder="请输入"></Input>
       </FormItem>
       <FormItem label="看守器" prop="guard_name">
-        <Input v-model="formData.guard_name" placeholder="请输入看守器"></Input>
+        <Input v-model="formData.guard_name" placeholder="请输入"></Input>
       </FormItem>
       <FormItem label="角色描述" prop="description">
-        <Input v-model="formData.description" placeholder="请输入角色描述"></Input>
+        <Input type="textarea" :rows="3" v-model="formData.description" placeholder="请输入"></Input>
       </FormItem>
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="addEditRoleExcute" :loading='saveLoading'>保存 </Button>
+      <Button type="primary" @click="addEditExcute" :loading='saveLoading'>保存 </Button>
     </div>
     <div class="demo-spin-container" v-if='spinLoading === true'>
       <Spin fix>
@@ -28,8 +28,8 @@
 </template>
 <script>
 import {
-  addEditRole,
-  getRoleInfoById
+  addEdit,
+  getInfoById
 } from '@/api/roles'
 
 export default {
@@ -65,13 +65,13 @@ export default {
   },
   mounted() {
     if (this.modalId > 0) {
-      this.getRoleInfoByIdExcute()
+      this.getInfoByIdExcute()
     }
   },
   methods: {
-    getRoleInfoByIdExcute() {
+    getInfoByIdExcute() {
       let t = this;
-      getRoleInfoById(t.modalId).then(res => {
+      getInfoById(t.modalId).then(res => {
         let res_data = res.data
         t.formData = {
           id: res_data.id,
@@ -83,12 +83,12 @@ export default {
       })
 
     },
-    addEditRoleExcute() {
+    addEditExcute() {
       let t = this
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
-          addEditRole(t.formData).then(res => {
+          addEdit(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
             t.$emit('on-edit-modal-success')

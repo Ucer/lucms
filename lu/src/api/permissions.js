@@ -11,7 +11,7 @@ export const getTableData = (searchData) => {
   })
 }
 
-export const addEditPermission = (saveData) => {
+export const addEdit = (saveData) => {
   return axios.request({
     url: '/api/admin/permissions',
     data: saveData,
@@ -20,18 +20,18 @@ export const addEditPermission = (saveData) => {
 }
 
 
-export const deletePermission = (permission) => {
+export const destroy = (id) => {
   return axios.request({
-    url: '/api/admin/permissions/' + permission,
+    url: '/api/admin/permissions/' + id,
     method: 'delete'
   })
 }
 
 // =============== privileges/permissions/components/edit-permission.vue =========================
 
-export const getPermissionInfoById = (permission) => {
+export const getInfoById = (id) => {
   return axios.request({
-    url: '/api/admin/permissions/' + permission,
+    url: '/api/admin/permissions/' + id,
     method: 'get'
   })
 }

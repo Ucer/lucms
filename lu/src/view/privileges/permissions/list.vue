@@ -4,9 +4,9 @@
 <div id="privileges-users-list">
   <Row :gutter="24">
     <Col :xs="8" :lg="16">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
-    <Col :xs="12" :lg="4" class="hidden-mobile" >
+    <Col :xs="12" :lg="4" class="hidden-mobile">
     <Input icon="search" placeholder="请输入权限名称..." v-model="searchForm.name" />
     </Col>
     <Col :xs="3" :lg="2" class="hidden-mobile">
@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import AddComponent from './components/add-permission'
-import EditComponent from './components/edit-permission'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
 
 import {
   getTableData,
-  deletePermission
+  destroy
 } from '@/api/permissions'
 
 export default {
@@ -106,7 +106,7 @@ export default {
                 }
               }
 
-            }, 'Edit'),
+            }, '修改'),
             h('Poptip', {
               props: {
                 confirm: true,
@@ -115,7 +115,7 @@ export default {
               },
               on: {
                 'on-ok': () => {
-                  t.deletePermissionExcute(params.row.id, params.index)
+                  t.destroyExcute(params.row.id, params.index)
                 }
               }
             }, [
@@ -156,9 +156,9 @@ export default {
       this.searchForm.order_by = order
       this.getTableDataExcute()
     },
-    deletePermissionExcute(permission, key) {
+    destroyExcute(id, key) {
       let t = this
-      deletePermission(permission).then(res => {
+      destroy(id).then(res => {
         t.dataList.splice(key, 1)
         t.$Notice.success({
           title: res.message

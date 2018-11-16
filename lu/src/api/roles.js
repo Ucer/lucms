@@ -12,21 +12,12 @@ export const getTableData = (searchData) => {
 }
 
 export const getAllPermission = () => {
-  return axios.request({
-    url: '/api/admin/all_permissions',
-    method: 'get'
-  })
+  return axios.request({url: '/api/admin/all_permissions', method: 'get'})
 }
 
-
-export const addEditRole = (saveData) => {
-  return axios.request({
-    url: '/api/admin/roles',
-    data: saveData,
-    method: 'post'
-  })
+export const addEdit = (saveData) => {
+  return axios.request({url: '/api/admin/roles', data: saveData, method: 'post'})
 }
-
 
 export const getRolePermissions = (roleId) => {
   return axios.request({
@@ -35,7 +26,7 @@ export const getRolePermissions = (roleId) => {
   })
 }
 
-export const giveRolePermission = (roleId,permissions) => {
+export const giveRolePermission = (roleId, permissions) => {
   return axios.request({
     url: '/api/admin/give/' + roleId + '/permissions',
     data: {
@@ -45,18 +36,18 @@ export const giveRolePermission = (roleId,permissions) => {
   })
 }
 
-export const deleteRole = (role) => {
+export const destroy = (id) => {
   return axios.request({
-    url: '/api/admin/roles/' + role,
+    url: '/api/admin/roles/' + id,
     method: 'delete'
   })
 }
 
 // =============== privileges/roles/components/edit-role.vue =========================
 
-export const getRoleInfoById = (role) => {
+export const getInfoById = (id) => {
   return axios.request({
-    url: '/api/admin/roles/' + role,
+    url: '/api/admin/roles/' + id,
     method: 'get'
   })
 }
