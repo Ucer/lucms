@@ -23,6 +23,7 @@ class httpRequest {
     // 添加请求拦截器
     instance.interceptors.request.use(config => {
       config.headers['Authorization'] = Cookies.get(TOKEN_KEY)
+       window.access_token = Cookies.get(TOKEN_KEY)
       // Spin.show()
       // 在发送请求之前做些什么
       return config

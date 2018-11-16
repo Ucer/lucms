@@ -13,12 +13,12 @@ import './index.less'
 import '@/assets/icons/iconfont.css'
 import Highlight from '@/libs/highlight.js'
 
-import apiRequest from './libs/api.request'
+// import apiRequest from './libs/api.request'
 import appUrl from '../config/url'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import {TOKEN_KEY} from '@/libs/util'
 
-window.access_token = Cookies.get(TOKEN_KEY)
+// window.access_token = Cookies.get(TOKEN_KEY)
 
 window.uploadUrl = {
   uploadAvatar: appUrl + 'api/upload/avatar',
