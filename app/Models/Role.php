@@ -136,7 +136,7 @@ class Role extends Model implements RoleContract
         return $this->permissions->contains('id', $permission->id);
     }
 
-    public function destroyRole()
+    public function destroyAction()
     {
         DB::beginTransaction();
         try {

@@ -33,14 +33,14 @@ class  RoleValidate extends Validate
 
     }
 
-    public function updateValidate($request_data, $role_id = 0)
+    public function updateValidate($request_data, $table_id = 0)
     {
         $rules = [
             'name' => [
                 'required',
                 'between:3,50',
                 'regex: /^\w+$/',
-                Rule::unique('roles')->ignore($role_id),
+                Rule::unique('roles')->ignore($table_id),
             ],
             'guard_name' => 'required|between:2,30',
             'description' => 'required'
@@ -73,11 +73,11 @@ class  RoleValidate extends Validate
         return true;
     }
 
-    public function destroyValidate($role)
+    public function destroyValidate($model)
     {
         $is_user_has_this_role = DB::table('model_has_roles')
             ->where('model_type', 'App\Models\User')
-            ->where('role_id', $role->id)
+            ->where('role_id', $model->id)
             ->count();
         if ($is_user_has_this_role) return $this->baseFailed('有用户在使用该角色,无法删除');
         return $this->baseSucceed($this->data, $this->message);

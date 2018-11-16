@@ -16,34 +16,34 @@ class PermissionsController extends AdminController
         $this->middleware('auth:api');
     }
 
-    public function permissionList(Request $request, Permission $permission)
+    public function permissionList(Request $request, Permission $model)
     {
         $search_data = json_decode($request->get('search_data'), true);
         $name = isset_and_not_empty($search_data, 'name');
         if ($name) {
-            $permission = $permission->columnLike('name', $name);
+            $model = $model->columnLike('name', $name);
         }
 
         $order_by = isset_and_not_empty($search_data, 'order_by');
         if ($order_by) {
             $order_by = explode(',', $order_by);
-            $permission = $permission->orderBy($order_by[0], $order_by[1]);
+            $model = $model->orderBy($order_by[0], $order_by[1]);
         }
 
-        $permissions = $permission->get();
+        $permissions = $model->get();
 
         return new CommonCollection($permissions);
     }
 
-    public function show(Permission $permission)
+    public function show(Permission $model)
     {
-        return $this->success($permission);
+        return $this->success($model);
     }
 
 
-    public function allPermissions(Permission $permission)
+    public function allPermissions(Permission $model)
     {
-        $permissions = $permission->get();
+        $permissions = $model->get();
         $return = [];
         $permissions->each(function ($per) use (&$return) {
             $return[] = [
@@ -55,12 +55,12 @@ class PermissionsController extends AdminController
         return $this->success($return);
     }
 
-    public function addEdit(Request $request, Permission $permission, PermissionValidate $validate)
+    public function addEdit(Request $request, Permission $model, PermissionValidate $validate)
     {
         $data = $request->only('id', 'name', 'guard_name', 'description');
         $permission_id = $request->post('id', 0);
         if ($permission_id > 0) {
-            $permission = $permission->findOrFail($permission_id);
+            $model = $model->findOrFail($permission_id);
             $rest_validate = $validate->updateValidate($data, $permission_id);
         } else {
             $rest_validate = $validate->storeValidate($data);
@@ -69,17 +69,17 @@ class PermissionsController extends AdminController
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
-        $res = $permission->saveData($data);
+        $res = $model->saveData($data);
         if ($res) return $this->message('操作成功');
         return $this->failed('内部错误');
     }
 
-    public function destroy(Permission $permission, PermissionValidate $permissionValidate)
+    public function destroy(Permission $model, PermissionValidate $validate)
     {
-        if (!$permission) return $this->failed('找不到权限', 404);
-        $rest_destroy_validate = $permissionValidate->destroyValidate($permission);
+        if (!$model) return $this->failed('找不到权限', 404);
+        $rest_destroy_validate = $validate->destroyValidate($model);
         if ($rest_destroy_validate['status'] === true) {
-            $rest_destroy = $permission->destroyPermission();
+            $rest_destroy = $model->destroyAction();
             if ($rest_destroy['status'] === true) return $this->message($rest_destroy['message']);
             return $this->failed($rest_destroy['message'], 500);
         } else {

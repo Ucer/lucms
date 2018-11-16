@@ -19,7 +19,7 @@ class Permission extends Model implements PermissionContract
     use HasRoles;
     use RefreshesPermissionCache;
 
-    protected $fillable = ['name','guard_name', 'description'];
+    protected $fillable = ['name', 'guard_name', 'description'];
 
     public function __construct(array $attributes = [])
     {
@@ -74,7 +74,7 @@ class Permission extends Model implements PermissionContract
             return $permission->name === $name && $permission->guard_name === $guardName;
         })->first();
 
-        if (! $permission) {
+        if (!$permission) {
             throw PermissionDoesNotExist::create($name, $guardName);
         }
 
@@ -99,7 +99,7 @@ class Permission extends Model implements PermissionContract
             return $permission->id === $id && $permission->guard_name === $guardName;
         })->first();
 
-        if (! $permission) {
+        if (!$permission) {
             throw PermissionDoesNotExist::withId($id, $guardName);
         }
 
@@ -122,7 +122,7 @@ class Permission extends Model implements PermissionContract
             return $permission->name === $name && $permission->guard_name === $guardName;
         })->first();
 
-        if (! $permission) {
+        if (!$permission) {
             return static::create(['name' => $name, 'guard_name' => $guardName]);
         }
 
@@ -137,7 +137,7 @@ class Permission extends Model implements PermissionContract
         return app(PermissionRegistrar::class)->getPermissions();
     }
 
-    public function destroyPermission()
+    public function destroyAction()
     {
         DB::beginTransaction();
         try {

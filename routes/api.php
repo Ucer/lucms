@@ -151,8 +151,12 @@ Route::namespace('Admin')->group(function () {
 
     Route::get('admin/statistics', 'StatisticsController@base')->name('statistics.base');
 
+});
 
+
+Route::namespace('Admin')->group(function () {
     /**       ==========================          自定义 Api           ====================   */
+
 });
 
 

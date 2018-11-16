@@ -45,7 +45,7 @@ class User extends Authenticatable
         return $query->where('is_admin', $value);
     }
 
-    public function storeUser($input)
+    public function storeAction($input)
     {
         DB::beginTransaction();
         try {
@@ -66,7 +66,7 @@ class User extends Authenticatable
         }
     }
 
-    public function updateUser($input)
+    public function updateAction($input)
     {
         $old_head_image = $this->head_image['attachment_id'];
         $new_head_image = $input['head_image'];
@@ -94,7 +94,7 @@ class User extends Authenticatable
         }
     }
 
-    public function destroyUser()
+    public function destroyAction()
     {
         DB::beginTransaction();
         try {

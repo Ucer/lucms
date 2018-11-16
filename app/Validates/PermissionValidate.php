@@ -25,7 +25,7 @@ class  PermissionValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->baseSucceed($this->data,$this->message);
+            return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
             return $this->baseFailed($this->message);
@@ -33,21 +33,21 @@ class  PermissionValidate extends Validate
 
     }
 
-    public function updateValidate($request_data, $permission_id = 0)
+    public function updateValidate($request_data, $table_id = 0)
     {
         $rules = [
             'name' => [
                 'required',
                 'between:3,50',
                 'regex: /^\w+$/',
-                Rule::unique('permissions')->ignore($permission_id),
+                Rule::unique('permissions')->ignore($table_id),
             ],
             'guard_name' => 'required|between:2,30',
             'description' => 'required'
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->baseSucceed($this->data,$this->message);
+            return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
             return $this->baseFailed($this->message);
@@ -73,10 +73,10 @@ class  PermissionValidate extends Validate
         return true;
     }
 
-    public function destroyValidate($permission)
+    public function destroyValidate($model)
     {
         $is_role_has_this_permission = DB::table('role_has_permissions')
-            ->where('permission_id', $permission->id)
+            ->where('permission_id', $model->id)
             ->count();
         if ($is_role_has_this_permission) return $this->baseFailed('有角色在使用该权限,无法删除');
         return $this->baseSucceed($this->data, $this->message);

@@ -18,39 +18,39 @@ class UserController extends AdminController
         $this->middleware('auth:api');
     }
 
-    public function usersList(Request $request, User $user)
+    public function usersList(Request $request, User $model)
     {
         $per_page = $request->get('per_page', 10);
         $search_data = json_decode($request->get('search_data'), true);
 
         $email = isset_and_not_empty($search_data, 'email');
         if ($email) {
-            $user = $user->columnLike('email', $email);
+            $model = $model->columnLike('email', $email);
         }
 
         $enable = isset_and_not_empty($search_data, 'enable');
         if ($enable) {
-            $user = $user->enableSearch($enable);
+            $model = $model->enableSearch($enable);
         }
 
         $is_admin = isset_and_not_empty($search_data, 'is_admin');
         if ($is_admin) {
-            $user = $user->isAdminSearch($is_admin);
+            $model = $model->isAdminSearch($is_admin);
         }
 
         $order_by = isset_and_not_empty($search_data, 'order_by');
         if ($order_by) {
             $order_by = explode(',', $order_by);
-            $user = $user->orderBy($order_by[0], $order_by[1]);
+            $model = $model->orderBy($order_by[0], $order_by[1]);
         }
 
-        return new CommonCollection($user->paginate($per_page));
+        return new CommonCollection($model->paginate($per_page));
     }
 
 
-    public function show(User $user)
+    public function show(User $model)
     {
-        return new UserResource($user);
+        return new UserResource($model);
     }
 
     public function currentUser()
@@ -65,7 +65,7 @@ class UserController extends AdminController
         return $this->success($return);
     }
 
-    public function store(Request $request, User $user, UserValidate $validate)
+    public function store(Request $request, User $model, UserValidate $validate)
     {
         $insert_data = $request->all();
         if (isset($data['head_image']['attachment_id'])) {
@@ -80,13 +80,13 @@ class UserController extends AdminController
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
 
-        $res = $user->storeUser($insert_data);
+        $res = $model->storeAction($insert_data);
         if ($res['status'] === true) return $this->message($res['message']);
         return $this->failed($res['message']);
 
     }
 
-    public function update(User $user, Request $request, UserValidate $validate)
+    public function update(User $model, Request $request, UserValidate $validate)
     {
         $update_data = $request->only('id', 'name', 'head_image', 'is_admin');
 
@@ -101,7 +101,7 @@ class UserController extends AdminController
         }
         $update_data['head_image'] = $attachement_id;
 
-        $res = $user->updateUser($update_data);
+        $res = $model->updateAction($update_data);
 
         if ($res['status'] === true) {
             admin_log_record(Auth::id(), 'U', 'users', '更新用户', $update_data);
@@ -110,9 +110,9 @@ class UserController extends AdminController
         return $this->failed($res['message']);
     }
 
-    public function getUserRoles(User $user)
+    public function getUserRoles(User $model)
     {
-        $roles = $user->roles()->get();
+        $roles = $model->roles()->get();
         $return = [];
         $roles->each(function ($per) use (&$return) {
             $return[] = strval($per->id);
@@ -121,21 +121,21 @@ class UserController extends AdminController
         return $this->success($return);
     }
 
-    public function giveUserRoles(Request $request, User $user)
+    public function giveUserRoles(Request $request, User $model)
     {
         $roles = $request->post('role');
-        $user->syncRoles($roles);
+        $model->syncRoles($roles);
         return $this->message('角色分配成功');
     }
 
-    public function destroy(User $user, UserValidate $validate)
+    public function destroy(User $model, UserValidate $validate)
     {
-        if (!$user) return $this->failed('找不到用户', 404);
+        if (!$model) return $this->failed('找不到用户', 404);
 
-        $rest_validate = $validate->destroyValidate($user);
+        $rest_validate = $validate->destroyValidate($model);
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
-        $rest_destroy = $user->destroyUser();
+        $rest_destroy = $model->destroyAction();
         if ($rest_destroy['status'] === true) return $this->message($rest_destroy['message']);
         return $this->failed($rest_destroy['message'], 500);
     }

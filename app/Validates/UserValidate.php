@@ -42,9 +42,9 @@ class  UserValidate extends Validate
 
     }
 
-    public function destroyValidate($user)
+    public function destroyValidate($model)
     {
-        if ($user->id === 1) return $this->baseFailed('不允许删除最高管理员');
+        if ($model->id === 1) return $this->baseFailed('不允许删除最高管理员');
         return $this->baseSucceed();
     }
 
