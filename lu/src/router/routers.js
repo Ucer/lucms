@@ -45,7 +45,6 @@ export default[
         path: '/permission-list',
         name: 'permission-list',
         meta: {
-          icon: 'ios-lock',
           title: '权限列表'
         },
         component: () => import ('@/view/privileges/permissions/list.vue')
@@ -53,7 +52,6 @@ export default[
         path: '/role-list',
         name: 'role-list',
         meta: {
-          icon: 'ios-people',
           title: '角色列表',
           // href: 'https://lison16.github.io/iview-admin-doc/#/'
         },
@@ -62,7 +60,6 @@ export default[
         path: '/administrator-list',
         name: 'administrator-list',
         meta: {
-          icon: 'md-people',
           title: '用户列表'
         },
         component: () => import ('@/view/privileges/users/list.vue')
@@ -81,7 +78,6 @@ export default[
         path: '/advertisement-positions',
         name: 'advertisement-positions',
         meta: {
-          icon: 'ios-disc',
           title: '广告位'
         },
         component: () => import ('@/view/news-system/advertisement-positions/list.vue')
@@ -89,7 +85,6 @@ export default[
         path: 'advertisement-list',
         name: 'advertisement-list',
         meta: {
-          icon: 'ios-volume-up',
           title: '广告列表'
         },
         component: () => import ('@/view/news-system/advertisements/list.vue')
@@ -97,7 +92,6 @@ export default[
         path: '/category-list',
         name: 'category-list',
         meta: {
-          icon: 'ios-navigate',
           title: '分类管理'
         },
         component: () => import ('@/view/news-system/categories/list.vue')
@@ -105,7 +99,6 @@ export default[
         path: '/tag-list',
         name: 'tag-list',
         meta: {
-          icon: 'ios-pricetags',
           title: '标签管理'
         },
         component: () => import ('@/view/news-system/tags/list.vue')
@@ -113,7 +106,6 @@ export default[
         path: '/article-list',
         name: 'article-list',
         meta: {
-          icon: 'ios-list',
           title: '文章管理'
         },
         component: () => import ('@/view/news-system/articles/list.vue')
@@ -121,7 +113,6 @@ export default[
         path: '/carousel-list',
         name: 'carousel-list',
         meta: {
-          icon: 'ios-aperture',
           title: '抡播图'
         },
         component: () => import ('@/view/news-system/carousels/list.vue')
@@ -140,7 +131,6 @@ export default[
         path: '/attachments',
         name: 'attachments',
         meta: {
-          icon: 'ios-link-outline',
           title: '附件列表'
         },
         component: () => import ('@/view/resources/attachments/list.vue')
@@ -148,7 +138,6 @@ export default[
         path: '/config-item-list',
         name: 'config-item-list',
         meta: {
-          icon: 'ios-barcode-outline',
           title: '系统配置项'
         },
         component: () => import ('@/view/resources/systems/config-item-list.vue')
@@ -167,7 +156,6 @@ export default[
         path: '/system-logs',
         name: 'system-logs',
         meta: {
-          icon: 'ios-more',
           title: '系统日志'
         },
         component: () => import ('@/view/security/logs/list.vue')
@@ -175,7 +163,6 @@ export default[
         path: '/ip-filters',
         name: 'ip-filters',
         meta: {
-          icon: 'ios-warning-outline',
           title: 'ip 过滤'
         },
         component: () => import ('@/view/security/ip_filters/list.vue')
@@ -183,7 +170,6 @@ export default[
         path: '/app-versions',
         name: 'app-versions',
         meta: {
-          icon: 'logo-twitter',
           title: 'app 版本控制'
         },
         component: () => import ('@/view/security/app-versions/list.vue')
@@ -191,7 +177,6 @@ export default[
         path: '/system-versions',
         name: 'system-versions',
         meta: {
-          icon: 'ios-git-branch',
           title: 'lucms 版本更新日志'
         },
         component: () => import ('@/view/system-version')
@@ -210,7 +195,6 @@ export default[
         path: '/admin-messages',
         name: 'admin-messages',
         meta: {
-          icon: 'logo-reddit',
           title: '后台消息'
         },
         component: () => import ('@/view/messages/admin-messages/list.vue')
@@ -218,7 +202,6 @@ export default[
         path: '/api-messages',
         name: 'api-messages',
         meta: {
-          icon: 'ios-barcode-outline',
           title: 'api 消息'
         },
         component: () => import ('@/view/messages/api-messages/list.vue')
