@@ -1,7 +1,7 @@
 
 <template>
 <div>
-  <Row  :gutter="24">
+  <Row :gutter="24">
     <Col :xs="15">
     <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
@@ -92,17 +92,20 @@ export default {
                 h('img', {
                   attrs: {
                     src: params.row.cover_image.url,
+                    class: 'fancybox',
+                    href: params.row.cover_image.url,
+                    title:'图片'
                   },
                   style: {
                     width: '40px',
                     height: '40px'
                   },
-                  on: {
-                    click: (value) => {
-                      t.modalCoverImage.show = true;
-                      t.modalCoverImage.url = params.row.cover_image.url;
-                    }
-                  }
+                  // on: {
+                  //   click: (value) => {
+                  //     t.modalCoverImage.show = true;
+                  //     t.modalCoverImage.url = params.row.cover_image.url;
+                  //   }
+                  // }
                 }),
               ]);
             }
@@ -180,6 +183,7 @@ export default {
         const response_data = res.data
         t.dataList = response_data
         t.tableLoading = false
+        t.globalFancybox()
       }, function(error) {
         t.tableLoading = false
       })
@@ -206,7 +210,7 @@ export default {
     },
     editModalHide() {
       this.editModal.show = false
-    }
+    },
   }
 }
 </script>

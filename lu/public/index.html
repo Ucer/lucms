@@ -15,3 +15,24 @@
     <!-- built files will be auto injected -->
   </body>
 </html>
+
+<script type="text/javascript">
+
+
+$(document).ready(function() {
+  $('.fancybox')
+    .attr('rel', 'media-gallery')
+    .fancybox({
+      openEffect: 'none',
+      closeEffect: 'none',
+      prevEffect: 'none',
+      nextEffect: 'none',
+
+      arrows: false,
+      helpers: {
+        media: {},
+        buttons: {}
+      }
+    });
+})
+</script>

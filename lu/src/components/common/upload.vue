@@ -17,11 +17,18 @@
       <Icon type="ios-camera" size="20"></Icon>
     </div>
   </Upload>
+  <br>
+
+  <!-- <div class="galley-image-list">
+    <ul class="pictures  row l-hide" ref="galley">
+      <li  v-for="(item,key) in formatFileList"><img :data-original="item.url" :src="item.url" alt=""></li>
+    </ul>
+  </div> -->
   <Collapse v-if="formatFileList.length > 0">
     <Panel name="1">
       预览
       <p slot="content">
-        <img :src="item.url" :alt="item.name" v-for="(item,key) in formatFileList"  style="width:100%"  />
+        <img class="fancybox" :src="item.url" :alt="item.name" v-for="(item,key) in formatFileList" />
       </p>
     </Panel>
   </Collapse>
@@ -31,7 +38,8 @@
 import {
   deleteAttachment
 } from '@/api/common'
-
+import Viewer from 'viewerjs';
+import 'viewerjs/dist/viewer.css';
 export default {
   props: {
     isDelete: {
@@ -138,7 +146,45 @@ export default {
         })
       }
       return check
-    }
+    },
+    ViewImage() {
+      this.$nextTick(() => {
+        $(function() {
+          $('.l-hide').click(function() {
+            $('.l-show').removeAttr('id').addClass('l-hide').removeClass('l-show');
+            $(this).attr('id', 'galley');
+            $(this).addClass('l-show');
+            $(this).removeClass('l-hide');
+            var galley = document.getElementById('galley');
+            var viewer = new Viewer(galley, {
+              url: 'data-original',
+              toolbar: {
+                oneToOne: true,
+                prev: function() {
+                  viewer.prev(true);
+                },
+                play: true,
+                next: function() {
+                  viewer.next(true);
+                },
+                update: function() {
+
+                },
+                download: function() {
+                  const a = document.createElement('a');
+
+                  a.href = viewer.image.src;
+                  a.download = viewer.image.alt;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                },
+              },
+            });
+          });
+        });
+      });
+    },
   },
   mounted() {
     this.uploadList = this.$refs.upload.fileList
@@ -148,7 +194,8 @@ export default {
       this.$emit('input', formatFileList)
       this.$emit('on-upload-change', this.uploadList, formatFileList)
     }
-  }
+    this.ViewImage()
+  },
 }
 </script>
 <style>
@@ -191,5 +238,9 @@ export default {
   font-size: 20px;
   cursor: pointer;
   margin: 0 2px;
+}
+
+.fancybox {
+  max-width:100% 
 }
 </style>

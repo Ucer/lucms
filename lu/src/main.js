@@ -18,6 +18,9 @@ import appUrl from '../config/url'
 // import Cookies from 'js-cookie'
 import {TOKEN_KEY} from '@/libs/util'
 
+window.$ = window.jQuery = require('jquery')
+require('./assets/vendor/fancybox/jquery.fancybox');
+
 // window.access_token = Cookies.get(TOKEN_KEY)
 
 window.uploadUrl = {
@@ -66,6 +69,26 @@ Vue.prototype.globalPlatformType = function() {
   } else {
     return 'pc'
   };
+}
+
+Vue.prototype.globalFancybox = function() {
+
+  this.$nextTick(() => {
+    $(function() {
+      $('.fancybox').attr('rel', 'media-gallery').fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+        prevEffect: 'none',
+        nextEffect: 'none',
+
+        arrows: false,
+        helpers: {
+          media: {},
+          buttons: {}
+        }
+      });
+    })
+  })
 }
 
 // 引入vue-amap
