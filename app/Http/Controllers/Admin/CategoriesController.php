@@ -14,65 +14,65 @@ class CategoriesController extends AdminController
         $this->middleware('auth:api');
     }
 
-    public function categoryList(Request $request, Category $category)
+    public function categoryList(Request $request, Category $model)
     {
         $search_data = json_decode($request->get('search_data'), true);
         $name = isset_and_not_empty($search_data, 'name');
         if ($name) {
-            $category = $category->columnLike('name', $name);
+            $model = $model->columnLike('name', $name);
         }
         $order_by = isset_and_not_empty($search_data, 'order_by');
         if ($order_by) {
             $order_by = explode(',', $order_by);
-            $category = $category->orderBy($order_by[0], $order_by[1]);
+            $model = $model->orderBy($order_by[0], $order_by[1]);
         }
 
-        return $this->success($category->get());
+        return $this->success($model->get());
     }
 
-    public function allCategories(Category $category)
+    public function allCategories(Category $model)
     {
-        return $this->success(collect($category->get())->keyBy('id'));
+        return $this->success(collect($model->get())->keyBy('id'));
     }
 
-    public function show(Category $category)
+    public function show(Category $model)
     {
-        return $this->success($category);
+        return $this->success($model);
     }
 
-    public function addEditCategory(Request $request, Category $category, CategoryValidate $validate)
+    public function addEditCategory(Request $request, Category $model, CategoryValidate $validate)
     {
-        $data = $request->all();
+        $request_data = $request->all();
         $category_id = $request->post('id', 0);
-        if (isset($data['cover_image']['attachment_id'])) {
-            $attachement_id = $data['cover_image']['attachment_id'];
+        if (isset($request_data['cover_image']['attachment_id'])) {
+            $attachement_id = $request_data['cover_image']['attachment_id'];
         } else {
             $attachement_id = 0;
         }
-        $data['cover_image'] = $attachement_id;
-        if (is_null($data['description'])) unset($data['description']);
+        $request_data['cover_image'] = $attachement_id;
+        if (is_null($request_data['description'])) unset($request_data['description']);
 
         if ($category_id > 0) {
-            $category = $category->findOrFail($category_id);
-            $rest_validate = $validate->updateValidate($data, $category_id);
+            $model = $model->findOrFail($category_id);
+            $rest_validate = $validate->updateValidate($request_data, $category_id);
             if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
-            $res = $category->updateCategory($data);
+            $res = $model->updateAction($request_data);
         } else {
-            $rest_validate = $validate->storeValidate($data);
+            $rest_validate = $validate->storeValidate($request_data);
             if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
-            $res = $category->storeCategory($data);
+            $res = $model->storeAction($request_data);
         }
 
         if ($res['status'] === true) return $this->message($res['message']);
         return $this->failed($res['message']);
     }
 
-    public function destroy(Category $category, CategoryValidate $validate)
+    public function destroy(Category $model, CategoryValidate $validate)
     {
-        if (!$category) return $this->failed('找不到数据', 404);
-        $rest_destroy_validate = $validate->destroyValidate($category);
+        if (!$model) return $this->failed('找不到数据', 404);
+        $rest_destroy_validate = $validate->destroyValidate($model);
         if ($rest_destroy_validate['status'] === true) {
-            $rest_destroy = $category->destroyCategory();
+            $rest_destroy = $model->destroyAction();
             if ($rest_destroy['status'] === true) return $this->message($rest_destroy['message']);
             return $this->failed($rest_destroy['message'], 500);
         } else {

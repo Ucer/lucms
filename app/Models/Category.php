@@ -31,7 +31,7 @@ class Category extends Model
         ];
     }
 
-    public function storeCategory($input)
+    public function storeAction($input)
     {
         DB::beginTransaction();
         try {
@@ -49,7 +49,7 @@ class Category extends Model
         }
     }
 
-    public function updateCategory($input)
+    public function updateAction($input)
     {
         $old_cover_image = $this->cover_image['attachment_id'];
         $new_cover_image = $input['cover_image'];
@@ -74,7 +74,7 @@ class Category extends Model
         }
     }
 
-    public function destroyCategory()
+    public function destroyAction()
     {
         DB::beginTransaction();
         try {

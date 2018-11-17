@@ -11,20 +11,20 @@ export const getTableData = (searchData) => {
   })
 }
 
-export const deleteCategory = (category) => {
+export const destroy = (id) => {
   return axios.request({
-    url: '/api/admin/categories/' + category,
+    url: '/api/admin/categories/' + id,
     method: 'delete'
   })
 }
 
-export const addEditCategory = (saveData) => {
+export const addEdit = (saveData) => {
   return axios.request({url: '/api/admin/categories', data: saveData, method: 'post'})
 }
 
-export const getCategoryInfoById = (catetgoryId) => {
+export const getInfoById = (id) => {
   return axios.request({
-    url: 'api/admin/categories/' + catetgoryId,
+    url: 'api/admin/categories/' + id,
     method: 'get'
   })
 }

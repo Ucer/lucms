@@ -3,7 +3,7 @@
 <div>
   <Row :gutter="24">
     <Col :xs="6" :lg="15">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
     <Col :xs="10" :lg="5">
     <Input icon="searchForm" placeholder="请输入名称..." v-model="searchForm.name" />
@@ -41,12 +41,12 @@
 
 
 <script>
-import AddComponent from './components/add-category'
-import EditComponent from './components/edit-category'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
 
 import {
   getTableData,
-  deleteCategory
+  destroy
 } from '@/api/category'
 
 export default {
@@ -147,7 +147,7 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               h('Poptip', {
                 props: {
                   confirm: true,
@@ -156,7 +156,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteCategoryExcute(params.row.id, params.index);
+                    t.destroyExcute(params.row.id, params.index);
                   }
                 }
               }, [
@@ -199,9 +199,9 @@ export default {
       this.searchForm.order_by = order
       this.getTableDataExcute(1)
     },
-    deleteCategoryExcute(category, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteCategory(category).then(res => {
+      destroy(id).then(res => {
         t.dataList.splice(key, 1)
         t.$Notice.success({
           title: res.message

@@ -1,16 +1,16 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="header">添加分类</p>
+    <p slot="header">添加</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="分类名称" prop="name">
-        <Input v-model="formData.name" placeholder="请输分类名称"></Input>
+        <Input v-model="formData.name" placeholder="请输入"></Input>
       </FormItem>
       <FormItem label="封面：">
-        <upload v-if='formdataFinished' :is-delete='false' v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
+        <upload v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
       </FormItem>
       <FormItem label="描述" prop="description">
-        <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>
+        <Input type="textarea" :rows="3" v-model="formData.description" placeholder="请输入"></Input>
       </FormItem>
       <FormItem label="排序：">
         <Input v-model="formData.weight" placeholder="请输入序号" />
@@ -18,21 +18,14 @@
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="addEditCategoryExcute" :loading='saveLoading'>保存 </Button>
-    </div>
-    <div class="demo-spin-container" v-if='spinLoading === true'>
-      <Spin fix>
-        <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
-        <div>加载中...</div>
-      </Spin>
+      <Button type="primary" @click="addEditExcute" :loading='saveLoading'>保存 </Button>
     </div>
   </Modal>
 </div>
 </template>
 <script>
 import {
-  addEditCategory,
-  getCategoryInfoById
+  addEdit
 } from '@/api/category'
 
 import Upload from '_c/common/upload'
@@ -40,20 +33,11 @@ export default {
   components: {
     Upload
   },
-  props: {
-    modalId: {
-      type: Number,
-      default: 0
-    }
-  },
   data() {
     return {
       modalShow: true,
       saveLoading: false,
-      spinLoading: true,
-      formdataFinished: false,
       formData: {
-        id: 0,
         name: '',
         description: '',
         cover_image: {
@@ -79,45 +63,21 @@ export default {
         file_name: 'file',
         multiple: false,
         file_num: 1,
-        default_list: [],
+        default_list: []
       },
     }
   },
-  mounted() {
-    if (this.modalId > 0) {
-      this.getCategoryInfoByIdExcute()
-    }
-  },
   methods: {
-    getCategoryInfoByIdExcute() {
-      let t = this;
-      getCategoryInfoById(t.modalId).then(res => {
-        let res_data = res.data
-        t.formData = {
-          id: res_data.id,
-          name: res_data.name,
-          description: res_data.description,
-          cover_image: {
-            attachment_id: res_data.cover_image.attachment_id,
-            url: res_data.cover_image.url
-          },
-          weight: res_data.weight
-        }
-        t.imguploadConfig.default_list = [t.formData.cover_image]
-        t.formdataFinished = true
-        t.spinLoading = false
-      })
-    },
-    addEditCategoryExcute() {
+    addEditExcute() {
       let t = this
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
-          addEditCategory(t.formData).then(res => {
+          addEdit(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
-            t.$emit('on-edit-modal-success')
-            t.$emit('on-edit-modal-hide')
+            t.$emit('on-add-modal-success')
+            t.$emit('on-add-modal-hide')
             t.$Notice.success({
               title: res.message
             })
@@ -129,7 +89,7 @@ export default {
     },
     cancel() {
       this.modalShow = false
-      this.$emit('on-edit-modal-hide')
+      this.$emit('on-add-modal-hide')
     },
     uploadChange(fileList, formatFileList) {}
   }
