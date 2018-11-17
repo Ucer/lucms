@@ -35,9 +35,9 @@ class CategoriesController extends AdminController
         return $this->success(collect($model->get())->keyBy('id'));
     }
 
-    public function show($category, Category $model)
+    public function show(Category $model)
     {
-        return $this->success($model->findOrFail($category));
+        return $this->success($model);
     }
 
     public function addEditCategory(Request $request, Category $model, CategoryValidate $validate)
@@ -69,7 +69,6 @@ class CategoriesController extends AdminController
 
     public function destroy(Category $model, CategoryValidate $validate)
     {
-        if (!$model) return $this->failed('找不到数据', 404);
         $rest_destroy_validate = $validate->destroyValidate($model);
         if ($rest_destroy_validate['status'] === true) {
             $rest_destroy = $model->destroyAction();

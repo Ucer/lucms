@@ -11,7 +11,7 @@ class Tag extends Model
         'name',
     ];
 
-    public function destroyTag()
+    public function destroyAction()
     {
 
         DB::beginTransaction();

@@ -17,20 +17,20 @@ export const getTagList = () => {
   return axios.request({url: '/api/admin/tags', method: 'get'})
 }
 
-export const deleteTag = (tag) => {
+export const getInfoById = (id) => {
   return axios.request({
-    url: '/api/admin/tags/' + tag,
-    method: 'delete'
+    url: 'api/admin/tags/' + id,
+    method: 'get'
   })
 }
 
-export const addEditTag = (saveData) => {
+export const addEdit = (saveData) => {
   return axios.request({url: '/api/admin/tags', data: saveData, method: 'post'})
 }
 
-export const getTagInfoById = (tagId) => {
+export const destroy = (id) => {
   return axios.request({
-    url: 'api/admin/tags/' + tagId,
-    method: 'get'
+    url: '/api/admin/tags/' + id,
+    method: 'delete'
   })
 }

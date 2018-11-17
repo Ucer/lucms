@@ -4,7 +4,7 @@
 <div>
   <Row  :gutter="24">
     <Col :xs="6" :lg="15">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
     <Col :xs="8" :lg="5">
     <Input icon="search" placeholder="请输入名称..." v-model="searchForm.name" />
@@ -37,12 +37,12 @@
 </template>
 
 <script>
-import AddComponent from './components/add-tag'
-import EditComponent from './components/edit-tag'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
 
 import {
   getTableData,
-  deleteTag
+  destroy
 } from '@/api/tag'
 
 export default {
@@ -109,7 +109,7 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               h('Poptip', {
                 props: {
                   confirm: true,
@@ -118,7 +118,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteTagExcute(params.row.id, params.index);
+                    t.destroyExcute(params.row.id, params.index);
                   }
                 }
               }, [
@@ -169,9 +169,9 @@ export default {
       this.searchForm.order_by = order
       this.getTableDataExcute(this.feeds.current_page)
     },
-    deleteTagExcute(tag, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteTag(tag).then(res => {
+      destroy(id).then(res => {
         t.feeds.data.splice(key, 1)
         t.$Notice.success({
           title: res.message
