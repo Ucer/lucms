@@ -2,14 +2,14 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="header">修改配置项</p>
+    <p slot="header">添加</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="配置标识：" prop="flag">
         <Input v-model="formData.flag" placeholder="请输入配置标识"></Input>
         <input-helper text="英文字母与下划线组成"></input-helper>
       </FormItem>
       <FormItem label="配置标题：" prop="title">
-        <Input v-model="formData.title" placeholder="请输入配置标题"></Input>
+        <Input v-model="formData.title" placeholder="请输入"></Input>
       </FormItem>
       <FormItem label="分组：" prop="system_config_group">
         <Select v-model="formData.system_config_group" filterable placeholder="请选择配置分组">
@@ -17,7 +17,7 @@
         </Select>
       </FormItem>
       <FormItem label="配置值：">
-        <Input type="textarea" v-model="formData.value" placeholder="请输入配置值"></Input>
+        <Input type="textarea" v-model="formData.value" placeholder="请输入"></Input>
       </FormItem>
       <FormItem label="是否启用：">
         <RadioGroup v-model="formData.enable">
@@ -26,26 +26,19 @@
         </RadioGroup>
       </FormItem>
       <FormItem label="描述：">
-        <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>
+        <Input type="textarea" :rows="3" v-model="formData.description" placeholder="请输入"></Input>
       </FormItem>
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="editSystemConfigExcute" :loading='saveLoading'>保存 </Button>
-    </div>
-    <div class="demo-spin-container" v-if='spinLoading === true'>
-      <Spin fix>
-        <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
-        <div>加载中...</div>
-      </Spin>
+      <Button type="primary" @click="addExcute" :loading='saveLoading'>保存 </Button>
     </div>
   </Modal>
 </div>
 </template>
 <script>
 import {
-  editSystemConfig,
-  getSystemConfigInfoById
+  add
 } from '@/api/systems'
 
 import Upload from '_c/common/upload'
@@ -63,17 +56,12 @@ export default {
     configGroup: {
       type: Object,
       value: []
-    },
-    modalId: {
-      type: Number,
-      default: 0
     }
   },
   data() {
     return {
       modalShow: true,
       saveLoading: false,
-      spinLoading: true,
       formData: {
         flag: '',
         title: '',
@@ -82,7 +70,6 @@ export default {
         description: '',
         enable: 'T'
       },
-      formdataFinished: false,
       rules: {
         flag: [{
           required: true,
@@ -102,38 +89,17 @@ export default {
       },
     }
   },
-  mounted() {
-    this.getSystemConfigInfoByIdExcute()
-  },
   methods: {
-    getSystemConfigInfoByIdExcute() {
-      let t = this;
-      getSystemConfigInfoById(t.modalId).then(res => {
-        let res_data = res.data
-        t.formData = {
-          flag: res_data.flag,
-          title: res_data.title,
-          system_config_group: res_data.system_config_group,
-          value: res_data.value,
-          enable: res_data.enable,
-          description: res_data.description
-        }
-
-        t.formdataFinished = true
-        t.spinLoading = false
-      })
-
-    },
-    editSystemConfigExcute() {
+    addExcute() {
       let t = this
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
-          editSystemConfig(t.modalId, t.formData).then(res => {
+          add(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
-            t.$emit('on-edit-modal-success')
-            t.$emit('on-edit-modal-hide')
+            t.$emit('on-add-modal-success')
+            t.$emit('on-add-modal-hide')
             t.$Notice.success({
               title: res.message
             })
@@ -145,7 +111,7 @@ export default {
     },
     cancel() {
       this.modalShow = false
-      this.$emit('on-edit-modal-hide')
+      this.$emit('on-add-modal-hide')
     },
     uploadChange(fileList, formatFileList) {}
   }

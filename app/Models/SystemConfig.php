@@ -10,7 +10,7 @@ class SystemConfig extends Model
         'flag', 'title', 'system_config_group', 'system_config_type', 'item', 'value', 'desc', 'weight', 'enable', 'description'
     ];
 
-    public function storeSystemConfig($input)
+    public function storeAction($input)
     {
         try {
             $input['value'] = str_replace([',', '，', '，'], [',', ',', ','], $input['value']);

@@ -31,16 +31,16 @@ class  SystemConfigValidate extends Validate
     }
 
 
-    public function updateValidate($request_data, $system_config_id)
+    public function updateValidate($request_data, $table_id)
     {
         $rules = [
             'flag' => [
                 'regex:/^[a-z][a-zA-Z0-9_]{2,100}$/',
-                Rule::unique('system_configs')->ignore($system_config_id)
+                Rule::unique('system_configs')->ignore($table_id)
             ],
             'title' => [
                 'between:2,100',
-                Rule::unique('system_configs')->ignore($system_config_id)
+                Rule::unique('system_configs')->ignore($table_id)
             ],
             'system_config_group' => 'required'
         ];
@@ -53,10 +53,8 @@ class  SystemConfigValidate extends Validate
         }
     }
 
-    public function destroyValidate($category)
+    public function destroyValidate($model)
     {
-        $is_model_has_this_category = $category->articles()->count();
-        if ($is_model_has_this_category) return $this->baseFailed('有模型在使用该分类,无法删除');
         return $this->baseSucceed($this->data, $this->message);
     }
 

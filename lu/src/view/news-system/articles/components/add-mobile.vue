@@ -96,7 +96,7 @@ import {
 } from '@/api/article'
 
 import {
-  addEditTag,
+  addEdit,
   getTagList
 } from '@/api/tag'
 

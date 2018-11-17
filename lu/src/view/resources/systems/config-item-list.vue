@@ -4,7 +4,7 @@
 <div>
   <Row :gutter="24">
     <Col :xs="8" :lg="3">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
     <Col :xs="6" :lg="4" class="hidden-mobile">
     <Input icon="searchForm" placeholder="请输入配置标识..." v-model="searchForm.flag" />
@@ -48,13 +48,13 @@
 
 
 <script>
-import AddComponent from './components/add-config-item'
-import EditComponent from './components/edit-config-item'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
 
 import {
   getTableData,
   getGroup,
-  deleteSystemConfig,
+  destroy,
 } from '@/api/systems'
 
 import {
@@ -163,7 +163,7 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               h('Poptip', {
                 props: {
                   confirm: true,
@@ -172,7 +172,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteSystemConfigExcute(params.row.id, params.index);
+                    t.destroyExcute(params.row.id, params.index);
                   }
                 }
               }, [
@@ -225,9 +225,9 @@ export default {
       this.searchForm.order_by = order
       this.getTableDataExcute()
     },
-    deleteSystemConfigExcute(systemConfig, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteSystemConfig(systemConfig).then(res => {
+      destroy(id).then(res => {
         t.dataList.splice(key, 1)
         t.$Notice.success({
           title: res.message

@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\IpFilter;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\SystemConfig;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('attachment', function ($value) {
             return Attachment::where('id', $value)->first();
         });
+
+        Route::bind('system_config', function ($value) {
+            return SystemConfig::where('id', $value)->first();
+        });
+
         Route::bind('ip_filter', function ($value) {
             return IpFilter::where('id', $value)->first();
         });
