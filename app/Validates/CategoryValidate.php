@@ -31,13 +31,13 @@ class  CategoryValidate extends Validate
 
     }
 
-    public function updateValidate($request_data, $category_id = 0)
+    public function updateValidate($request_data, $table_id = 0)
     {
         $rules = [
             'name' => [
                 'required',
                 'between:2,12',
-                Rule::unique('categories')->ignore($category_id),
+                Rule::unique('categories')->ignore($table_id),
             ],
         ];
         $rest_validate = $this->validate($request_data, $rules);
@@ -50,9 +50,9 @@ class  CategoryValidate extends Validate
 
     }
 
-    public function destroyValidate($category)
+    public function destroyValidate($model)
     {
-        $is_model_has_this_category = $category->articles()->count();
+        $is_model_has_this_category = $model->articles()->count();
         if ($is_model_has_this_category) return $this->baseFailed('有模型在使用该分类,无法删除');
         return $this->baseSucceed($this->data, $this->message);
     }
