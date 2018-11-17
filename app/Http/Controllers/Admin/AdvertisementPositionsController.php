@@ -15,40 +15,40 @@ class AdvertisementPositionsController extends AdminController
         $this->middleware('auth:api');
     }
 
-    public function advertisementPositionList(Request $request, AdvertisementPosition $advertisementPosition)
+    public function advertisementPositionList(Request $request, AdvertisementPosition $model)
     {
         $per_page = $request->get('per_page', 10);
 
         $search_data = json_decode($request->get('search_data'), true);
         $name = isset_and_not_empty($search_data, 'name');
         if ($name) {
-            $advertisementPosition = $advertisementPosition->columnLike('name', $name);
+            $model = $model->columnLike('name', $name);
         }
         $type = isset_and_not_empty($search_data, 'type');
         if ($type) {
-            $advertisementPosition = $advertisementPosition->typeSearch($type);
+            $model = $model->typeSearch($type);
         }
         $order_by = isset_and_not_empty($search_data, 'order_by');
         if ($order_by) {
             $order_by = explode(',', $order_by);
-            $advertisementPosition = $advertisementPosition->orderBy($order_by[0], $order_by[1]);
+            $model = $model->orderBy($order_by[0], $order_by[1]);
         }
 
-        return new CommonCollection($advertisementPosition->paginate($per_page));
+        return new CommonCollection($model->paginate($per_page));
     }
 
-    public function show(AdvertisementPosition $advertisementPosition)
+    public function show(AdvertisementPosition $model)
     {
-        return $this->success($advertisementPosition);
+        return $this->success($model);
     }
 
-    public function allAdvertisementPositions(AdvertisementPosition $advertisementPosition)
+    public function allAdvertisementPositions(AdvertisementPosition $model)
     {
-        return $this->success(collect($advertisementPosition->get())->keyBy('id'));
+        return $this->success(collect($model->get())->keyBy('id'));
     }
 
 
-    public function addEdit(Request $request, AdvertisementPosition $advertisementPosition, AdvertisementPositionValidate $validate)
+    public function addEdit(Request $request, AdvertisementPosition $model, AdvertisementPositionValidate $validate)
     {
         $data = $request->only('id', 'name', 'type', 'description');
         $advertisement_position_id = $request->post('id', 0);
@@ -56,7 +56,7 @@ class AdvertisementPositionsController extends AdminController
         if (is_null($data['description'])) unset($data['description']);
 
         if ($advertisement_position_id > 0) {
-            $advertisementPosition = $advertisementPosition->findOrFail($advertisement_position_id);
+            $model = $model->findOrFail($advertisement_position_id);
             $rest_validate = $validate->updateValidate($data, $advertisement_position_id);
         } else {
             $rest_validate = $validate->storeValidate($data);
@@ -65,17 +65,17 @@ class AdvertisementPositionsController extends AdminController
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
-        $res = $advertisementPosition->saveData($data);
+        $res = $model->saveData($data);
         if ($res) return $this->message('操作成功');
         return $this->failed('内部错误');
     }
 
-    public function destroy(AdvertisementPosition $advertisementPosition, AdvertisementPositionValidate $advertisementPositionValidate)
+    public function destroy(AdvertisementPosition $model, AdvertisementPositionValidate $validate)
     {
-        if (!$advertisementPosition) return $this->failed('找不到数据', 404);
-        $rest_destroy_validate = $advertisementPositionValidate->destroyValidate($advertisementPosition);
+        if (!$model) return $this->failed('找不到数据', 404);
+        $rest_destroy_validate = $validate->destroyValidate($model);
         if ($rest_destroy_validate['status'] === true) {
-            $rest_destroy = $advertisementPosition->destroyAdvertisementPosition();
+            $rest_destroy = $model->destroyAction();
             if ($rest_destroy['status'] === true) return $this->message($rest_destroy['message']);
             return $this->failed($rest_destroy['message'], 500);
         } else {

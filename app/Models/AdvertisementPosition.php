@@ -17,7 +17,7 @@ class AdvertisementPosition extends Model
     }
 
 
-    public function destroyAdvertisementPosition()
+    public function destroyAction()
     {
 
         DB::beginTransaction();

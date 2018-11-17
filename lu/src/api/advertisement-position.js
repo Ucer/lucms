@@ -13,20 +13,20 @@ export const getTableData = (to_page, per_page, searchData) => {
   })
 }
 
-export const deleteAdvertisementPosition = (advertisement_position) => {
+export const destroy = (id) => {
   return axios.request({
-    url: '/api/admin/advertisement_positions/' + advertisement_position,
+    url: '/api/admin/advertisement_positions/' + id,
     method: 'delete'
   })
 }
 
-export const addEditAdvertisementPosition = (saveData) => {
+export const addEdit = (saveData) => {
   return axios.request({url: '/api/admin/advertisement_positions', data: saveData, method: 'post'})
 }
 
-export const getAdvertisementPositionInfoById = (advertisementPosition) => {
+export const getInfoById = (id) => {
   return axios.request({
-    url: 'api/admin/advertisement_positions/' + advertisementPosition,
+    url: 'api/admin/advertisement_positions/' + id,
     method: 'get'
   })
 }

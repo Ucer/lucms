@@ -2,7 +2,7 @@
 <div>
   <Row :gutter="24">
     <Col :xs="8" :lg="1">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
     <Col :xs="4" :lg="2" class="hidden-mobile">
     <a :href='exportExcel'><Button icon="md-download">导出文件</Button></a>
@@ -48,8 +48,8 @@
 
 
 <script>
-import AddComponent from './components/add-advertisement-position'
-import EditComponent from './components/edit-advertisement-position'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
 import UploadFile from '_c/common/upload-file'
 
 import {
@@ -58,7 +58,7 @@ import {
 
 import {
   getTableData,
-  deleteAdvertisementPosition
+  destroy
 } from '@/api/advertisement-position'
 
 export default {
@@ -162,7 +162,7 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               h('Poptip', {
                 props: {
                   confirm: true,
@@ -171,7 +171,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteAdvertisementPositionExcute(params.row.id, params.index)
+                    t.destroyExcute(params.row.id, params.index)
                   }
                 }
               }, [
@@ -234,9 +234,9 @@ export default {
         t.tableLoading = false
       })
     },
-    deleteAdvertisementPositionExcute(advertisementPosition, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteAdvertisementPosition(advertisementPosition).then(res => {
+      destroy(id).then(res => {
         t.feeds.data.splice(key, 1)
         t.$Notice.success({
           title: res.message

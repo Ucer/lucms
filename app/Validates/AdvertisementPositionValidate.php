@@ -26,7 +26,7 @@ class  AdvertisementPositionValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->baseSucceed($this->data,$this->message);
+            return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
             return $this->baseFailed($this->message);
@@ -34,13 +34,13 @@ class  AdvertisementPositionValidate extends Validate
 
     }
 
-    public function updateValidate($request_data, $advertisemet_position_id = 0)
+    public function updateValidate($request_data, $table_id = 0)
     {
         $rules = [
             'name' => [
                 'required',
                 'between:2,50',
-                Rule::unique('advertisement_positions')->ignore($advertisemet_position_id),
+                Rule::unique('advertisement_positions')->ignore($table_id),
             ],
             'type' => [
                 Rule::in(['default', 'model', 'spa']),
@@ -48,7 +48,7 @@ class  AdvertisementPositionValidate extends Validate
         ];
         $rest_validate = $this->validate($request_data, $rules);
         if ($rest_validate === true) {
-            return $this->baseSucceed($this->data,$this->message);
+            return $this->baseSucceed($this->data, $this->message);
         } else {
             $this->message = $rest_validate;
             return $this->baseFailed($this->message);
@@ -71,9 +71,9 @@ class  AdvertisementPositionValidate extends Validate
         return true;
     }
 
-    public function destroyValidate($advertisement_position)
+    public function destroyValidate($model)
     {
-        $is_advertisement_has_this_position = Advertisement::where('advertisement_positions_id', $advertisement_position->id)->count();
+        $is_advertisement_has_this_position = Advertisement::where('advertisement_positions_id', $model->id)->count();
         if ($is_advertisement_has_this_position) return $this->baseFailed('有广告正在使用该广告位，不允许删除');
         return $this->baseSucceed($this->data, $this->message);
     }
