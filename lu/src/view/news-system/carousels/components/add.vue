@@ -1,7 +1,7 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="header">添加分类</p>
+    <p slot="header">添加</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="封面：">
         <upload  :is-delete='false' v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
@@ -18,15 +18,15 @@
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="addCarouselExcute" :loading='saveLoading'>保存 </Button>
+      <Button type="primary" @click="addExcute" :loading='saveLoading'>保存 </Button>
     </div>
   </Modal>
 </div>
 </template>
 <script>
 import {
-  addCarousel
-} from '@/api/news'
+  add
+} from '@/api/carousel'
 
 import Upload from '_c/common/upload'
 export default {
@@ -63,12 +63,12 @@ export default {
     }
   },
   methods: {
-    addCarouselExcute() {
+    addExcute() {
       let t = this
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
-          addCarousel(t.formData).then(res => {
+          add(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
             t.$emit('on-add-modal-success')

@@ -8,56 +8,54 @@ use Illuminate\Http\Request;
 class NewsController extends AdminController
 {
 
-    public function carousels(Carousel $carousel)
+    public function carousels(Carousel $model)
     {
-        $carousel = $carousel->orderBy('weight', 'asc');
-        return $this->success($carousel->get());
+        $model = $model->orderBy('weight', 'asc');
+        return $this->success($model->get());
     }
 
-    public function showCarousels($id, Carousel $carousel)
+    public function showCarousels($id, Carousel $model)
     {
-        $m_carsousel = $carousel->findOrFail($id);
-        return $this->success($m_carsousel);
+        return $this->success($model->findOrFail($id));
     }
 
-    public function storeCarousel(Request $request, Carousel $carousel)
+    public function storeCarousel(Request $request, Carousel $model)
     {
-        $insert_data = $request->all();
-        if (isset($insert_data['cover_image']['attachment_id'])) {
-            $insert_data['cover_image'] = $insert_data['cover_image']['attachment_id'];
+        $request_data = $request->all();
+        if (isset($request_data['cover_image']['attachment_id'])) {
+            $request_data['cover_image'] = $request_data['cover_image']['attachment_id'];
         } else {
             return $this->failed('必须上传图片');
         }
-        if(!$insert_data['url']) $insert_data['url'] = '';
-        if(!$insert_data['description']) $insert_data['description'] = '';
+        if(!$request_data['url']) $request_data['url'] = '';
+        if(!$request_data['description']) $request_data['description'] = '';
 
-        $res = $carousel->storeCarousel($insert_data);
+        $res = $model->storeAction($request_data);
         if ($res['status'] === true) return $this->message($res['message']);
         return $this->failed($res['message']);
     }
 
 
-    public function updateCarousel(Request $request, Carousel $carousel, $id)
+    public function updateCarousel(Request $request, Carousel $model, $id)
     {
-        $insert_data = $request->all();
-        if (isset($insert_data['cover_image']['attachment_id'])) {
-            $insert_data['cover_image'] = $insert_data['cover_image']['attachment_id'];
+        $request_data = $request->all();
+        if (isset($request_data['cover_image']['attachment_id'])) {
+            $request_data['cover_image'] = $request_data['cover_image']['attachment_id'];
         } else {
             return $this->failed('必须上传图片');
         }
-        $m_carousel = $carousel->findOrFail($id);
+        $m_carousel = $model->findOrFail($id);
 
-        if(!$insert_data['url']) $insert_data['url'] = '';
-        if(!$insert_data['description']) $insert_data['description'] = '';
-        $res = $carousel->updateCarousel($insert_data, $m_carousel);
+        if(!$request_data['url']) $request_data['url'] = '';
+        if(!$request_data['description']) $request_data['description'] = '';
+        $res = $model->updateAction($request_data, $m_carousel);
         if ($res['status'] === true) return $this->message($res['message']);
         return $this->failed($res['message']);
     }
 
-    public function destroyCarousel($id, Carousel $carousel)
+    public function destroyCarousel($id, Carousel $model)
     {
-        $m_carousel = $carousel->findOrFail($id);
-        $res = $carousel->destroyCarousel($m_carousel);
+        $res = $model->destroyAction($model->findOrFail($id));
         if ($res['status'] === true) return $this->message($res['message']);
         return $this->failed($res['message']);
     }

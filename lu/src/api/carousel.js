@@ -5,29 +5,29 @@ export const getTableData = () => {
   return axios.request({url: '/api/admin/news/carousels', method: 'get'})
 }
 
-export const deleteCarousel = (carousel) => {
+export const destroy = (id) => {
   return axios.request({
-    url: '/api/admin/news/carousels/' + carousel,
+    url: '/api/admin/news/carousels/' + id,
     method: 'delete'
   })
 }
 
-export const addCarousel = (saveData) => {
+export const add = (saveData) => {
   return axios.request({url: '/api/admin/news/carousels', data: saveData, method: 'post'})
 }
 
-export const editCarousel = (saveData, carouselId) => {
+export const edit = (saveData, id) => {
   return axios.request({
-    url: '/api/admin/news/carousels/' + carouselId,
+    url: '/api/admin/news/carousels/' + id,
     data: saveData,
     method: 'patch'
   })
 }
 
 
-export const getCarouselInfoById = (carouselId) => {
+export const getInfoById = (id) => {
   return axios.request({
-    url: 'api/admin/news/carousels/' + carouselId,
+    url: 'api/admin/news/carousels/' + id,
     method: 'get'
   })
 }

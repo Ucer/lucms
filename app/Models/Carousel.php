@@ -26,7 +26,7 @@ class Carousel extends Model
         ];
     }
 
-    public function storeCarousel($input)
+    public function storeAction($input)
     {
         try {
             if ($input['cover_image']) {
@@ -42,7 +42,7 @@ class Carousel extends Model
     }
 
 
-    public function updateCarousel($input, $m_carsousel)
+    public function updateAction($input, $m_carsousel)
     {
         $old_cover_image = $m_carsousel->cover_image['attachment_id'];
         $new_cover_image = $input['cover_image'];
@@ -62,7 +62,7 @@ class Carousel extends Model
         }
     }
 
-    public function destroyCarousel($m_carsousel)
+    public function destroyAction($m_carsousel)
     {
         DB::beginTransaction();
         try {

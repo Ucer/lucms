@@ -1,16 +1,16 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="header">添加轮播图</p>
+    <p slot="header">修改</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="封面：">
         <upload v-if='formdataFinished' :is-delete='false' v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
       </FormItem>
       <FormItem label="跳转链接：" prop="url">
-        <Input v-model="formData.url" placeholder="请输入跳转链接"></Input>
+        <Input v-model="formData.url" placeholder="请输入"></Input>
       </FormItem>
       <FormItem label="描述：" prop="description">
-        <Input type="textarea" v-model="formData.description" placeholder="请输入描述"></Input>
+        <Input type="textarea" v-model="formData.description" placeholder="请输入"></Input>
       </FormItem>
       <FormItem label="排序：" prop="description">
         <InputNumber v-model="formData.weight"></InputNumber>
@@ -18,7 +18,7 @@
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="editCarouselExcute" :loading='saveLoading'>保存 </Button>
+      <Button type="primary" @click="editExcute" :loading='saveLoading'>保存 </Button>
     </div>
     <div class="demo-spin-container" v-if='spinLoading === true'>
       <Spin fix>
@@ -31,9 +31,9 @@
 </template>
 <script>
 import {
-  editCarousel,
-  getCarouselInfoById
-} from '@/api/news'
+  edit,
+  getInfoById
+} from '@/api/carousel'
 
 import Upload from '_c/common/upload'
 export default {
@@ -79,13 +79,13 @@ export default {
   },
   mounted() {
     if (this.modalId > 0) {
-      this.getCarouselInfoByIdExcute()
+      this.getInfoByIdExcute()
     }
   },
   methods: {
-    getCarouselInfoByIdExcute() {
+    getInfoByIdExcute() {
       let t = this;
-      getCarouselInfoById(t.modalId).then(res => {
+      getInfoById(t.modalId).then(res => {
         let res_data = res.data
         t.formData = {
           id: res_data.id,
@@ -102,12 +102,12 @@ export default {
         t.spinLoading = false
       })
     },
-    editCarouselExcute() {
+    editExcute() {
       let t = this
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
-          editCarousel(t.formData, t.formData.id).then(res => {
+          edit(t.formData, t.formData.id).then(res => {
             t.saveLoading = false
             t.modalShow = false
             t.$emit('on-edit-modal-success')

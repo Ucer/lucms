@@ -3,7 +3,7 @@
 <div>
   <Row  :gutter="24">
     <Col :xs="15">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
   </Row>
   <br>
@@ -34,13 +34,13 @@
 
 
 <script>
-import AddComponent from './components/add-carousel'
-import EditComponent from './components/edit-carousel'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
 
 import {
   getTableData,
-  deleteCarousel
-} from '@/api/news'
+  destroy
+} from '@/api/carousel'
 
 export default {
   components: {
@@ -137,16 +137,16 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               h('Poptip', {
                 props: {
                   confirm: true,
-                  title: '您确定要删除「' + params.row.name + '」？',
+                  title: '您确定要删除「' + params.row.id + '」？',
                   transfer: true
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteCarouselExcute(params.row.id, params.index);
+                    t.destroyExcute(params.row.id, params.index);
                   }
                 }
               }, [
@@ -189,9 +189,9 @@ export default {
       this.searchForm.order_by = order
       this.getTableDataExcute(1)
     },
-    deleteCarouselExcute(id, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteCarousel(id).then(res => {
+      destroy(id).then(res => {
         t.dataList.splice(key, 1)
         t.$Notice.success({
           title: res.message
