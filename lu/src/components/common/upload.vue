@@ -36,7 +36,7 @@ export default {
   props: {
     isDelete: {
       type: Boolean,
-      default: true
+      default: false
     },
     uploadConfig: {
       type: Object,
