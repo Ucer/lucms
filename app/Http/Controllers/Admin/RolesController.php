@@ -39,18 +39,18 @@ class RolesController extends AdminController
 
     public function addEdit(Request $request, Role $model, RoleValidate $validate)
     {
-        $update_data = $request->only('id', 'name', 'guard_name', 'description');
+        $request_data = $request->only('id', 'name', 'guard_name', 'description');
         $role_id = $request->post('id', 0);
         if ($role_id > 0) {
             $model = $model->findOrFail($role_id);
-            $rest_validate = $validate->updateValidate($update_data, $role_id);
+            $rest_validate = $validate->updateValidate($request_data, $role_id);
         } else {
-            $rest_validate = $validate->storeValidate($update_data);
+            $rest_validate = $validate->storeValidate($request_data);
         }
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
-        $res = $model->saveData($update_data);
+        $res = $model->saveData($request_data);
 
         if ($res) return $this->message('操作成功');
         return $this->failed('内部错误');
@@ -88,10 +88,10 @@ class RolesController extends AdminController
         return $this->success($return);
     }
 
-    public function destroy(Role $model, RoleValidate $roleValidate)
+    public function destroy(Role $model, RoleValidate $validate)
     {
         if (!$model) return $this->failed('找不到角色', 404);
-        $rest_destroy_validate = $roleValidate->destroyValidate($model);
+        $rest_destroy_validate = $validate->destroyValidate($model);
         if ($rest_destroy_validate['status'] === true) {
             $rest_destroy = $model->destroyAction();
             if ($rest_destroy['status'] === true) return $this->message($rest_destroy['message']);

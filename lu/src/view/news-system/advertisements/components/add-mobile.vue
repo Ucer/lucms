@@ -1,11 +1,15 @@
-
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="1200">
-    <p slot="header">修改广告</p>
+    <p slot="header">添加</p>
     <Row>
       <Col span="24">
       <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
+        <FormItem label="广告位：">
+          <Select v-model="formData.advertisement_positions_id" filterable @on-change="positionHasChanged" placeholder="请选择广告位">
+              <Option v-for="(item,key) in advertisementPositionsIds" :value="item.id" :key="key">{{ item.name }} </Option>
+            </Select>
+        </FormItem>
         <FormItem label="广告标题" prop="name">
           <Input v-model="formData.name" />
         </FormItem>
@@ -15,23 +19,17 @@
             <Radio label="T">启用</Radio>
           </RadioGroup>
         </FormItem>
+        <FormItem label="封面：">
+          <upload v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
+        </FormItem>
         <FormItem label="描述：">
           <Input type="textarea" v-model="formData.descriptions" :rows="4" />
         </FormItem>
-        <FormItem label="封面：">
-          <upload v-if="formdataFinished" :is-delete='false' v-model="formData.cover_image" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
-        </FormItem>
         <FormItem label="广告内容：">
-          <editor v-if="formdataFinished" :cache="false" v-model="formData.content" :value="formData.content" @on-change="editContentChange" :upload-config='uploadConfig'></editor>
+          <editor v-model="formData.content" @on-change="editContentChange" :upload-config='wangUploadConfig'></editor>
         </FormItem>
       </Form>
-
       <Form label-position="right" :label-width="100">
-        <FormItem label="广告位：">
-          <Select v-model="formData.advertisement_positions_id" filterable @on-change="positionHasChanged" placeholder="请选择广告位">
-              <Option v-for="(item,key) in advertisementPositionsIds" :value="item.id" :key="key">{{ item.name }} </Option>
-            </Select>
-        </FormItem>
         <FormItem label="链接地址：">
           <Input v-model="formData.link_url" placeholder="请输入链接地址如： http://lucms.com" />
         </FormItem>
@@ -39,7 +37,7 @@
           <Input v-model="formData.weight" placeholder="请输入序号" />
         </FormItem>
         <FormItem label="有效期：">
-          <DatePicker :value="effectiveDate" type="datetimerange" placement="bottom-end" placeholder="请选择有效期，不选永久有效" confirm @on-clear="timeClear" @on-change="timeChanged" style="width: 50%"></DatePicker>
+          <DatePicker type="datetimerange" placement="bottom-end" placeholder="请选择有效期，不选永久有效" confirm @on-clear="timeClear" @on-change="timeChanged" style="width:50%"></DatePicker>
         </FormItem>
         <FormItem label="键值对选择：" v-if="typeIsModel">
           <transition name="publish-time">
@@ -62,21 +60,14 @@
 
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="editAdvertisementExcute" :loading='saveLoading'>保存 </Button>
-    </div>
-    <div class="demo-spin-container" v-if='spinLoading === true'>
-      <Spin fix>
-        <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
-        <div>加载中...</div>
-      </Spin>
+      <Button type="primary" @click="addExcute" :loading='saveLoading'>保存 </Button>
     </div>
   </Modal>
 </div>
 </template>
 <script>
 import {
-  editAdvertisement,
-  getAdvertisementInfoById
+  add
 } from '@/api/advertisement'
 
 import Editor from '_c/editor'
@@ -87,10 +78,6 @@ export default {
     Upload
   },
   props: {
-    modalId: {
-      type: Number,
-      default: 0
-    },
     advertisementPositionsIds: {
       default: {}
     }
@@ -99,9 +86,6 @@ export default {
     return {
       modalShow: true,
       saveLoading: false,
-      spinLoading: true,
-      effectiveDate: ['', ''],
-      formdataFinished: false,
       formData: {
         name: '',
         enable: 'F',
@@ -123,7 +107,7 @@ export default {
           url: ''
         }
       },
-      uploadConfig: {
+      wangUploadConfig: {
         headers: {
           'Authorization': window.access_token
         },
@@ -156,60 +140,22 @@ export default {
       },
     }
   },
-  mounted() {
-    if (this.modalId > 0) {
-      this.getAdvertisementInfoByIdExcute()
-    }
-  },
   computed: {
     typeIsModel() {
       return (this.formData.advertisement_positions_type == 'model') ? true : false
     },
   },
   methods: {
-    getAdvertisementInfoByIdExcute() {
-      let t = this
-      getAdvertisementInfoById(t.modalId).then(res => {
-        let res_data = res.data
-        t.formData = {
-          id: res_data.id,
-          name: res_data.name,
-          enable: res_data.enable,
-          advertisement_positions_id: res_data.advertisement_positions_id,
-          advertisement_positions_type: res_data.advertisement_position.type,
-          model_column_value: {
-            model: res_data.model_column_value.model,
-            column: res_data.model_column_value.column,
-            value: res_data.model_column_value.value,
-          },
-          link_url: res_data.link_url,
-          start_at: res_data.start_at,
-          end_at: res_data.end_at,
-          weight: 20,
-          descriptions: res_data.descriptions,
-          content: res_data.content.html,
-          cover_image: {
-            attachment_id: res_data.cover_image.attachment_id,
-            url: res_data.cover_image.url,
-          }
-        }
-        t.effectiveDate = [res_data.start_at, res_data.end_at]
-        t.imguploadConfig.default_list = [t.formData.cover_image]
-        t.formdataFinished = true
-        t.spinLoading = false
-      })
-
-    },
-    editAdvertisementExcute() {
+    addExcute() {
       let t = this
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
-          editAdvertisement(t.formData, t.formData.id).then(res => {
+          add(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
-            t.$emit('on-edit-modal-success')
-            t.$emit('on-edit-modal-hide')
+            t.$emit('on-add-modal-success')
+            t.$emit('on-add-modal-hide')
             t.$Notice.success({
               title: res.message
             })
@@ -235,7 +181,7 @@ export default {
       t.formData.end_at = ''
     },
     cancel() {
-      this.$emit('on-edit-modal-hide')
+      this.$emit('on-add-modal-hide')
       this.modalShow = false
     },
     editContentChange(html, text) {

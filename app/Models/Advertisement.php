@@ -57,7 +57,7 @@ class Advertisement extends Model
         ];
     }
 
-    public function storeAdvertisement($input)
+    public function storeAction($input)
     {
         DB::beginTransaction();
         try {
@@ -74,7 +74,7 @@ class Advertisement extends Model
         }
     }
 
-    public function updateAdvertisement($input)
+    public function updateAction($input)
     {
         $old_cover_image = $this->cover_image['attachment_id'];
         $new_cover_image = $input['cover_image'];
@@ -99,7 +99,7 @@ class Advertisement extends Model
         }
     }
 
-    public function destroyAdvertisement()
+    public function destroyAction()
     {
 
         DB::beginTransaction();

@@ -67,20 +67,20 @@ class UserController extends AdminController
 
     public function store(Request $request, User $model, UserValidate $validate)
     {
-        $insert_data = $request->all();
-        if (isset($data['head_image']['attachment_id'])) {
-            $attachement_id = $insert_data['head_image']['attachment_id'];
+        $request_data = $request->all();
+        if (isset($request_data['head_image']['attachment_id'])) {
+            $attachement_id = $request_data['head_image']['attachment_id'];
         } else {
             $attachement_id = 0;
         }
-        $insert_data['head_image'] = $attachement_id;
+        $request_data['head_image'] = $attachement_id;
 
-        $rest_validate = $validate->storeValidate($insert_data);
+        $rest_validate = $validate->storeValidate($request_data);
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
 
-        $res = $model->storeAction($insert_data);
+        $res = $model->storeAction($request_data);
         if ($res['status'] === true) return $this->message($res['message']);
         return $this->failed($res['message']);
 
@@ -88,23 +88,23 @@ class UserController extends AdminController
 
     public function update(User $model, Request $request, UserValidate $validate)
     {
-        $update_data = $request->only('id', 'name', 'head_image', 'is_admin');
+        $request_data = $request->only('id', 'name', 'head_image', 'is_admin');
 
-        $rest_validate = $validate->updateValidate($update_data);
+        $rest_validate = $validate->updateValidate($request_data);
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
-        if (isset($update_data['head_image']['attachment_id'])) {
-            $attachement_id = $update_data['head_image']['attachment_id'];
+        if (isset($request_data['head_image']['attachment_id'])) {
+            $attachement_id = $request_data['head_image']['attachment_id'];
         } else {
             $attachement_id = 0;
         }
-        $update_data['head_image'] = $attachement_id;
+        $request_data['head_image'] = $attachement_id;
 
-        $res = $model->updateAction($update_data);
+        $res = $model->updateAction($request_data);
 
         if ($res['status'] === true) {
-            admin_log_record(Auth::id(), 'U', 'users', '更新用户', $update_data);
+            admin_log_record(Auth::id(), 'U', 'users', '更新用户', $request_data);
             return $this->message($res['message']);
         }
         return $this->failed($res['message']);

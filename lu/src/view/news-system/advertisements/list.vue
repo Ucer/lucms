@@ -3,7 +3,7 @@
 <div>
   <Row :gutter="24">
     <Col :xs="5" :lg="10">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
     <Col :xs="3" :lg="3">
     <Select v-model="searchForm.enable" placeholder="是否启用">
@@ -51,10 +51,10 @@
 
 
 <script>
-import AddComponent from './components/add-advertisement'
-import EditComponent from './components/edit-advertisement'
-import AddMobileComponent from './components/add-advertisement-mobile'
-import EditMobileComponent from './components/edit-advertisement-mobile'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
+import AddMobileComponent from './components/add-mobile'
+import EditMobileComponent from './components/edit-mobile'
 import ShowInfo from './components/show-info'
 
 import {
@@ -65,7 +65,7 @@ import {
 import {
   getTableData,
   getAdvertisementPositions,
-  deleteAdvertisement
+  destroy
 } from '@/api/advertisement'
 
 export default {
@@ -226,7 +226,7 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               h('Poptip', {
                 props: {
                   confirm: true,
@@ -235,7 +235,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteAdvertisementExcute(params.row.id, params.index);
+                    t.destroyExcute(params.row.id, params.index);
                   }
                 }
               }, [
@@ -318,9 +318,9 @@ export default {
         })
       })
     },
-    deleteAdvertisementExcute(advertisement, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteAdvertisement(advertisement).then(res => {
+      destroy(id).then(res => {
         t.feeds.data.splice(key, 1)
         t.$Notice.success({
           title: res.message

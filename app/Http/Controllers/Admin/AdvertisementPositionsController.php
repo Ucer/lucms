@@ -50,22 +50,22 @@ class AdvertisementPositionsController extends AdminController
 
     public function addEdit(Request $request, AdvertisementPosition $model, AdvertisementPositionValidate $validate)
     {
-        $data = $request->only('id', 'name', 'type', 'description');
+        $request_data = $request->only('id', 'name', 'type', 'description');
         $advertisement_position_id = $request->post('id', 0);
 
-        if (is_null($data['description'])) unset($data['description']);
+        if (is_null($request_data['description'])) unset($request_data['description']);
 
         if ($advertisement_position_id > 0) {
             $model = $model->findOrFail($advertisement_position_id);
-            $rest_validate = $validate->updateValidate($data, $advertisement_position_id);
+            $rest_validate = $validate->updateValidate($request_data, $advertisement_position_id);
         } else {
-            $rest_validate = $validate->storeValidate($data);
+            $rest_validate = $validate->storeValidate($request_data);
         }
 
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
-        $res = $model->saveData($data);
+        $res = $model->saveData($request_data);
         if ($res) return $this->message('操作成功');
         return $this->failed('内部错误');
     }
