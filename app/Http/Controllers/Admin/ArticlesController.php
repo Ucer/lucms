@@ -16,7 +16,7 @@ class ArticlesController extends AdminController
         $this->middleware('auth:api');
     }
 
-    public function articleList(Request $request, Article $article)
+    public function articleList(Request $request, Article $model)
     {
         $per_page = $request->get('per_page', 10);
         $search_data = json_decode($request->get('search_data'), true);
@@ -40,76 +40,76 @@ class ArticlesController extends AdminController
             $order_type = $order_by[1];
         }
 
-        $list = $article->getArticlesWithFilter($filter, $user_id, $title, $tag_id, $category_id, $recommend, $top, $enable, $year, $month, $order, $order_type, $per_page);
+        $list = $model->getArticlesWithFilter($filter, $user_id, $title, $tag_id, $category_id, $recommend, $top, $enable, $year, $month, $order, $order_type, $per_page);
         return new CommonCollection($list);
     }
 
 
-    public function show(Article $article)
+    public function show(Article $model)
     {
-        $article_tag = $article->tags->toArray();
+        $article_tag = $model->tags->toArray();
 
-        $article->tagids = array_column($article_tag, 'id');
-        return $this->success($article);
+        $model->tagids = array_column($article_tag, 'id');
+        return $this->success($model);
     }
 
-    public function store(Request $request, Article $article, ArticleValidate $validate)
+    public function store(Request $request, Article $model, ArticleValidate $validate)
     {
-        $insert_data = $request->all();
-        if(!isset_and_not_empty($insert_data,'access_value')) {
-           unset($insert_data['access_value']);
+        $request_data = $request->all();
+        if(!isset_and_not_empty($request_data,'access_value')) {
+           unset($request_data['access_value']);
         }
-        $insert_data = array_merge($insert_data, ['created_year' => date('Y'), 'created_month' => date('m')]);
+        $request_data = array_merge($request_data, ['created_year' => date('Y'), 'created_month' => date('m')]);
 
-        if (isset($insert_data['cover_image']['attachment_id'])) {
-            $attachement_id = $insert_data['cover_image']['attachment_id'];
+        if (isset($request_data['cover_image']['attachment_id'])) {
+            $attachement_id = $request_data['cover_image']['attachment_id'];
         } else {
             $attachement_id = 0;
         }
-        $insert_data['cover_image'] = $attachement_id;
+        $request_data['cover_image'] = $attachement_id;
 
-        $rest_validate = $validate->storeValidate($insert_data);
+        $rest_validate = $validate->storeValidate($request_data);
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
 
-        $res = $article->storeArticle($insert_data);
+        $res = $model->storeAction($request_data);
         if ($res['status'] === true) return $this->message($res['message']);
         return $this->failed($res['message']);
     }
 
-    public function update(Request $request, Article $article, ArticleValidate $validate)
+    public function update(Request $request, Article $model, ArticleValidate $validate)
     {
-        if (!$article) return $this->failed('找不到数据', 404);
+        if (!$model) return $this->failed('找不到数据', 404);
 
-        $update_data = $request->all();
-        if(!isset_and_not_empty($update_data,'access_value')) {
-            unset($update_data['access_value']);
+        $request_data = $request->all();
+        if(!isset_and_not_empty($request_data,'access_value')) {
+            unset($request_data['access_value']);
         }
 
-        if (isset($update_data['cover_image']['attachment_id'])) {
-            $attachement_id = $update_data['cover_image']['attachment_id'];
+        if (isset($request_data['cover_image']['attachment_id'])) {
+            $attachement_id = $request_data['cover_image']['attachment_id'];
         } else {
             $attachement_id = 0;
         }
-        $update_data['cover_image'] = $attachement_id;
+        $request_data['cover_image'] = $attachement_id;
 
-        $rest_validate = $validate->updateValidate($update_data, $article->id);
+        $rest_validate = $validate->updateValidate($request_data, $model->id);
 
         if ($rest_validate['status'] === false) return $this->failed($rest_validate['message']);
 
 
-        $res = $article->updateArticle($update_data);
+        $res = $model->updateAction($request_data);
         if ($res['status'] === true) return $this->message($res['message']);
         return $this->failed($res['message']);
     }
 
-    public function destroy(Article $article, ArticleValidate $validate)
+    public function destroy(Article $model, ArticleValidate $validate)
     {
-        if (!$article) return $this->failed('找不到数据', 404);
-        $rest_destroy_validate = $validate->destroyValidate($article);
+        if (!$model) return $this->failed('找不到数据', 404);
+        $rest_destroy_validate = $validate->destroyValidate($model);
         if ($rest_destroy_validate['status'] === true) {
-            $rest_destroy = $article->destroyArticle();
+            $rest_destroy = $model->destroyAction();
             if ($rest_destroy['status'] === true) return $this->message($rest_destroy['message']);
             return $this->failed($rest_destroy['message'], 500);
         } else {

@@ -57,12 +57,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('tag', function ($value) {
             return Tag::where('id', $value)->first();
         });
+        Route::bind('article', function ($value) {
+            return Article::where('id', $value)->first();
+        });
 
         Route::bind('attachment', function ($value) {
             return Attachment::where('id', $value)->first();
-        });
-        Route::bind('article', function ($value) {
-            return Article::where('id', $value)->first();
         });
         Route::bind('ip_filter', function ($value) {
             return IpFilter::where('id', $value)->first();

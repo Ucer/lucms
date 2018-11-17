@@ -17,28 +17,28 @@ export const getArticleCategories = () => {
   return axios.request({url: '/api/admin/categories/all', method: 'get'})
 }
 
-export const deleteArticle = (article) => {
+export const destroy = (id) => {
   return axios.request({
-    url: '/api/admin/articles/' + article,
+    url: '/api/admin/articles/' + id,
     method: 'delete'
   })
 }
 
-export const addArticle = (formData) => {
+export const add = (formData) => {
   return axios.request({url: '/api/admin/articles', data: formData, method: 'post'})
 }
 
-export const editArticle = (articleId, formData) => {
+export const edit = (id, formData) => {
   return axios.request({
-    url: '/api/admin/articles/' + articleId,
+    url: '/api/admin/articles/' + id,
     data: formData,
     method: 'patch'
   })
 }
 
-export const getArticleInfoById = (articleId) => {
+export const getInfoById = (id) => {
   return axios.request({
-    url: 'api/admin/articles/' + articleId,
+    url: 'api/admin/articles/' + id,
     method: 'get'
   })
 }

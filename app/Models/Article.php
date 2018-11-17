@@ -81,7 +81,7 @@ class Article extends Model
     }
      */
 
-    public function storeArticle($input)
+    public function storeAction($input)
     {
         DB::beginTransaction();
         try {
@@ -105,7 +105,7 @@ class Article extends Model
         }
     }
 
-    public function updateArticle($input)
+    public function updateAction($input)
     {
         $old_cover_image = $this->cover_image['attachment_id'];
         $new_cover_image = $input['cover_image'];
@@ -159,7 +159,7 @@ class Article extends Model
     }
      */
 
-    public function destroyArticle()
+    public function destroyAction()
     {
         DB::beginTransaction();
         try {

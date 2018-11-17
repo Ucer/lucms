@@ -31,7 +31,7 @@ class  ArticleValidate extends Validate
 
     }
 
-    public function updateValidate($request_data, $article_id = 0)
+    public function updateValidate($request_data, $table_id = 0)
     {
         $rules = [
             'title' => [
@@ -51,7 +51,7 @@ class  ArticleValidate extends Validate
 
     }
 
-    public function destroyValidate($article)
+    public function destroyValidate($model)
     {
         return $this->baseSucceed($this->data, $this->message);
     }

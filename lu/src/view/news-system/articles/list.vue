@@ -3,7 +3,7 @@
 <div>
   <Row :gutter="24">
     <Col :xs="6" :lg="3">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
     <Col :xs="3" :lg="4" class="hidden-mobile">
     <Input icon="search" placeholder="请输入标题..." v-model="searchForm.title" />
@@ -64,10 +64,10 @@
 
 
 <script>
-import AddComponent from './components/add-article'
-import AddMobileComponent from './components/add-article-mobile'
-import EditComponent from './components/edit-article'
-import EditMobileComponent from './components/edit-article-mobile'
+import AddComponent from './components/add'
+import AddMobileComponent from './components/add-mobile'
+import EditComponent from './components/edit'
+import EditMobileComponent from './components/edit-mobile'
 import ShowInfo from './components/show-info'
 
 import {
@@ -78,7 +78,7 @@ import {
 import {
   getTableData,
   getArticleCategories,
-  deleteArticle
+  destroy
 } from '@/api/article'
 
 export default {
@@ -260,12 +260,12 @@ export default {
             delete_btn = h('Poptip', {
               props: {
                 confirm: true,
-                title: '您确定要删除「' + params.row.name + '」？',
+                title: '您确定要删除「' + params.row.title + '」？',
                 transfer: true
               },
               on: {
                 'on-ok': () => {
-                  t.deleteArticleExcute(params.row.id, params.index);
+                  t.destroyExcute(params.row.id, params.index);
                 }
               }
             }, [
@@ -309,7 +309,7 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               delete_btn
             ])
           }
@@ -381,9 +381,9 @@ export default {
         })
       })
     },
-    deleteArticleExcute(article, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteArticle(article).then(res => {
+      destroy(id).then(res => {
         t.feeds.data.splice(key, 1)
         t.$Notice.success({
           title: res.message
