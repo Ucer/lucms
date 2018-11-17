@@ -1,4 +1,3 @@
-
 import axios from '@/libs/api.request'
 
 // =============== privileges/permissions/list.vue =========================
@@ -12,25 +11,20 @@ export const getTableData = (searchData) => {
   })
 }
 
-export const addEditIpFilter = (saveData) => {
-  return axios.request({
-    url: '/api/admin/ip_filters',
-    data: saveData,
-    method: 'post'
-  })
+export const addEdit = (saveData) => {
+  return axios.request({url: '/api/admin/ip_filters', data: saveData, method: 'post'})
 }
 
-
-export const deleteIpFilter = (ip_filter) => {
+export const destroy = (id) => {
   return axios.request({
-    url: '/api/admin/ip_filters/' + ip_filter,
+    url: '/api/admin/ip_filters/' + id,
     method: 'delete'
   })
 }
 
-export const getIpFilterInfoById = (ipFilterId) => {
+export const getInfoById = (id) => {
   return axios.request({
-    url: '/api/admin/ip_filters/' + ipFilterId,
+    url: '/api/admin/ip_filters/' + id,
     method: 'get'
   })
 }

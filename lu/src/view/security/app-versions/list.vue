@@ -3,7 +3,7 @@
 <div>
   <Row  :gutter="24">
     <Col :xs="6" :lg="10">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
     <Col :xs="5" :lg="4">
       <Select v-model="searchForm.port" placeholder="请选择 app">
@@ -47,13 +47,13 @@
 
 
 <script>
-import AddComponent from './components/add-version'
-import EditComponent from './components/edit-version'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
 import ShowInfo from './components/show-info'
 
 import {
   getTableData,
-  deleteVersion
+  destroy
 } from '@/api/app-version'
 
 import {
@@ -171,16 +171,16 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               h('Poptip', {
                 props: {
                   confirm: true,
-                  title: '您确定要删除「' + params.row.version_sn + '」？',
+                  title: '您确定要删除「' + params.row.id + '」？',
                   transfer: true
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteVersionExcute(params.row.id, params.index)
+                    t.destroyExcute(params.row.id, params.index)
                   }
                 }
               }, [
@@ -235,9 +235,9 @@ export default {
       })
 
     },
-    deleteVersionExcute(version, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteVersion(version).then(res => {
+      deleteVersion(id).then(res => {
         t.feeds.data.splice(key, 1)
         t.$Notice.success({
           title: res.message

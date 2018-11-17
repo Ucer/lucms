@@ -34,7 +34,7 @@ class  IpFilterValidate extends Validate
 
     }
 
-    public function updateValidate($request_data, $id = 0)
+    public function updateValidate($request_data, $table_id = 0)
     {
         $rules = [
             'type' => [
@@ -44,7 +44,7 @@ class  IpFilterValidate extends Validate
             'ip' => [
                 'required',
                 'ip',
-                Rule::unique('ip_filters')->ignore($id),
+                Rule::unique('ip_filters')->ignore($table_id),
             ],
         ];
         $rest_validate = $this->validate($request_data, $rules);

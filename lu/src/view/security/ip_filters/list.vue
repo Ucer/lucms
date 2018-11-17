@@ -2,7 +2,7 @@
 <div id="privileges-users-list">
   <Row :gutter="24">
     <Col :xs="8" :lg="10">
-    <Button type="success" icon="plus" @click="addBtn()">Add</Button>
+    <Button type="success" icon="plus" @click="addBtn()">添加</Button>
     </Col>
     <Col :xs="6" :lg="5" class="hidden-mobile">
     <Input icon="searchForm" placeholder="请输入ip..." v-model="searchForm.ip" />
@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import AddComponent from './components/add-ip-filter'
-import EditComponent from './components/edit-ip-filter'
+import AddComponent from './components/add'
+import EditComponent from './components/edit'
 
 import {
   getTableStatus
@@ -45,7 +45,7 @@ import {
 
 import {
   getTableData,
-  deleteIpFilter
+  destroy
 } from '@/api/ip-filter'
 
 export default {
@@ -131,16 +131,16 @@ export default {
                   }
                 }
 
-              }, 'Edit'),
+              }, '修改'),
               h('Poptip', {
                 props: {
                   confirm: true,
-                  title: '您确定要删除「' + params.row.ip + '」？',
+                  title: '您确定要删除「' + params.row.id + '」？',
                   transfer: true
                 },
                 on: {
                   'on-ok': () => {
-                    t.deleteIpFilterExcute(params.row.id, params.index);
+                    t.destroyExcute(params.row.id, params.index);
                   }
                 }
               }, [
@@ -189,9 +189,9 @@ export default {
       this.searchForm.order_by = order
       this.getTableDataExcute()
     },
-    deleteIpFilterExcute(ipFilter, key) {
+    destroyExcute(id, key) {
       let t = this
-      deleteIpFilter(ipFilter).then(res => {
+      destroy(id).then(res => {
         t.dataList.splice(key, 1)
         t.$Notice.success({
           title: res.message

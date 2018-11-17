@@ -12,28 +12,28 @@ export const getTableData = (to_page, per_page, searchData) => {
   })
 }
 
-export const deleteVersion = (version) => {
+export const destroy = (id) => {
   return axios.request({
-    url: '/api/admin/app_versions/' + version,
+    url: '/api/admin/app_versions/' + id,
     method: 'delete'
   })
 }
 
-export const addVersion = (formData) => {
+export const add = (formData) => {
   return axios.request({url: '/api/admin/app_versions', data: formData, method: 'post'})
 }
 
-export const editVersion = (versionId, formData) => {
+export const edit = (id, formData) => {
   return axios.request({
-    url: '/api/admin/app_versions/' + versionId,
+    url: '/api/admin/app_versions/' + id,
     data: formData,
     method: 'patch'
   })
 }
 
-export const getVersionInfoById = (version) => {
+export const getInfoById = (id) => {
   return axios.request({
-    url: 'api/admin/app_versions/' + version,
+    url: 'api/admin/app_versions/' + id,
     method: 'get'
   })
 }

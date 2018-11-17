@@ -1,7 +1,7 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="header">修改管理员信息</p>
+    <p slot="header">添加</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="选择 App:" prop="port">
         <Select v-model="formData.port" filterable placeholder="请选择 app">
@@ -20,40 +20,27 @@
         <Input type='textarea' v-model="formData.version_intro"></Input>
       </FormItem>
       <FormItem label="上传包：">
-        <upload v-if='formdataFinished' v-model="formData.package" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
+        <upload v-model="formData.package" :upload-config="imguploadConfig" @on-upload-change='uploadChange'></upload>
       </FormItem>
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="editVersionExcute" :loading='saveLoading'>保存
-                </Button>
-    </div>
-    <div class="demo-spin-container" v-if='spinLoading === true'>
-      <Spin fix>
-        <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
-        <div>加载中...</div>
-      </Spin>
+      <Button type="primary" @click="addExcute" :loading='saveLoading'>保存 </Button>
     </div>
   </Modal>
-
 </div>
 </template>
 <script>
-import Upload from '_c/common/upload-file'
 import {
-  editVersion,
-  getVersionInfoById
+  add
 } from '@/api/app-version'
 
+import Upload from '_c/common/upload-file'
+
+import InputHelper from '_c/common/input-helper'
+
 export default {
-  components: {
-    Upload
-  },
   props: {
-    modalId: {
-      type: Number,
-      default: 0
-    },
     port: {
       default: []
     },
@@ -61,11 +48,14 @@ export default {
       default: []
     }
   },
+  components: {
+    Upload,
+    InputHelper
+  },
   data() {
     return {
       modalShow: true,
       saveLoading: false,
-      spinLoading: true,
       formData: {
         port: 'A',
         system: 'ALL',
@@ -76,12 +66,11 @@ export default {
           url: ''
         },
       },
-      formdataFinished: false,
       imguploadConfig: {
         headers: {
           'Authorization': window.access_token
         },
-        format: ['wgt'],
+        format: ['wgt','txt'],
         max_size: 50000,
         upload_url: window.uploadUrl.uploadNewVersion,
         file_name: 'file',
@@ -114,43 +103,17 @@ export default {
       },
     }
   },
-  mounted() {
-    if (this.modalId > 0) {
-      this.getVersionInfoByIdExcute()
-    }
-  },
   methods: {
-    getVersionInfoByIdExcute() {
-      let t = this;
-      getVersionInfoById(t.modalId).then(res => {
-        let res_data = res.data
-        t.formData = {
-          id: res_data.id,
-          port: res_data.port,
-          system: res_data.system,
-          version_sn: res_data.version_sn,
-          version_intro: res_data.version_intro,
-          package: {
-            attachment_id: res_data.package.attachment_id,
-            url: res_data.package.url
-          },
-        }
-        t.imguploadConfig.default_list = [t.formData.package]
-        t.formdataFinished = true
-        t.spinLoading = false
-      })
-
-    },
-    editVersionExcute() {
+    addExcute() {
       let t = this;
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
-          editVersion(t.modalId, t.formData).then(res => {
+          add(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
-            t.$emit('on-edit-modal-success')
-            this.$emit('on-edit-modal-hide')
+            t.$emit('on-add-modal-success')
+            t.$emit('on-add-modal-hide')
             t.$Notice.success({
               title: res.message
             })
@@ -164,11 +127,9 @@ export default {
     },
     cancel() {
       this.modalShow = false
-      this.$emit('on-edit-modal-hide')
+      this.$emit('on-add-modal-hide')
     },
-    editContentChange(html, text) {
-      // console.log(this.formData.content)
-    },
+    editContentChange(html, text) {},
     uploadChange(fileList, formatFileList) {}
   }
 }

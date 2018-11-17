@@ -1,7 +1,7 @@
 <template>
 <div>
   <Modal v-model="modalShow" :closable='false' :mask-closable=false width="600">
-    <p slot="header">添加防火墙</p>
+    <p slot="header">添加</p>
     <Form ref="formData" :model="formData" :rules="rules" label-position="left" :label-width="100">
       <FormItem label="类型" prop="type">
         <Select v-model="formData.type" filterable placeholder="请选择类型">
@@ -14,14 +14,14 @@
     </Form>
     <div slot="footer">
       <Button type="text" @click="cancel">取消</Button>
-      <Button type="primary" @click="addEditIpFilterExcute" :loading='saveLoading'>保存 </Button>
+      <Button type="primary" @click="addEditExcute" :loading='saveLoading'>保存 </Button>
     </div>
   </Modal>
 </div>
 </template>
 <script>
 import {
-  addEditIpFilter
+  addEdit
 } from '@/api/ip-filter'
 
 export default {
@@ -49,12 +49,12 @@ export default {
     }
   },
   methods: {
-    addEditIpFilterExcute() {
+    addEditExcute() {
       let t = this
       t.$refs.formData.validate((valid) => {
         if (valid) {
           t.saveLoading = true
-          addEditIpFilter(t.formData).then(res => {
+          addEdit(t.formData).then(res => {
             t.saveLoading = false
             t.modalShow = false
             t.$emit('on-add-modal-success')

@@ -16,7 +16,7 @@ class IpFilter extends Model
         return $query->where('type', $value);
     }
 
-    public function destroyIpFilter()
+    public function destroyAction()
     {
 
         DB::beginTransaction();
