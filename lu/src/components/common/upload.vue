@@ -17,21 +17,21 @@
       <Icon type="ios-camera" size="20"></Icon>
     </div>
   </Upload>
-  <br>
-
-  <!-- <div class="galley-image-list">
+  <Divider orientation="left">点击预览图片</Divider>
+  <div class="galley-image-list">
     <ul class="pictures  row l-hide" ref="galley">
-      <li  v-for="(item,key) in formatFileList"><img :data-original="item.url" :src="item.url" alt=""></li>
+      <li v-for="(item,key) in formatFileList"><img :data-original="item.url" :src="item.url" alt=""></li>
     </ul>
-  </div> -->
-  <Collapse v-if="formatFileList.length > 0">
+  </div>
+
+  <!-- <Collapse v-if="formatFileList.length > 0">
     <Panel name="1">
       预览
       <p slot="content">
         <img class="fancybox" :src="item.url" :alt="item.name" v-for="(item,key) in formatFileList" />
       </p>
     </Panel>
-  </Collapse>
+  </Collapse> -->
 </div>
 </template>
 <script>
@@ -99,6 +99,7 @@ export default {
       let formatFileList = this.fomatFile()
       this.$emit('input', formatFileList)
       this.$emit('on-upload-change', this.uploadList, formatFileList)
+      this.ViewImage()
     },
     handleSuccess(res, file) {
       file.url = res.data.url
@@ -108,6 +109,7 @@ export default {
       let formatFileList = this.fomatFile()
       this.$emit('input', formatFileList)
       this.$emit('on-upload-change', this.uploadList, formatFileList)
+      this.ViewImage()
     },
     fomatFile() {
       let formatFileList = []
@@ -129,12 +131,14 @@ export default {
         title: '文件格式不正确',
         desc: '文件 ' + file.name + ' 格式不正确。'
       })
+      this.ViewImage()
     },
     handleMaxSize(file) {
       this.$Notice.warning({
         title: '超出文件大小限制',
         desc: '文件 ' + file.name + ' 太大，不能超过 ' + this.uploadConfig.max_size + 'kb'
       })
+      this.ViewImage()
     },
     handleBeforeUpload() {
       const check = this.uploadList.length < this.uploadConfig.file_num
@@ -144,6 +148,7 @@ export default {
           title: '数量限制',
           desc: '最多只能上传' + this.uploadConfig.file_num + '个文件'
         })
+        this.ViewImage()
       }
       return check
     },
@@ -241,6 +246,6 @@ export default {
 }
 
 .fancybox {
-  max-width:100% 
+  max-width: 100%
 }
 </style>

@@ -72,7 +72,7 @@ export default {
         upload_url: window.uploadUrl.uploadCarousel,
         file_name: 'file',
         multiple: false,
-        file_num: 1,
+        file_num: 3,
         default_list: []
       },
     }
