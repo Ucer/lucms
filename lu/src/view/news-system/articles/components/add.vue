@@ -81,7 +81,7 @@
             </Select>
           </FormItem>
           <FormItem label="新建标签">
-            <Input v-model="newTagName" search enter-button="新建" placeholder="标签名字" @on-search="addEditTagExcute" />
+            <Input v-model="newTagName" search enter-button="新建" placeholder="标签名字" @on-search="addEditExcute" />
           </FormItem>
         </Form>
       </Card>
@@ -234,9 +234,9 @@ export default {
       }
       return true;
     },
-    addEditTagExcute() {
+    addEditExcute() {
       let t = this;
-      addEditTag({
+      addEdit({
         name: t.newTagName
       }).then(res => {
         t.getTagListExcute()

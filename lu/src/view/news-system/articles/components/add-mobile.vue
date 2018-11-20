@@ -64,7 +64,7 @@
         </p>
 
         <FormItem label="新建标签">
-          <Input v-model="newTagName" search enter-button="新建" placeholder="标签名字" @on-search="addEditTagExcute" />
+          <Input v-model="newTagName" search enter-button="新建" placeholder="标签名字" @on-search="addEditExcute" />
         </FormItem>
         <FormItem label="标签：">
           <Select v-model="formData.tags" multiple filterable placeholder="请选择文章标签">
@@ -223,9 +223,9 @@ export default {
       }
       return true;
     },
-    addEditTagExcute() {
+    addEditExcute() {
       let t = this;
-      addEditTag({
+      addEdit({
         name: t.newTagName
       }).then(res => {
         t.getTagListExcute()
