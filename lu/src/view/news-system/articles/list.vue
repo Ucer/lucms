@@ -139,18 +139,15 @@ export default {
               return h('div', [
                 h('img', {
                   attrs: {
-                    src: params.row.cover_image.url,
+                      src: params.row.cover_image.url,
+                      class: 'fancybox',
+                      href: params.row.cover_image.url,
+                      title:'图片'
                   },
                   style: {
                     width: '40px',
                     height: '40px'
                   },
-                  on: {
-                    click: (value) => {
-                      t.modalHeadImage.show = true;
-                      t.modalHeadImage.url = params.row.cover_image.url;
-                    }
-                  }
                 }),
               ]);
             }
@@ -340,9 +337,9 @@ export default {
       let t = this
       getTableStatus(params).then(res => {
         const response_data = res.data
-        t.tableStatus.enable = response_data.enable;
-        t.tableStatus.recommend = response_data.recommend;
-        t.tableStatus.top = response_data.top;
+        t.tableStatus.enable = response_data.enable
+        t.tableStatus.recommend = response_data.recommend
+        t.tableStatus.top = response_data.top
       })
     },
     getArticleCategoriesExcute() {
@@ -359,6 +356,7 @@ export default {
         t.feeds.data = res.data
         t.feeds.total = res.meta.total
         t.tableLoading = false
+        t.globalFancybox()
       }, function(error) {
         t.tableLoading = false
       })
