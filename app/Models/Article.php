@@ -120,6 +120,9 @@ class Article extends Model
                 }
             }
             $this->fill($input)->save();
+            if (is_array($input['tags']) && count($input['tags']) > 0) {
+                $this->syncTag($input['tags']);
+            }
 
             DB::commit();
             return $this->baseSucceed([], '操作成功');
