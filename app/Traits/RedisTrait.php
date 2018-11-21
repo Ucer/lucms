@@ -26,6 +26,6 @@ trait RedisTrait
 
     protected function getRedis($redisKeyType, $key)
     {
-        return json_decode(Redis::get($this->redisKeyType[$redisKeyType]['name'] . $key));
+        return json_decode(Redis::get($this->redisKeyType[$redisKeyType]['name'] . $key), true);
     }
 }
