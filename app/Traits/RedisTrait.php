@@ -9,7 +9,8 @@ trait RedisTrait
     protected $redisKeyType = [
         'demo' => [
             'name' => 'demo_', // 示例_[xxx]
-            'expiry_time' => 3600 * 365 // 过期时间[秒]
+            'expiry_time' => 3600 * 365, // 过期时间[秒]
+            'default_value' => ''
         ]
     ];
 
@@ -26,6 +27,7 @@ trait RedisTrait
 
     protected function getRedis($redisKeyType, $key)
     {
-        return json_decode(Redis::get($this->redisKeyType[$redisKeyType]['name'] . $key), true);
+        $reidsKey = $this->redisKeyType[$redisKeyType];
+        return json_decode(Redis::get($reidsKey['name'] . $key), true) ?: $reidsKey['default_value'];
     }
 }
