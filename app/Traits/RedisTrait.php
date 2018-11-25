@@ -49,4 +49,9 @@ trait RedisTrait
         return Redis::lrange($this->redisKeyType[$redisKeyType]['name'] . $key, $start, $max_get_num);
     }
 
+    public function getRedisListByLpop($redisKeyType, $key)
+    {
+        return Redis::lpop($this->redisKeyType[$redisKeyType]['name'] . $key);
+    }
+
 }
