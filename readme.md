@@ -4,6 +4,8 @@
 
 `lucms` 意为「撸一个cms」
 
+更详细文档请参考网站： [Code好事](https://codehaoshi.com)
+
 ### 版本与协议
 
 版权遵循 [MIT](https://baike.baidu.com/item/MIT/10772952#viewPageContent) 开源协议，以下为基于 lucms 的解释协议。
